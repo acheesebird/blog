@@ -43,4 +43,19 @@
         <tag>Demo</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Basic Physics Ⅰ Introduction</title>
+    <url>/2024/08/15/Physics/introduction/</url>
+    <content><![CDATA[<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><h2 id="Why-do-I-need-to-learn-Physics"><a href="#Why-do-I-need-to-learn-Physics" class="headerlink" title="Why do I need to learn Physics?"></a>Why do I need to learn Physics?</h2><p>Actually, my undergraduate major has little to do with physics. Although it is an engineering discipline, it does not require studying physics in college. However, since there may be a significant connection with physics when pursuing a <strong>graduate degree</strong> in the future, and <strong>physics is actually the subject that I first encountered</strong>, I decided to learn it.</p>
+<h2 id="An-Introduction-to-this-Course"><a href="#An-Introduction-to-this-Course" class="headerlink" title="An Introduction to this Course."></a>An Introduction to this Course.</h2><p>Due to my almost forgotten high school physics knowledge and the fact that I did not study physics during my freshman year, I chose to start with some <strong>simple courses and books</strong>. </p>
+<h1 id="Course-and-Book"><a href="#Course-and-Book" class="headerlink" title="Course and Book"></a>Course and Book</h1><p>The following are the main course and book used in this course.</p>
+<p>Books：<a class="link" href="https://book.douban.com/subject/35369510/">R. Shankar.Fundamentals of Physics I <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>Course:<a class="link" href="https://oyc.yale.edu/physics/phys-200">Fundamentals of Physics I.Open Yale Courses <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>.<br>Also you can find it in <a class="link" href="https://www.bilibili.com/video/BV1cv421C7uM?p=1&vd_source=76f061272e14a257394b630e5eccc5b9">BiliBili <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a class="link" href="https://book.douban.com/subject/1437284/">Mechanics(L. D. Landau, E. M. Lifshitz ) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><a class="link" href="https://book.douban.com/subject/30207279/">The Feynman Lectures on Physics, Vol. I The New Millennium Edition (Richard P. Feynman) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+]]></content>
+      <categories>
+        <category>Basic Physics Ⅰ</category>
+      </categories>
+  </entry>
 </search>
