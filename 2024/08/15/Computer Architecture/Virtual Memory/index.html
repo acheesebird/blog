@@ -30,7 +30,7 @@
 <meta property="og:description" content="Virtual Memory(General Cache) the main memory can act as a “cache” for the secondary storage, usually implemented with magnetic disks.This technique is called virtual memory(A technique that uses main">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-15T09:57:18.000Z">
-<meta property="article:modified_time" content="2024-08-18T12:35:11.111Z">
+<meta property="article:modified_time" content="2024-08-18T18:14:58.777Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
     
@@ -685,8 +685,8 @@ mjx-container[display="true"] + br {
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-08-18 20:35:11</span>
-            <span class="mobile">2024-08-18 20:35:11</span>
+            <span class="desktop">2024-08-19 02:14:58</span>
+            <span class="mobile">2024-08-19 02:14:58</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -713,7 +713,7 @@ mjx-container[display="true"] + br {
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1k Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>993 Words</span>
         </span>
     
     
@@ -741,103 +741,150 @@ mjx-container[display="true"] + br {
 <p>the main memory can act as a “cache” for the secondary storage,
 usually implemented with magnetic disks.This technique is called
 <strong>virtual memory</strong>(A technique that uses main memory as a
-“cache” for secondary storage) # Major Motivations for Virtual Memory 1.
-allow efficient and safe sharing of memory among multiple programs, such
-as for the memory needed by multiple <strong>virtual machines</strong>
-for cloud computing 2. remove the programming burdens of a
-<strong>small, limited amount</strong>of main memory # Physical Address
-and Virtual Address 1. <strong>physical addresses</strong>:An address in
-<strong>main memory</strong>(sometimes called <strong>physical
-memory</strong> to distinguish it from virtual memory) 2.
-<strong>protection</strong>:A set of mechanisms for ensuring that
+“cache” for secondary storage)</p>
+<h1 id="major-motivations-for-virtual-memory">Major Motivations for
+Virtual Memory</h1>
+<ol type="1">
+<li>allow efficient and safe sharing of memory among multiple programs,
+such as for the memory needed by multiple <strong>virtual
+machines</strong> for cloud computing</li>
+<li>remove the programming burdens of a <strong>small, limited
+amount</strong>of main memory</li>
+</ol>
+<h1 id="physical-address-and-virtual-address">Physical Address and
+Virtual Address</h1>
+<ol type="1">
+<li><strong>physical addresses</strong>:An address in <strong>main
+memory</strong>(sometimes called <strong>physical memory</strong> to
+distinguish it from virtual memory)</li>
+<li><strong>protection</strong>:A set of mechanisms for ensuring that
 multiple processes sharing the processor, memory, or I/O devices cannot
 interfere, intentionally or unintentionally, with one another by reading
 or writing each other’s data. These mechanisms also isolate the
-operating system from a user process. 3. <strong>Page</strong>:A virtual
-memory block is called a page 4. <strong>page fault</strong>:An event
-that occurs when an accessed page is not present in main memory.(a
-virtual memory miss) 5. <strong>virtual address</strong>:An address that
-corresponds to a location in virtual space and is translated by address
-mapping to a physical address when memory is accessed 6. <strong>address
-translation</strong>:Also called <strong>address mapping</strong>. The
-process by which a virtual address is mapped to an address used to
-access memory. If we return to our <strong>library analogy</strong>, we
-can think of a virtual address as the title of a book and a physical
-address as the location of that book in the library, such as might be
-given by the Library of Congress call number. 7. Virtual memory also
-simplifies loading the program for execution by providing
-<strong>relocation</strong>. Furthermore, all virtual memory systems in
-use today relocate the program as a set of <strong>fixed-size blocks
-(pages)</strong>, thereby <strong>eliminating the need to find a
+operating system from a user process.</li>
+<li><strong>Page</strong>:A virtual memory block is called a page</li>
+<li><strong>page fault</strong>:An event that occurs when an accessed
+page is not present in main memory.(a virtual memory miss)</li>
+<li><strong>virtual address</strong>:An address that corresponds to a
+location in virtual space and is translated by address mapping to a
+physical address when memory is accessed</li>
+<li><strong>address translation</strong>:Also called <strong>address
+mapping</strong>. The process by which a virtual address is mapped to an
+address used to access memory. If we return to our <strong>library
+analogy</strong>, we can think of a virtual address as the title of a
+book and a physical address as the location of that book in the library,
+such as might be given by the Library of Congress call number.</li>
+<li>Virtual memory also simplifies loading the program for execution by
+providing <strong>relocation</strong>. Furthermore, all virtual memory
+systems in use today relocate the program as a set of <strong>fixed-size
+blocks (pages)</strong>, thereby <strong>eliminating the need to find a
 contiguous block of memory</strong> to allocate to a program; instead,
 the operating system need <strong>only find a sufficient number of pages
-in main memory</strong>. 8. In virtual memory, the address is broken
-into a <strong>virtual page number</strong> and a <strong>page
-offset</strong>(determines the page size). The <strong>physical page
-number</strong> constitutes the upper portion of the physical address,
-while the <strong>page offset, which is not changed</strong>,
-constitutes the lower portion. <strong>Having a larger number of virtual
-pages than physical pages</strong> is the basis for the illusion of an
-essentially unbounded amount of virtual memory 9. several key decisions
-in designing virtual memory systems: 1. Pages should be
-<strong>large</strong> enough to try to amortize the high access time 2.
-Organizations that <strong>reduce the page fault rate</strong> are
-attractive 3. Page faults can be handled in <strong>software</strong>
-because the overhead will be small compared to the disk access time 4.
-Write-through will not work for virtual memory, since writes take too
-long. Instead, virtual memory systems use
-<strong>write-back</strong></p>
+in main memory</strong>.</li>
+<li>In virtual memory, the address is broken into a <strong>virtual page
+number</strong> and a <strong>page offset</strong>(determines the page
+size). The <strong>physical page number</strong> constitutes the upper
+portion of the physical address, while the <strong>page offset, which is
+not changed</strong>, constitutes the lower portion. <strong>Having a
+larger number of virtual pages than physical pages</strong> is the basis
+for the illusion of an essentially unbounded amount of virtual
+memory</li>
+<li>several key decisions in designing virtual memory systems:
+<ul>
+<li>Pages should be <strong>large</strong> enough to try to amortize the
+high access time</li>
+<li>Organizations that <strong>reduce the page fault rate</strong> are
+attractive</li>
+<li>Page faults can be handled in <strong>software</strong> because the
+overhead will be small compared to the disk access time</li>
+<li>Write-through will not work for virtual memory, since writes take
+too long. Instead, virtual memory systems use
+<strong>write-back</strong></li>
+</ul></li>
+</ol>
 <p><em>Elaboration</em>:<em>time-sharing systems, segmentation and
-Paging</em> # Page Table and Page Table Register 1. <strong>page
-table</strong>:The table <strong>containing the virtual to physical
-address translations</strong> in a virtual memory system. The table,
-which is stored in memory, is typically indexed by the virtual page
-number; each entry in the table contains the physical page number for
-that virtual page if the page is currently in memory. 2. <strong>page
-table register</strong>:To indicate the location of the page table in
-memory, the hardware includes a register that points to the start of the
-page table; we call this the <strong>page table register</strong>.
-<em>Hardware/ Software Interface</em> 1. The page table, together with
-the program counter and the registers, specifies the
-<strong>state</strong> of a virtual machine.We often refer to this state
-as a <strong>process</strong>. 2. The process is considered
-<strong>active</strong> when it is in possession of the processor;
-otherwise, it is considered <strong>inactive</strong>. 3. Rather than
-save the entire page table, the operating system simply loads the
-<strong>page table register</strong> to point to the page table of the
-process it wants to make active. <strong>Each process has its own page
-table, since different processes use the same virtual
-addresses</strong>. 4. The use of separate page tables also provides
-<strong>protection</strong> of one process from another. 3.
-<strong>valid bit</strong>: - If the bit is off, the page is not present
-in main memory and a <strong>page fault</strong> occurs - If the bit is
-on, the page is in memory and the entry contains the physical page
-number 4. Because the page table contains a mapping for every possible
-virtual page, <strong>no tags are required</strong>. # Page Faults ##
-replacement strategy 1. swap space：The space on the disk reserved for
-the full virtual memory space of a process <em>Hardware/ Software
-Interface</em> <strong>reference bit</strong>: Also called <strong>use
-bit</strong>. A field that is set whenever a page is accessed and that
-is used to implement <strong>LRU(least recently used)</strong> or other
-replacement schemes. The operating system <strong>periodically
-clears</strong> the reference bits and later records them so it can
-determine which pages were touched during a particular time period. ##
-writing strategy 1. In a virtual memory system, writes to the next level
-of the hierarchy (disk) can take millions of processor clock cycles,
-virtual memory systems must use <strong>write-back</strong>. 2. To track
-whether a page has been written since it was read into the memory, a
-<strong>dirty bit</strong> is added to the page table. The dirty bit is
-set when any word in a page is written # Making Address Translation
-Fast: the TLB 1. translation-lookaside buffer (TLB): A cache that keeps
-track of recently used address mappings to try to avoid an access to the
-page table. 2. If a miss in the TLB occurs, we must determine whether it
-is a <strong>page fault</strong> or merely a <strong>TLB miss</strong> -
-If the page exists in memory, then the TLB miss indicates only that the
-translation is missing - If the page is not present in memory, then the
-TLB miss indicates a true page fault ## Integrating Virtual Memory,
-TLBs, and Caches 1. that data cannot be in the cache unless it is
-present in main memory <em>aliasing, physically addressed cache</em> #
-Implementing Protection with Virtual Memory</p>
+Paging</em></p>
+<h1 id="page-table-and-page-table-register">Page Table and Page Table
+Register</h1>
+<ol type="1">
+<li><strong>page table</strong>:The table <strong>containing the virtual
+to physical address translations</strong> in a virtual memory system.
+The table, which is stored in memory, is typically indexed by the
+virtual page number; each entry in the table contains the physical page
+number for that virtual page if the page is currently in memory.</li>
+<li><strong>page table register</strong>:To indicate the location of the
+page table in memory, the hardware includes a register that points to
+the start of the page table; we call this the <strong>page table
+register</strong>. <em>Hardware/ Software Interface</em>
+<ol type="1">
+<li>The page table, together with the program counter and the registers,
+specifies the <strong>state</strong> of a virtual machine.We often refer
+to this state as a <strong>process</strong>.</li>
+<li>The process is considered <strong>active</strong> when it is in
+possession of the processor; otherwise, it is considered
+<strong>inactive</strong>.</li>
+<li>Rather than save the entire page table, the operating system simply
+loads the <strong>page table register</strong> to point to the page
+table of the process it wants to make active. <strong>Each process has
+its own page table, since different processes use the same virtual
+addresses</strong>.</li>
+<li>The use of separate page tables also provides
+<strong>protection</strong> of one process from another.</li>
+</ol></li>
+<li><strong>valid bit</strong>:
+<ul>
+<li>If the bit is off, the page is not present in main memory and a
+<strong>page fault</strong> occurs</li>
+<li>If the bit is on, the page is in memory and the entry contains the
+physical page number</li>
+</ul></li>
+<li>Because the page table contains a mapping for every possible virtual
+page, <strong>no tags are required</strong>.</li>
+</ol>
+<h1 id="page-faults">Page Faults</h1>
+<h2 id="replacement-strategy">replacement strategy</h2>
+<ol type="1">
+<li>swap space：The space on the disk reserved for the full virtual
+memory space of a process <em>Hardware/ Software Interface</em>
+<strong>reference bit</strong>: Also called <strong>use bit</strong>. A
+field that is set whenever a page is accessed and that is used to
+implement <strong>LRU(least recently used)</strong> or other replacement
+schemes. The operating system <strong>periodically clears</strong> the
+reference bits and later records them so it can determine which pages
+were touched during a particular time period.</li>
+</ol>
+<h2 id="writing-strategy">writing strategy</h2>
+<ol type="1">
+<li>In a virtual memory system, writes to the next level of the
+hierarchy (disk) can take millions of processor clock cycles, virtual
+memory systems must use <strong>write-back</strong>.</li>
+<li>To track whether a page has been written since it was read into the
+memory, a <strong>dirty bit</strong> is added to the page table. The
+dirty bit is set when any word in a page is written</li>
+</ol>
+<h1 id="making-address-translation-fast-the-tlb">Making Address
+Translation Fast: the TLB</h1>
+<ol type="1">
+<li>translation-lookaside buffer (TLB): A cache that keeps track of
+recently used address mappings to try to avoid an access to the page
+table.</li>
+<li>If a miss in the TLB occurs, we must determine whether it is a
+<strong>page fault</strong> or merely a <strong>TLB miss</strong>
+<ul>
+<li>If the page exists in memory, then the TLB miss indicates only that
+the translation is missing</li>
+<li>If the page is not present in memory, then the TLB miss indicates a
+true page fault</li>
+</ul></li>
+</ol>
+<h2 id="integrating-virtual-memory-tlbs-and-caches">Integrating Virtual
+Memory, TLBs, and Caches</h2>
+<ol type="1">
+<li>that data cannot be in the cache unless it is present in main memory
+<em>aliasing, physically addressed cache</em></li>
+</ol>
+<h1 id="implementing-protection-with-virtual-memory">Implementing
+Protection with Virtual Memory</h1>
 <h1 id="handling-tlb-misses-and-page-faults">Handling TLB Misses and
 Page Faults</h1>
 <h1 id="summary">Summary</h1>
@@ -882,7 +929,13 @@ Page Faults</h1>
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">Virtual Memory</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#virtual-memorygeneral-cache"><span class="nav-text">Virtual Memory(General Cache)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#handling-tlb-misses-and-page-faults"><span class="nav-text">Handling TLB Misses and
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#virtual-memorygeneral-cache"><span class="nav-text">Virtual Memory(General Cache)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#major-motivations-for-virtual-memory"><span class="nav-text">Major Motivations for
+Virtual Memory</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#physical-address-and-virtual-address"><span class="nav-text">Physical Address and
+Virtual Address</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#page-table-and-page-table-register"><span class="nav-text">Page Table and Page Table
+Register</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#page-faults"><span class="nav-text">Page Faults</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#replacement-strategy"><span class="nav-text">replacement strategy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#writing-strategy"><span class="nav-text">writing strategy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#making-address-translation-fast-the-tlb"><span class="nav-text">Making Address
+Translation Fast: the TLB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#integrating-virtual-memory-tlbs-and-caches"><span class="nav-text">Integrating Virtual
+Memory, TLBs, and Caches</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#implementing-protection-with-virtual-memory"><span class="nav-text">Implementing
+Protection with Virtual Memory</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#handling-tlb-misses-and-page-faults"><span class="nav-text">Handling TLB Misses and
 Page Faults</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#summary"><span class="nav-text">Summary</span></a></li></ol>
 
     </div>
@@ -920,7 +973,7 @@ Page Faults</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" 
                     </span>
                     
                         <span>
-                            6.3k words in total
+                            6.7k words in total
                         </span>
                     
                 </p>
