@@ -22,15 +22,15 @@
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="前言 这应该是暂时我对于代数学引论的最后一篇笔记，其实在2.3时我就想要放弃了，但是想着善始善终，把第二章做完，就有了这一篇笔记，以后我会用其他简单的教材来补充高代部分的内容，主要使用高等代数（第二版：下册）丘维声 。 我觉得我以后还会重读这本书的，一定！ 1.哈密顿-凯莱定理  定理1 线性算子的矩阵总能(在相似意义下)转化成三角形式 定理2(哈密顿-凯莱定理) 线性算子和它(在任意基底之下)对">
+        <meta name="description" content="1.哈密顿-凯莱定理  定理1 线性算子的矩阵总能(在相似意义下)转化成三角形式 定理2(哈密顿-凯莱定理) 线性算子和它(在任意基底之下)对应的矩阵必然零化自己的特征多项式,,也就是  推论 线性算子的极小多项式,是其特征多项式的一个因子,而 可以被所有的线性因子整除,. 定义：我们称矩阵  为特征值对应的阶(或阶)的(上)若尔当块. 一个矩阵,若它的对角线由若尔当块组成,且这些块之外均为0:">
 <meta property="og:type" content="article">
 <meta property="og:title" content="B.A.Ⅱ 2.4若尔当标准型">
 <meta property="og:url" content="http://example.com/2024/08/19/Algebra/B.A.%E2%85%A1%202.4%E8%8B%A5%E5%B0%94%E5%BD%93%E6%A0%87%E5%87%86%E5%9E%8B_%E5%89%AF%E6%9C%AC/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前言 这应该是暂时我对于代数学引论的最后一篇笔记，其实在2.3时我就想要放弃了，但是想着善始善终，把第二章做完，就有了这一篇笔记，以后我会用其他简单的教材来补充高代部分的内容，主要使用高等代数（第二版：下册）丘维声 。 我觉得我以后还会重读这本书的，一定！ 1.哈密顿-凯莱定理  定理1 线性算子的矩阵总能(在相似意义下)转化成三角形式 定理2(哈密顿-凯莱定理) 线性算子和它(在任意基底之下)对">
+<meta property="og:description" content="1.哈密顿-凯莱定理  定理1 线性算子的矩阵总能(在相似意义下)转化成三角形式 定理2(哈密顿-凯莱定理) 线性算子和它(在任意基底之下)对应的矩阵必然零化自己的特征多项式,,也就是  推论 线性算子的极小多项式,是其特征多项式的一个因子,而 可以被所有的线性因子整除,. 定义：我们称矩阵  为特征值对应的阶(或阶)的(上)若尔当块. 一个矩阵,若它的对角线由若尔当块组成,且这些块之外均为0:">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-19T10:26:51.021Z">
-<meta property="article:modified_time" content="2024-08-19T10:32:58.432Z">
+<meta property="article:modified_time" content="2024-08-22T09:47:29.269Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Algebra">
 <meta name="twitter:card" content="summary">
@@ -630,11 +630,11 @@ mjx-container[display="true"] + br {
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">13</div>
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">16</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -686,8 +686,8 @@ mjx-container[display="true"] + br {
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-08-19 18:32:58</span>
-            <span class="mobile">2024-08-19 18:32:58</span>
+            <span class="desktop">2024-08-22 17:47:29</span>
+            <span class="mobile">2024-08-22 17:47:29</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -735,12 +735,12 @@ mjx-container[display="true"] + br {
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>698 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>586 Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>2 Mins</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>1 Mins</span>
         </span>
     
     
@@ -759,10 +759,7 @@ mjx-container[display="true"] + br {
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <h1 id="前言">前言</h1>
-<p>这应该是暂时我对于代数学引论的最后一篇笔记，其实在2.3时我就想要放弃了，但是想着善始善终，把第二章做完，就有了这一篇笔记，以后我会用其他简单的教材来补充高代部分的内容，主要使用<a class="link" target="_blank" rel="noopener" href="https://book.douban.com/subject/34954858/">高等代数（第二版：下册）丘维声 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
-<p><em>我觉得我以后还会重读这本书的，一定！</em></p>
-<h1 id="哈密顿-凯莱定理">1.哈密顿-凯莱定理</h1>
+            <h1 id="哈密顿-凯莱定理">1.哈密顿-凯莱定理</h1>
 <ol type="1">
 <li><strong>定理1</strong> 线性算子<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.113ex;" xmlns="http://www.w3.org/2000/svg" width="1.853ex" height="1.76ex" role="img" focusable="false" viewBox="0 -728 819 778"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="41" d="M576 668Q576 688 606 708T660 728Q676 728 675 712V571Q675 409 688 252Q696 122 720 57Q722 53 723 50T728 46T732 43T737 41T743 39L754 45Q788 61 803 61Q819 61 819 47Q818 43 814 35Q799 15 755 -7T675 -30Q659 -30 648 -25T630 -8T621 11T614 34Q603 77 599 106T594 146T591 160V163H460L329 164L316 145Q241 35 196 -7T119 -50T59 -24T30 43Q30 75 46 100T74 125Q81 125 83 120T88 104T96 84Q118 57 151 57Q189 57 277 182Q432 400 542 625L559 659H567Q574 659 575 660T576 668ZM584 249Q579 333 577 386T575 473T574 520V581L563 560Q497 426 412 290L372 228L370 224H371L383 228L393 232H586L584 249Z"></path></g></g></g></g></svg></mjx-container></span>的矩阵总能(在相似意义下)转化成<strong>三角形式</strong></li>
 <li><strong>定理2(哈密顿-凯莱定理)</strong> 线性算子<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.113ex;" xmlns="http://www.w3.org/2000/svg" width="1.853ex" height="1.76ex" role="img" focusable="false" viewBox="0 -728 819 778"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="41" d="M576 668Q576 688 606 708T660 728Q676 728 675 712V571Q675 409 688 252Q696 122 720 57Q722 53 723 50T728 46T732 43T737 41T743 39L754 45Q788 61 803 61Q819 61 819 47Q818 43 814 35Q799 15 755 -7T675 -30Q659 -30 648 -25T630 -8T621 11T614 34Q603 77 599 106T594 146T591 160V163H460L329 164L316 145Q241 35 196 -7T119 -50T59 -24T30 43Q30 75 46 100T74 125Q81 125 83 120T88 104T96 84Q118 57 151 57Q189 57 277 182Q432 400 542 625L559 659H567Q574 659 575 660T576 668ZM584 249Q579 333 577 386T575 473T574 520V581L563 560Q497 426 412 290L372 228L370 224H371L383 228L393 232H586L584 249Z"></path></g></g></g></g></svg></mjx-container></span>和它(在任意基底之下)对应的矩阵<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.697ex" height="1.62ex" role="img" focusable="false" viewBox="0 -716 750 716"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D434" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path></g></g></g></svg></mjx-container></span>必然<strong>零化自己的特征多项式</strong>,<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="5.688ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 2514.1 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="58" d="M324 614Q291 576 250 573Q231 573 231 584Q231 589 232 592Q235 601 244 614T271 643T324 671T400 683H403Q462 683 481 610Q485 594 490 545T498 454L501 413Q504 413 551 442T648 509T705 561Q707 565 707 578Q707 610 682 614Q667 614 667 626Q667 641 695 662T755 683Q765 683 775 680T796 662T807 623Q807 596 792 572T713 499T530 376L505 361V356Q508 346 511 278T524 148T557 75Q569 69 580 69Q585 69 593 77Q624 108 660 110Q667 110 670 110T676 106T678 94Q668 59 624 30T510 0Q487 0 471 9T445 32T430 71T422 117T417 173Q416 183 416 188Q413 214 411 244T407 286T405 299Q403 299 344 263T223 182T154 122Q152 118 152 105Q152 69 180 69Q183 69 187 66T191 60L192 58V56Q192 41 163 21T105 0Q94 0 84 3T63 21T52 60Q52 77 56 90T85 131T155 191Q197 223 259 263T362 327T402 352L391 489Q391 492 390 505T387 526T384 547T379 568T372 586T361 602T348 611Q346 612 341 613T333 614H324Z"></path></g></g><g data-mml-node="TeXAtom" transform="translate(746,-161.2) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="41" d="M576 668Q576 688 606 708T660 728Q676 728 675 712V571Q675 409 688 252Q696 122 720 57Q722 53 723 50T728 46T732 43T737 41T743 39L754 45Q788 61 803 61Q819 61 819 47Q818 43 814 35Q799 15 755 -7T675 -30Q659 -30 648 -25T630 -8T621 11T614 34Q603 77 599 106T594 146T591 160V163H460L329 164L316 145Q241 35 196 -7T119 -50T59 -24T30 43Q30 75 46 100T74 125Q81 125 83 120T88 104T96 84Q118 57 151 57Q189 57 277 182Q432 400 542 625L559 659H567Q574 659 575 660T576 668ZM584 249Q579 333 577 386T575 473T574 520V581L563 560Q497 426 412 290L372 228L370 224H371L383 228L393 232H586L584 249Z"></path></g></g></g></g><g data-mml-node="mo" transform="translate(1375.1,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(1764.1,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mo" transform="translate(2125.1,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container></span>,也就是 <span class="math display"><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="10.873ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 4805.7 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="58" d="M324 614Q291 576 250 573Q231 573 231 584Q231 589 232 592Q235 601 244 614T271 643T324 671T400 683H403Q462 683 481 610Q485 594 490 545T498 454L501 413Q504 413 551 442T648 509T705 561Q707 565 707 578Q707 610 682 614Q667 614 667 626Q667 641 695 662T755 683Q765 683 775 680T796 662T807 623Q807 596 792 572T713 499T530 376L505 361V356Q508 346 511 278T524 148T557 75Q569 69 580 69Q585 69 593 77Q624 108 660 110Q667 110 670 110T676 106T678 94Q668 59 624 30T510 0Q487 0 471 9T445 32T430 71T422 117T417 173Q416 183 416 188Q413 214 411 244T407 286T405 299Q403 299 344 263T223 182T154 122Q152 118 152 105Q152 69 180 69Q183 69 187 66T191 60L192 58V56Q192 41 163 21T105 0Q94 0 84 3T63 21T52 60Q52 77 56 90T85 131T155 191Q197 223 259 263T362 327T402 352L391 489Q391 492 390 505T387 526T384 547T379 568T372 586T361 602T348 611Q346 612 341 613T333 614H324Z"></path></g></g><g data-mml-node="TeXAtom" transform="translate(746,-161.2) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="41" d="M576 668Q576 688 606 708T660 728Q676 728 675 712V571Q675 409 688 252Q696 122 720 57Q722 53 723 50T728 46T732 43T737 41T743 39L754 45Q788 61 803 61Q819 61 819 47Q818 43 814 35Q799 15 755 -7T675 -30Q659 -30 648 -25T630 -8T621 11T614 34Q603 77 599 106T594 146T591 160V163H460L329 164L316 145Q241 35 196 -7T119 -50T59 -24T30 43Q30 75 46 100T74 125Q81 125 83 120T88 104T96 84Q118 57 151 57Q189 57 277 182Q432 400 542 625L559 659H567Q574 659 575 660T576 668ZM584 249Q579 333 577 386T575 473T574 520V581L563 560Q497 426 412 290L372 228L370 224H371L383 228L393 232H586L584 249Z"></path></g></g></g></g><g data-mml-node="mo" transform="translate(1375.1,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1764.1,0)"><g data-mml-node="mi"><path data-c="41" d="M576 668Q576 688 606 708T660 728Q676 728 675 712V571Q675 409 688 252Q696 122 720 57Q722 53 723 50T728 46T732 43T737 41T743 39L754 45Q788 61 803 61Q819 61 819 47Q818 43 814 35Q799 15 755 -7T675 -30Q659 -30 648 -25T630 -8T621 11T614 34Q603 77 599 106T594 146T591 160V163H460L329 164L316 145Q241 35 196 -7T119 -50T59 -24T30 43Q30 75 46 100T74 125Q81 125 83 120T88 104T96 84Q118 57 151 57Q189 57 277 182Q432 400 542 625L559 659H567Q574 659 575 660T576 668ZM584 249Q579 333 577 386T575 473T574 520V581L563 560Q497 426 412 290L372 228L370 224H371L383 228L393 232H586L584 249Z"></path></g></g><g data-mml-node="mo" transform="translate(2583.1,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(3249.9,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(4305.7,0)"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></g></g></g></svg></mjx-container></span></li>
@@ -813,13 +810,13 @@ mjx-container[display="true"] + br {
                     <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="prev"
                         rel="prev"
-                        href="/2024/08/21/Algebra/B.A.%E2%85%A13.1%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E5%90%91%E9%87%8F%E7%A9%BA%E9%97%B4_%E5%89%AF%E6%9C%AC2/"
+                        href="/2024/08/19/Analysis%20%E2%85%A0/Lebesgue%20Measurable%20Functions/"
                         >
                             <span class="left arrow-icon flex justify-center items-center">
                                 <i class="fa-solid fa-chevron-left"></i>
                             </span>
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">B.A.Ⅱ3.1欧几里得向量空间</span>
+                                <span class="post-nav-title-item">Lebesgue Measurable Functions</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                         </a>
@@ -854,7 +851,7 @@ mjx-container[display="true"] + br {
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">B.A.Ⅱ 2.4若尔当标准型</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%93%88%E5%AF%86%E9%A1%BF-%E5%87%AF%E8%8E%B1%E5%AE%9A%E7%90%86"><span class="nav-text">1.哈密顿-凯莱定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8B%A5%E5%B0%94%E5%BD%93%E6%A0%87%E5%87%86%E5%9E%8B%E5%AE%9A%E7%90%86%E4%B8%8E%E6%8E%A8%E8%AE%BA"><span class="nav-text">若尔当标准型:定理与推论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%82%E9%9B%B6%E7%AE%97%E5%AD%90%E7%9A%84%E6%83%85%E5%BD%A2"><span class="nav-text">幂零算子的情形</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%93%88%E5%AF%86%E9%A1%BF-%E5%87%AF%E8%8E%B1%E5%AE%9A%E7%90%86"><span class="nav-text">1.哈密顿-凯莱定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8B%A5%E5%B0%94%E5%BD%93%E6%A0%87%E5%87%86%E5%9E%8B%E5%AE%9A%E7%90%86%E4%B8%8E%E6%8E%A8%E8%AE%BA"><span class="nav-text">若尔当标准型:定理与推论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%82%E9%9B%B6%E7%AE%97%E5%AD%90%E7%9A%84%E6%83%85%E5%BD%A2"><span class="nav-text">幂零算子的情形</span></a></li></ol>
 
     </div>
 </div>
@@ -887,11 +884,11 @@ mjx-container[display="true"] + br {
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        12 posts in total
+                        16 posts in total
                     </span>
                     
                         <span>
-                            8.4k words in total
+                            11.2k words in total
                         </span>
                     
                 </p>
