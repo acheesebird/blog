@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Zhao Cong">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+        
+        
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/09/08/os/operating system introduction/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="false">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating System Introduction">
+<meta property="og:url" content="http://example.com/2024/09/08/OS/Operating%20System%20Introduction/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="false">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-09-08T03:31:45.754Z">
+<meta property="article:modified_time" content="2024-09-08T05:37:11.705Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+    <meta name="theme-color" content="#Ffc0cb">
+    <link rel="shortcut icon" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Operating System Introduction -
+        
+        ZC&#39;s Blog
+    </title>
+
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/Chillax/chillax.css">
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/assets/build/styles.css">
+    
+
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/GeistMono/geist-mono.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/Geist/geist.css">
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/anime.min.js"></script>
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":true,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#Ffc0cb","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-kxewpm.webp","dark":"/images/wallhaven-kxewpm.webp"},"title":"ZC's Blog","subtitle":{"text":["Simplicity favors regularity"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/acheesebird","instagram":"https://www.instagram.com/acheesebird?igsh=czBzYTdxMXEzaWFr&utm_source=qr","zhihu":null,"twitter":"https://x.com/acheesebird?s=11","email":"aiwdj@outlook.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":"Imagine","artist":"John Lennon","url":"https://evan.beee.top/music/Imagine%20-%20John%20Lennon.mp3","cover":"https://evan.beee.top/music/covers/Lennon_Imagine_Sleeve_1975.jpg","lrc":null},{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Essays":{"path":"/essays","icon":"fa-regular fa-message"},"About":{"icon":"fa-regular fa-archive","submenus":{"Me":"/about","Github":"https://github.com/acheesebird/blog"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"Just do it!","show_on_mobile":true,"links":{"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"YYYY-MM-DD HH:mm:ss","categories":{"enable":true,"limit":999},"tags":{"enable":true,"limit":3}},"footerStart":"2024/8/14 04:47:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        ZC&#39;s Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                ZC&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/essays"
+                                        >
+                                    <i class="fa-regular fa-message fa-fw"></i>
+                                    ESSAYS
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/acheesebird/blog">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/essays"
+                        >
+                            <span>
+                                ESSAYS
+                            </span>
+                            
+                                <i class="fa-regular fa-message fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/acheesebird/blog">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/tags"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/categories"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-regular fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">16</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">27</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Operating System Introduction</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Zhao Cong</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-09-08 11:31:45</span>
+        <span class="mobile">2024-09-08 11:31:45</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-09-08 13:37:11</span>
+            <span class="mobile">2024-09-08 13:37:11</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/OS/">OS</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/OS/">OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>20 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="what-operating-systems-do">What Operating Systems Do</h1>
+<ol type="1">
+<li>A computer system can be divided roughly into <strong>four
+components</strong>: the <strong>hardware</strong>, the
+<strong>operating system</strong>, the <strong>application
+programs</strong>, and a <strong>user</strong></li>
+<li>An operating system is similar to a <strong>government</strong>.
+Like a government, it performs no useful function by itself. It simply
+provides an <strong>environment</strong> within which other programs can
+do useful work.</li>
+<li>In this context, we can view an operating system as a
+<strong>resource allocator</strong></li>
+<li>An operating system is a <strong>control program</strong>. A control
+program manages the execution of user programs to prevent errors and
+improper use of the computer.</li>
+<li>The common functions of <strong>controlling</strong> and
+<strong>allocating resources</strong> are then brought together into one
+piece of software: the <strong>operating system</strong>.</li>
+<li>The operating system is the one program <strong>running at all
+times</strong> on the computer—usually called the
+<strong>kernel</strong>.</li>
+<li>Along with the kernel, there are two other types of programs:
+<strong>system programs</strong> and <strong>application
+programs</strong></li>
+<li>Mobile operating systems often include not only a core kernel but
+also <strong>middleware</strong>—a set of software frameworks that
+provide additional services to application developers.</li>
+<li>the operating system includes <strong>the always running
+kernel</strong>, <strong>middleware frameworks</strong> that ease
+application development and provide features, and <strong>system
+programs</strong> that aid in managing the system while it is
+running.</li>
+</ol>
+<h1 id="computer-system-organization">Computer-System Organization</h1>
+<ol type="1">
+<li>A modern general-purpose computer system consists of one or more
+CPUs and a number of device controllers connected through a common
+<strong>bus</strong> that provides access between components and shared
+memory.</li>
+<li>A <strong>device controller</strong> maintains some <strong>local
+buffer storage</strong> and a set of <strong>special-purpose
+registers</strong>. The device controller is responsible for
+<strong>moving the data between the peripheral devices that it controls
+and its local buffer storage</strong></li>
+<li>Typically, operating systems have a <strong>device driver</strong>
+for each device controller. This device driver understands the device
+controller and <strong>provides the rest of the operating system with a
+uniform interface to the device.</strong></li>
+</ol>
+<h2 id="interrupts">Interrupts</h2>
+<ol type="1">
+<li>To start an I/O operation
+<ol type="1">
+<li>the device driver loads the appropriate registers in the device
+controller.</li>
+<li>The device controller, in turn, examines the contents of these
+registers to determine what action to take (such as “read a character
+from the keyboard”).</li>
+<li>The controller starts the transfer of data from the device to its
+local buffer.</li>
+<li>Once the transfer of data is complete, the device controller informs
+the device driver that it has finished its operation.</li>
+<li>The device driver then gives control to other parts of the operating
+system, possibly returning the data or a pointer to the data if the
+operation was a read. the controller is accomplished via an
+<strong>interrupt</strong> to inform the device driver that it has
+finished its operation.</li>
+</ol></li>
+<li>Hardware may trigger an interrupt at any time by sending a signal to
+the CPU, usually by way of the <strong>system bus</strong></li>
+<li>When the CPU is interrupted, it stops what it is doing and
+immediately <strong>transfers execution to a fixed
+location</strong></li>
+<li>The fixed location usually <strong>contains the starting
+address</strong> where the service routine for the interrupt is
+located.</li>
+<li>The interrupt must <strong>transfer control to the appropriate
+interrupt service routine</strong>,<strong>interrupt-specific
+handler</strong> examine the interrupt information.</li>
+<li>. A <strong>table of pointers</strong> to interrupt routines can be
+used instead to <strong>provide the necessary speed</strong></li>
+<li>the addresses of the interrupt service routines for the various
+devices, called <strong>interrupt vector</strong>,to provide the address
+of the interrupt service routine for the interrupting device.</li>
+<li>The interrupt architecture must also <strong>save the state
+information</strong> of whatever was interrupted, so that it can
+<strong>restore this information after servicing the
+interrupt</strong></li>
+<li>After the interrupt is serviced, the saved return address is loaded
+into the program counter, and the interrupted computation resumes as
+though the interrupt had not occurred.</li>
+<li>The CPU hardware has a <strong>wire</strong> called the
+<strong>interrupt-request line</strong> that the CPU senses after
+executing every instruction. When the CPU detects that a controller has
+asserted a signal on the interrupt-request line, it reads the interrupt
+number and jumps to the <strong>interrupt-handler routine</strong> by
+using that <strong>interrupt number as an index into the interrupt
+vector</strong>.</li>
+<li>We say that the device controller <strong>raises an
+interrupt</strong> by asserting a signal on the interrupt request line,
+the CPU <strong>catches the interrupt</strong> and <strong>dispatches it
+to the interrupt handler</strong>, and the handler <strong>clears the
+interrupt</strong> by servicing the device.</li>
+<li>The basic interrupt mechanism just described enables the CPU to
+respond to an <strong>asynchronous event</strong>, as when a device
+controller becomes ready for service.In a modern operating system,
+however, we need <strong>more sophisticated interrupt handling
+features</strong>:
+<ol type="1">
+<li>We need the ability to <strong>defer interrupt</strong> handling
+during critical processing</li>
+<li>We need an <strong>efficient way to dispatch</strong> to the proper
+interrupt handler for a device</li>
+<li>We need <strong>multilevel interrupts</strong>, so that the
+operating system can distinguish between high- and low-priority
+interrupts and can respond with the appropriate degree of urgency In
+modern computer hardware, these three features are provided by the CPU
+and the <strong>interrupt-controller hardware</strong>.</li>
+</ol></li>
+<li>Most CPUs have <strong>two interrupt request lines</strong>. One is
+the <strong>nonmaskable</strong> interrupt, which is reserved for events
+such as unrecoverable memory errors.The second interrupt line is
+<strong>maskable</strong>: it can be <strong>turned off by the
+CPU</strong> before t<strong>he execution of critical instruction
+sequences that must not be interrupted</strong>. The maskable interrupt
+is used by d<strong>evice controllers</strong> to request
+service(feature 1)</li>
+<li><strong>interrupt chaining</strong>, in which each element in the
+interrupt vector points to the head of a list of interrupt handlers.When
+an interrupt is raised, the handlers on the corresponding list
+<strong>are called one by one</strong>, until one is found that can
+service the request. This structure is a <strong>compromise</strong>
+between <strong>the overhead of a huge interrupt table</strong> and the
+<strong>inefficiency of dispatching to a single interrupt
+handler</strong>.(feature 2)</li>
+<li>The interrupt mechanism also implements a system of
+<strong>interrupt priority levels</strong>(feature 3).</li>
+<li>In summary, interrupts are used throughout modern operating systems
+to handle <strong>asynchronous events</strong>.</li>
+</ol>
+<h2 id="storage-structure">Storage Structure</h2>
+<ol type="1">
+<li>General-purpose computers run most of their programs from
+<strong>rewritable memory</strong>, called <strong>main memory</strong>
+(also called <strong>random-access memory</strong>, or
+<strong>RAM</strong>).Main memory commonly is implemented in a
+<strong>semiconductor</strong> technology called <strong>dynamic
+random-access memory</strong> <strong>(DRAM)</strong></li>
+<li>the first program to run on computer power-on is a <strong>bootstrap
+program</strong>, which then loads the operating system</li>
+<li>RAM is <strong>volatile</strong>—loses its content when power is
+turned off or otherwise lost.</li>
+<li>To hold the bootstrap program,the computer uses <strong>electrically
+erasable programmable read-only memory (EEPROM)</strong> and other forms
+of <strong>firmwar</strong> —storage that is i<strong>nfrequently
+written to and is nonvolatile</strong>.EEPROM can be changed but cannot
+be changed frequently</li>
+<li>Interaction is achieved through a sequence of <strong>load or
+store</strong> instructions to specific memory addresses.</li>
+<li>instruction–execution cycle:
+<ol type="1">
+<li><strong>fetches an instruction</strong> from memory and stores that
+instruction in the instruction register.</li>
+<li>The instruction is then <strong>decoded</strong> and may cause
+operands to be fetched from memory and stored in some internal
+register.</li>
+<li>After the instruction on the operands has been executed, the result
+may b<strong>e stored back in memory</strong></li>
+</ol></li>
+<li>The programs and data cannot reside in main memory permanently for
+two reasons:
+<ol type="1">
+<li>Main memory is usually too <strong>small</strong> to store all
+needed programs and data permanently.</li>
+<li>Main memory, as mentioned, is <strong>volatile</strong>—it loses its
+contents when power is turned off or otherwise lost.</li>
+</ol></li>
+<li>Most computer systems provide <strong>secondary storage</strong> as
+an extension of main memory.</li>
+<li>The most common secondary-storage devices are <strong>hard-disk
+drives (HDDs)</strong> and <strong>nonvolatile memory (NVM)</strong>
+devices.</li>
+<li><strong>tertiary storage</strong>:optical disk, magnetic tapes</li>
+<li>The main differences among the various storage systems lie in
+<strong>speed, size, and volatility</strong>.</li>
+<li>As a general rule, there is a trade-off between size and speed,with
+smaller and faster memory closer to the CPU</li>
+<li>The top four levels of memory in the figure(registers, cache, main
+memory,NVM) are constructed using <strong>semiconductor
+memory</strong>.</li>
+<li>The most common form of NVM device is <strong>flash memory</strong>,
+which is popular in <strong>mobile devices</strong> such as smartphones
+and tablets.</li>
+<li><strong>Volatile storage</strong> will be referred to simply as
+<strong>memory</strong>.</li>
+<li><strong>Nonvolatile storage</strong> will be referred to as
+<strong>NVS</strong>,The vast majority of the time we spend on NVS will
+be on <strong>secondary storage</strong>,This type of storage can be
+classified into two distinct types:
+<ol type="1">
+<li>Mechanical:HDDs, optical disks, holographic storage, and magnetic
+tape</li>
+<li>Electrical:flash memory, FRAM, NRAM, and SSD.</li>
+</ol></li>
+</ol>
+<h2 id="io-structure">I/O Structure</h2>
+<ol type="1">
+<li>The form of interrupt-driven I/O is fine for <strong>moving small
+amounts</strong> of data but can produce <strong>high overhead</strong>
+when used for bulk data movement such as NVS I/O. To solve this problem,
+<strong>direct memory access (DMA)</strong> is used.</li>
+<li>After setting up <strong>buffers, pointers, and counters</strong>
+for the I/O device, the device controller transfers an <strong>entire
+block</strong> of data <strong>directly to or from the device and main
+memory,</strong> with <strong>no intervention by the CPU</strong>.</li>
+<li>Some high-end systems use <strong>switch</strong> rather than bus
+architecture.In this case, DMA is even more effective.</li>
+</ol>
+<h1 id="computer-system-architecture">Computer-System Architecture</h1>
+<p>We can categorize computer system roughly according to <strong>the
+number of general-purpose processors used</strong></p>
+<h2 id="single-processor-systems">Single-Processor Systems</h2>
+<ol type="1">
+<li>The <strong>core</strong> is the component that executes
+instructions and registers for storing data locally</li>
+<li>The use of special-purpose microprocessors is common and
+<strong>does not turn a single-processor system into a
+multiprocessor.</strong></li>
+<li>If there is only <strong>one general-purpose CPU</strong> with
+<strong>a single processing core</strong>, then the system is a
+<strong>single-processor system</strong>.</li>
+</ol>
+<h2 id="multiprocessor-systems">Multiprocessor Systems</h2>
+<ol type="1">
+<li>Multiprocessor Systems have <strong>two (or more)
+processors</strong>, each with <strong>a single-core CPU</strong>.</li>
+<li>The primary advantage of multiprocessor systems is <strong>increased
+throughput</strong></li>
+<li>The speed-up ratio with N processors is not N, however; it is
+<strong>less than N</strong>.a certain amount of overhead is incurred in
+<strong>keeping all the parts working correctly</strong>.</li>
+<li>The most common multiprocessor systems use <strong>symmetric
+multiprocessing (SMP)</strong>, in which each peer CPU processor
+performs all tasks, including operating-system functions and user
+processes.</li>
+<li>each CPU processor has its <strong>own set of registers</strong>, as
+well as a private—or local—cache. However, <strong>all processors share
+physical memory</strong> over the system bus.</li>
+<li>The benefit of this model is that <strong>many processes can run
+simultaneously</strong></li>
+<li>These inefficiencies(<strong>one may be sitting idle while another
+is overloaded</strong>) can be avoided if the processors <strong>share
+certain data structures</strong>.</li>
+<li>Multicore systems can be more efficient than multiple chips with
+<strong>single cores because on-chip communication is faster than
+between-chip communication</strong>.</li>
+<li>In a dual-core design, <strong>each core has its own register
+set</strong>, as well as its own local cache, often known as a level 1,
+or <strong>L1, cache</strong>.that a <strong>level 2 (L2) cache</strong>
+is local to the chip but is <strong>shared by the two processing
+cores</strong></li>
+<li>once we add <strong>too many CPUs</strong>, <strong>contention for
+the system bus</strong> becomes a bottleneck and performance begins to
+degrade. An alternative approach is instead to <strong>provide each CPU
+(or group of CPUs) with its own local memory that is accessed via a
+small, fast local bus</strong>.</li>
+<li>The CPUs are connected by a <strong>shared system
+interconnect</strong>, so that all CPUs share one physical address
+space. This approach—known as <strong>non-uniform memory
+access,</strong> or <strong>NUMA</strong>.The advantage is that, when a
+CPU accesses its local memory, not only is it <strong>fast</strong>, but
+there is also <strong>no contention</strong> over the system
+interconnect</li>
+<li>A <strong>potential drawback</strong> with a NUMA system is
+<strong>increased latency</strong> when a CPU must access <strong>remote
+memory</strong> across the system interconnect, creating a possible
+<strong>performance penalty</strong>.Operating systems can
+<strong>minimize this NUMA penalty through careful CPU scheduling and
+memory management</strong>.</li>
+<li><strong>blade servers</strong> are systems in which multiple
+processor boards, I/O boards, and networking boards are placed in the
+same chassis. The difference between these and traditional
+multiprocessor systems is that <strong>each blade processor board boots
+independently and runs its own operating system</strong>.In essence,
+these servers consist of m<strong>ultiple independent multiprocessor
+systems</strong>.</li>
+</ol>
+<h2 id="clustered-systems">Clustered Systems</h2>
+<ol type="1">
+<li>Another type of <strong>multiprocessor</strong> system is a
+<strong>clustered system</strong>.Clustered systems differ from the
+multiprocessor systems in that they are <strong>composed of two or more
+individual systems—or nodes—joined together</strong>.each node is
+typically a <strong>multicore system</strong>. Such systems are
+considered <strong>loosely coupled</strong></li>
+<li>Clustered computers share storage and are closely linked via a
+<strong>local-area network LAN</strong> or a <strong>faster
+interconnect</strong>.</li>
+<li>Clustering is usually used to provide <strong>high-availability
+service</strong>—that is, service that will continue even if one or more
+systems in the cluster fail.</li>
+<li>We obtain high availability by <strong>adding a level of
+redundancy</strong> in the system.</li>
+<li>A layer of cluster software runs on the cluster nodes. <strong>Each
+node can monitor one or more of the others (over the network)</strong>.
+If the <strong>monitored machine fails</strong>, the monitoring machine
+can take ownership of its storage and <strong>restart</strong> the
+applications that were running on the failed machine. The users and
+clients of the applications see <strong>only a brief
+interruption</strong> of service.</li>
+<li>The ability to continue providing service proportional to the level
+of surviving hardware is called <strong>graceful
+degradation</strong>,Some systems go beyond graceful degradation and are
+called <strong>fault tolerant</strong></li>
+<li>Clustering can be structured <strong>asymmetrically</strong> or
+<strong>symmetrically</strong>.
+<ol type="1">
+<li>In asymmetric clustering, one machine is in <strong>hot-standby
+mode</strong> while the other is running the applications. The
+hot-standby host machine <strong>does nothing but monitor the active
+server</strong>.If that server fails, the <strong>hot-standby host
+becomes the active</strong></li>
+<li>In symmetric clustering, two or more hosts are running applications
+and are <strong>monitoring each other</strong>.This structure is
+obviously more efficient, as it uses all of the available hardware.
+However, it does require that more than one application be available to
+run.</li>
+</ol></li>
+<li>Clusters can also be used to provide <strong>high-performance
+computing environments</strong>,This involves a technique known as
+<strong>parallelization</strong></li>
+<li>To provide this shared access(access the same data on shared
+storage), the system must also supply access control and locking to
+ensure that n<strong>o conflicting operations occur</strong>. This
+function, commonly known as a <strong>distributed lock manager
+(DLM)</strong></li>
+<li><strong>Storage-area networks (SANs)</strong> allows many systems to
+attach to a pool of storage.</li>
+</ol>
+<h1 id="operating-system-operations">Operating-System Operations</h1>
+<ol type="1">
+<li>Another form of interrupt is a <strong>trap (or an
+exception)</strong>, which is a <strong>software-generated
+interrupt</strong> caused either by an error (for example, division by
+zero or invalid memory access) or by a specific request from a user
+program that an operating-system service be performed by executing a
+special operation called a <strong>system call</strong>.</li>
+</ol>
+<h2 id="multiprogramming-and-multitasking">Multiprogramming and
+Multitasking</h2>
+<ol type="1">
+<li><strong>Multiprogramming</strong> increases CPU utilization, as well
+as keeping users satisfied, by organizing programs so that the
+<strong>CPU always has one to execute</strong>. In a multiprogrammed
+system, <strong>a program in execution is termed a
+process</strong>.</li>
+<li>In a non-multiprogrammed system, the CPU would <strong>sit
+idl</strong>e. In a multiprogrammed system, the operating system
+<strong>simply switches to, and executes, another process</strong>,As
+long as at least one process needs to execute, <strong>the CPU is never
+idle</strong>.</li>
+<li><strong>Multitasking</strong> is a logical extension of
+multiprogramming. In multitasking systems, the CPU executes multiple
+processes by <strong>switching among them</strong>, but the
+<strong>switches occur frequently</strong>, providing the user with
+<strong>a fast response time</strong>.</li>
+<li>Choose which process will run next is <strong>CPU
+scheduling</strong></li>
+<li><strong>Virtual memory</strong>, a technique that allows the
+execution of a process that is <strong>not completely in
+memory.</strong> The main advantage of this scheme is that it enables
+users to run programs that are <strong>larger than actual physical
+memory</strong>..Further, it abstracts main memory into a large, uniform
+array of storage, <strong>separating logical memory as viewed by the
+user from physical memory.</strong></li>
+</ol>
+<h2 id="dual-mode-and-multimode-operation">Dual-Mode and Multimode
+Operation</h2>
+<ol type="1">
+<li>.In order to ensure the proper execution of the system, we must be
+able to <strong>distinguish between the execution of operating-system
+code and user-defined code</strong>. The approach taken by most computer
+systems is to provide <strong>hardware support</strong> that allows
+differentiation among various modes of execution.</li>
+<li>At the very least, we need <strong>two separate modes</strong> of
+operation: <strong>user mode</strong> and <strong>kernel mode</strong>
+(also called supervisor mode, system mode, or privileged mode)</li>
+<li>A bit, called the <strong>mode bit</strong>, is added to the
+hardware of the computer to indicate the current mode: <strong>kernel
+(0) or user (1)</strong>.</li>
+<li>When a user application <strong>requests a service from the
+operating system</strong> (via a system call), the system must
+<strong>transition from user to kernel mode</strong> to fulfill the
+request.</li>
+<li>At system boot time, the hardware <strong>starts in kernel
+mode</strong>. The operating system is then loaded and starts user
+applications <strong>in user mode</strong>. Whenever a <strong>trap or
+interrupt</strong> occurs, the hardware <strong>switches from user mode
+to kernel mode</strong> (that is, changes the state of the mode bit to
+0). Thus, <strong>whenever the operating system gains control of the
+computer, it is in kernel mode.</strong> The system always
+<strong>switches to user mode</strong> (by setting the mode bit to 1)
+<strong>before passing control to a user program</strong></li>
+<li>We accomplish this protection by designating some of the machine
+instructions that may cause harm as <strong>privileged
+instructions.</strong> The hardware allows privileged instructions to be
+executed <strong>only in kernel mode</strong></li>
+</ol>
+<h2 id="timer">Timer</h2>
+<ol type="1">
+<li>We must ensure that the <strong>operating system maintains control
+over the CPU</strong>,We cannot allow a user program to <strong>get
+stuck in an infinite loop</strong> or to <strong>fail to call system
+services and never return control to the operating system</strong>. To
+accomplish this goal, we can use a <strong>timer</strong>.</li>
+<li>A <strong>timer</strong> can be set to <strong>interrupt the
+computer after a specified period.</strong> The period may be
+<strong>fixed</strong>b or <strong>variable</strong>.</li>
+</ol>
+<h1 id="resource-management">Resource Management</h1>
+<h2 id="process-management">Process Management</h2>
+<ol type="1">
+<li>We emphasize that <strong>a program by itself is not a
+process</strong>. A program is a <strong>passive entity</strong>, like
+the contents of a file stored on disk, whereas a process is an
+<strong>active entity</strong>.</li>
+<li>A single-threaded process has <strong>one program counter</strong>
+<strong>specifying the next instruction to execute</strong>. The
+execution of such a process must be <strong>sequentia</strong>l.</li>
+<li>Although two processes may be associated with the same program, they
+are nevertheless considered two separate execution sequences.</li>
+<li>A <strong>multithreaded process</strong> has <strong>multiple
+program counters</strong>, each pointing to the next instruction to
+execute for a given thread.</li>
+<li><strong>A process is the unit of work in a system.</strong> A system
+consists of a collection of processes, some of which are
+<strong>operating-system processes</strong> (those that execute system
+code) and the rest of which are <strong>user processes</strong> (those
+that execute user code).</li>
+<li>The operating system is responsible for the following activities in
+connection with process management:
+<ol type="1">
+<li>Creating and deleting both user and system processes</li>
+<li>Scheduling processes and threads on the CPUs</li>
+<li>Suspending and resuming processes</li>
+<li>Providing mechanisms for process synchronization</li>
+<li>Providing mechanisms for process communication</li>
+</ol></li>
+</ol>
+<h2 id="memory-management">Memory Management</h2>
+<ol type="1">
+<li>the main memory is generally the only large storage device that the
+CPU is able to address and access directly</li>
+<li>For a program to be executed, it must be <strong>mapped to absolute
+addresses</strong> and loaded into memory.</li>
+<li>The operating system is responsible for the following activities in
+connection with memory management
+<ol type="1">
+<li>Keeping track of which parts of memory are currently being used and
+which process is using them</li>
+<li>Allocating and deallocating memory space as needed</li>
+<li>Deciding which processes (or parts of processes) and data to move
+into and out of memory</li>
+</ol></li>
+</ol>
+<h2 id="file-system-management">File-System Management</h2>
+<ol type="1">
+<li>The operating system is responsible for the following activities in
+connection with file management:
+<ol type="1">
+<li>Creating and deleting files</li>
+<li>Creating and deleting directories to organize files</li>
+<li>Supporting primitives for manipulating files and directories</li>
+<li>Mapping files onto mass storage</li>
+<li>Backing up files on stable (nonvolatile) storage media</li>
+</ol></li>
+</ol>
+<h2 id="mass-storage-management">Mass-Storage Management</h2>
+<ol type="1">
+<li>The operating system is responsible for the following activities in
+connection with secondary storage management
+<ol type="1">
+<li>Mounting and unmounting</li>
+<li>Free-space management</li>
+<li>Storage allocation</li>
+<li>Disk scheduling</li>
+<li>Partitioning</li>
+<li>Protection</li>
+</ol></li>
+</ol>
+<h2 id="cache-management">Cache Management</h2>
+<ol type="1">
+<li>Because caches have limited size, <strong>cache management</strong>
+is an important design problem. <strong>Careful selection</strong> of
+the cache size and of a <strong>replacement policy</strong> can result
+in greatly increased performance</li>
+<li>The movement of information between levels of a storage hierarchy
+may be either <strong>explicit or implicit</strong>.data transfer
+<strong>from cache to CPU and registers</strong> is usually a
+<strong>hardware function</strong>,with no operating-system
+intervention. In contrast, transfer of data <strong>from disk to
+memory</strong> is usually controlled by the <strong>operating
+system</strong></li>
+<li>In a hierarchical storage structure, the same data may appear in
+different levels of the storage system. ## I/O System Management</li>
+<li>One of the purposes of an operating system is to hide the
+peculiarities of specific hardware devices from the user.</li>
+<li>The I/O subsystem consists of several components:
+<ol type="1">
+<li>A memory-management component that includes buffering, caching, and
+spooling</li>
+<li>A general device-driver interface</li>
+<li>Drivers for specific hardware devices</li>
+</ol></li>
+</ol>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/OS/">#OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/08/15/Computer Architecture/Virtual Memory/" title="Virtual Memory" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Virtual Memory" class="!max-w-none">
+  <span class="title">Virtual Memory</span>
+</a><a class="recommended-article-item" href="/2024/08/19/Computer Architecture/A Common Framework for Memory Hierarchy/" title="A Common Framework for Memory Hierarchy" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="A Common Framework for Memory Hierarchy" class="!max-w-none">
+  <span class="title">A Common Framework for Memory Hierarchy</span>
+</a><a class="recommended-article-item" href="/2024/08/16/StatisticsLearning/Survival Analysis/" title="Survival Analysis" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Survival Analysis" class="!max-w-none">
+  <span class="title">Survival Analysis</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/08/15/Computer Architecture/Virtual Memory/" title="Virtual Memory" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Virtual Memory" class="!max-w-none">
+  <span class="title">Virtual Memory</span>
+</a><a class="recommended-article-item" href="/2024/08/19/Computer Architecture/A Common Framework for Memory Hierarchy/" title="A Common Framework for Memory Hierarchy" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="A Common Framework for Memory Hierarchy" class="!max-w-none">
+  <span class="title">A Common Framework for Memory Hierarchy</span>
+</a></div>
+   </div>
+  </div>
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/09/08/Analysis%20%E2%85%A1/%E5%AE%9A%E7%A7%AF%E5%88%86%E7%9A%84%E5%BA%94%E7%94%A8/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">定积分的应用</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Operating System Introduction</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#what-operating-systems-do"><span class="nav-text">What Operating Systems Do</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#computer-system-organization"><span class="nav-text">Computer-System Organization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#interrupts"><span class="nav-text">Interrupts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#storage-structure"><span class="nav-text">Storage Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#io-structure"><span class="nav-text">I&#x2F;O Structure</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#computer-system-architecture"><span class="nav-text">Computer-System Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#single-processor-systems"><span class="nav-text">Single-Processor Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multiprocessor-systems"><span class="nav-text">Multiprocessor Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clustered-systems"><span class="nav-text">Clustered Systems</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#operating-system-operations"><span class="nav-text">Operating-System Operations</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#multiprogramming-and-multitasking"><span class="nav-text">Multiprogramming and
+Multitasking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dual-mode-and-multimode-operation"><span class="nav-text">Dual-Mode and Multimode
+Operation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#timer"><span class="nav-text">Timer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#resource-management"><span class="nav-text">Resource Management</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#process-management"><span class="nav-text">Process Management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#memory-management"><span class="nav-text">Memory Management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file-system-management"><span class="nav-text">File-System Management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mass-storage-management"><span class="nav-text">Mass-Storage Management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cache-management"><span class="nav-text">Cache Management</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-user-secret"></i>&nbsp;&nbsp;<a href="/">Zhao Cong</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        27 posts in total
+                    </span>
+                    
+                        <span>
+                            20.6k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/Swup.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupSlideTheme.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupScriptsPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupProgressPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupScrollPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupPreloadPlugin.min.js"></script>
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+<script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/imageViewer.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/utils.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/main.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/navbarShrink.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/scrollTopBottom.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/lightDarkSwitch.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/categoryList.js"></script>
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/localSearch.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/codeBlock.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/lazyload.js"></script>
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/runtime.js"></script>
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/odometer.min.js"></script>
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/Typed.min.js"></script>
+  <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/tocToggle.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/toc.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/plugins/tabs.js"></script>
+    
+</div>
+
+
+</body>
+</html>
