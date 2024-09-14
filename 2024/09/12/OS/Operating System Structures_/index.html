@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Zhao Cong">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+        
+        
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/09/12/os/operating system structures_/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="false">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating System Structures">
+<meta property="og:url" content="http://example.com/2024/09/12/OS/Operating%20System%20Structures_/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="false">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-09-12T10:49:24.263Z">
+<meta property="article:modified_time" content="2024-09-14T06:29:58.748Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+    <meta name="theme-color" content="#Ffc0cb">
+    <link rel="shortcut icon" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Operating System Structures -
+        
+        ZC&#39;s Blog
+    </title>
+
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/Chillax/chillax.css">
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/assets/build/styles.css">
+    
+
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/GeistMono/geist-mono.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/Geist/geist.css">
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/anime.min.js"></script>
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":true,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#Ffc0cb","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-kxewpm.webp","dark":"/images/wallhaven-kxewpm.webp"},"title":"ZC's Blog","subtitle":{"text":["Simplicity favors regularity"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/acheesebird","instagram":"https://www.instagram.com/acheesebird?igsh=czBzYTdxMXEzaWFr&utm_source=qr","zhihu":null,"twitter":"https://x.com/acheesebird?s=11","email":"aiwdj@outlook.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":"Imagine","artist":"John Lennon","url":"https://evan.beee.top/music/Imagine%20-%20John%20Lennon.mp3","cover":"https://evan.beee.top/music/covers/Lennon_Imagine_Sleeve_1975.jpg","lrc":null},{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Essays":{"path":"/essays","icon":"fa-regular fa-message"},"About":{"icon":"fa-regular fa-archive","submenus":{"Me":"/about","Github":"https://github.com/acheesebird/blog"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"Just do it!","show_on_mobile":true,"links":{"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"YYYY-MM-DD HH:mm:ss","categories":{"enable":true,"limit":999},"tags":{"enable":true,"limit":3}},"footerStart":"2024/8/14 04:47:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        ZC&#39;s Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                ZC&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/essays"
+                                        >
+                                    <i class="fa-regular fa-message fa-fw"></i>
+                                    ESSAYS
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/acheesebird/blog">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/essays"
+                        >
+                            <span>
+                                ESSAYS
+                            </span>
+                            
+                                <i class="fa-regular fa-message fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/acheesebird/blog">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/tags"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/categories"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-regular fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">16</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">32</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Operating System Structures</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Zhao Cong</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-09-12 18:49:24</span>
+        <span class="mobile">2024-09-12 18:49:24</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-09-14 14:29:58</span>
+            <span class="mobile">2024-09-14 14:29:58</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/OS/">OS</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/OS/">OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.5k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>22 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="operating-system-services">Operating-System Services</h1>
+<h2 id="for-helping-the-user">For helping the user</h2>
+<ul>
+<li><strong>User interface(UI)</strong>:graphical user interface
+(GUI),touch-screen interface ,command-line interface (CLI)</li>
+<li><strong>Program execution</strong>:The system must be able to
+<strong>load</strong> a program into memory and to <strong>run</strong>
+that program. The program must be able to <strong>end</strong> its
+execution, either <strong>normally or abnormally</strong> (indicating
+error).</li>
+<li><strong>I/O operations</strong>:For efficiency and protection, users
+usually cannot <strong>control I/O devices directly.</strong></li>
+<li><strong>File-system manipulation</strong>:Programs need to
+<strong>read and write</strong> files and directories. They also need to
+<strong>create and delete</strong> them by name, search for a given
+file, and <strong>list</strong> file information. Finally, some
+operating systems include <strong>permissions</strong> management.</li>
+<li><strong>Communications</strong>:Communications may be implemented
+via <strong>shared memory</strong>, in which two or more processes read
+and write to a shared section of memory, or <strong>message
+passing</strong>.</li>
+<li><strong>Error detection</strong></li>
+</ul>
+<h2 id="for-ensuring-the-efficient-operation-of-the-system-itself">For
+ensuring the efficient operation of the system itself</h2>
+<ul>
+<li><strong>Resource allocation</strong></li>
+<li><strong>Logging</strong>:We want to <strong>keep track of</strong>
+which programs use how much and what kinds of computer resources.</li>
+<li><strong>Protection and security</strong></li>
+</ul>
+<h1 id="user-and-operating-system-interface">User and Operating-System
+Interface</h1>
+<h2 id="command-interpreters">Command Interpreters</h2>
+<ul>
+<li>Treat the command interpreter as a <strong>special program</strong>
+that is running when a process is initiated or when a user first logs on
+(on interactive systems).</li>
+<li>On systems with multiple command interpreters to choose from, the
+interpreters are known as <strong>shells</strong>.ex:C shell,
+Bourne-Again shell(bash), Korn shell.</li>
+<li>The main function of the command interpreter is to <strong>get and
+execute the next user-specified command.</strong></li>
+<li>Commands can be implemented in two general ways:
+<ul>
+<li>The command interpreter <strong>itself contains the code</strong> to
+execute the command.</li>
+<li>Implements most commands <strong>through system
+programs.</strong>(add new commands to the system easily)</li>
+</ul></li>
+</ul>
+<h2 id="graphical-user-interface">Graphical User Interface</h2>
+<ul>
+<li>Users employ a <strong>mouse-based</strong> window and-menu system
+characterized by a <strong>desktop</strong> metaphor.</li>
+<li>The user moves the mouse to position its pointer on images, or
+<strong>icons</strong>, on the screen (the desktop).</li>
+<li>A file or directory is known as a <strong>folder</strong>.</li>
+</ul>
+<h2 id="touch-screen-interface">Touch-Screen Interface</h2>
+<ul>
+<li>Users interact by making <strong>gestures</strong> on the touch
+screen.</li>
+<li>. Both the iPad and the iPhone use the <strong>Springboard</strong>
+touch-screen interface.</li>
+</ul>
+<h1 id="system-calls">System Calls</h1>
+<p>System calls provide an <strong>interface to the services made
+available by an operating system</strong>. These calls are generally
+available as functions written in <strong>C and C++</strong>, although
+certain low-level tasks (for example, tasks where hardware must be
+accessed directly) may have to be written using
+<strong>assembly-language</strong> instructions.</p>
+<h2 id="application-programming-interface">Application Programming
+Interface</h2>
+<ul>
+<li>Typically, application developers design programs according to an
+<strong>application programming interface (API)</strong>.</li>
+<li>A programmer accesses an API via <strong>a library of code</strong>
+provided by the operating system. In the case of UNIX and Linux for
+programs written in the C language, the library is called
+<strong>libc</strong>.</li>
+<li>Another important factor in handling system calls is the
+<strong>run-time environment (RTE)</strong>—the full <strong>suite of
+software</strong> needed to execute applications written in a given
+programming language, including its <strong>compilers or
+interpreters</strong> as well as other software, such as
+<strong>libraries and loaders.</strong></li>
+<li>The RTE provides a <strong>system-call interface</strong> that
+serves as the link to system calls made available by the operating
+system.</li>
+<li>The caller need <strong>know nothing</strong> about how the system
+call is implemented or what it does during execution. Rather, the caller
+<strong>need only obey the API</strong> and understand what the
+operating system will do as a result of the execution of that system
+call.</li>
+<li>The simplest approach to <strong>pass parameters to the operating
+system</strong> is to <strong>pass the parameters in
+registers</strong>.</li>
+<li>However, there may be <strong>more parameters than
+registers</strong>. In these cases, the parameters are generally
+<strong>stored in a block, or table</strong>, in memory, and the address
+of the block is passed as a parameter in a register.</li>
+<li>Parameters also can be <strong>placed</strong>, or
+<strong>pushed</strong>, onto a <strong>stack</strong> by the
+<strong>program</strong> and <strong>popped off</strong> the stack by
+the <strong>operating system</strong>.</li>
+</ul>
+<h2 id="types-of-system-calls">Types of System Calls</h2>
+<p>System calls can be grouped roughly into <strong>six major
+categories: process control, file management, device management,
+information maintenance, communications, and protection.</strong></p>
+<h3 id="process-control">Process Control</h3>
+<ul>
+<li>create process, terminate process</li>
+<li>load, execute</li>
+<li>get process attributes, set process attributes</li>
+<li>wait event, signal event</li>
+<li>allocate and free memory</li>
+<li>acquire lock(),release lock()
+<ul>
+<li>To ensure the integrity of the data being shared, operating systems
+often provide system calls allowing a process to <strong>lock</strong>
+shared data.</li>
+</ul></li>
+<li>Single-tasking system:Arduino
+<ul>
+<li>To write a program for the Arduino, we first write the program on a
+PC and then upload the <strong>compiled program (known as a
+sketch)</strong> from the PC to the Arduino’s <strong>flash memory via a
+USB connection</strong></li>
+<li>The standard Arduino platform does not provide an operating system;
+instead, a small piece of software known as a <strong>boot
+loader</strong> loads the sketch into a specific region in the Arduino’s
+memory.</li>
+</ul></li>
+<li>Multitasking system:FreeBSD (derived from Berkeley UNIX)</li>
+</ul>
+<h3 id="file-management">File Management</h3>
+<ul>
+<li>create file, delete file</li>
+<li>open, close</li>
+<li>read, write, reposition</li>
+<li>get file attributes, set file attributes</li>
+</ul>
+<h3 id="device-management">Device Management</h3>
+<ul>
+<li><strong>physical devices</strong> or <strong>abstract or virtual
+devices</strong></li>
+<li>request device, release device</li>
+<li>read, write, reposition</li>
+<li>get device attributes, set device attributes</li>
+<li>logically attach or detach devices</li>
+<li>A set of system calls is used on <strong>both files and
+devices</strong>. Sometimes, I/O devices are identified by special file
+names, directory placement, or file attributes.</li>
+</ul>
+<h3 id="information-maintenance">Information maintenance</h3>
+<ul>
+<li>get time or date, set time or date</li>
+<li>get system data, set system data</li>
+<li>get process, file, or device attributes</li>
+<li>set process, file, or device attributes</li>
+<li>Many system calls exist simply for the purpose of
+<strong>transferring information between the user program and the
+operating system.</strong></li>
+<li>Another set of system calls is helpful in <strong>debugging a
+program</strong>.</li>
+<li>Many operating systems provide a <strong>time profile</strong> of a
+program to indicate the amount of time that the program executes at a
+particular location or set of locations.</li>
+<li>In addition, the operating system <strong>keeps information</strong>
+about all its processes, and system calls are used to access this
+information.</li>
+</ul>
+<h3 id="communications">Communications</h3>
+<ul>
+<li>create, delete communication connection</li>
+<li>send, receive messages</li>
+<li>transfer status information</li>
+<li>attach or detach remote devices</li>
+</ul>
+<p>There are two common models of interprocess communication: the
+<strong>message passing model</strong> and the <strong>shared-memory
+model</strong>.</p>
+<h4 id="message-passing-model">message-passing model</h4>
+<ul>
+<li>Each computer in a network has a <strong>host name</strong> by which
+it is commonly known. A host also has a network identifier, such as an
+<strong>IP address</strong>. Similarly, each process has a
+<strong>process name.</strong></li>
+<li>The source of the communication, known as the
+<strong>client</strong>, and the receiving daemon, known as a
+<strong>server</strong>.</li>
+<li>Message passing is useful for exchanging <strong>smaller
+amounts</strong> of data, because <strong>no conflicts</strong> need be
+avoided. It is also <strong>easier</strong> to implement than is shared
+memory for intercomputer communication.</li>
+<li><strong>Shared memory</strong> <strong>allows maximum speed and
+convenience of communication</strong>, since it can be done at memory
+transfer speeds when it takes place within a computer. Problems exist,
+however, in the areas of <strong>protection and synchronization</strong>
+between the processes sharing memory.</li>
+</ul>
+<h3 id="protection">Protection</h3>
+<ul>
+<li>get file permissions</li>
+<li>set file permissions</li>
+</ul>
+<h1 id="system-services">System Services</h1>
+<ul>
+<li><p>At the lowest level is <strong>hardware</strong>. Next is the
+<strong>operating system</strong>, then the <strong>system
+services</strong>, and finally the <strong>application
+programs</strong>.</p></li>
+<li><p><strong>System services</strong>, also known as <strong>system
+utilities</strong>, provide a convenient environment for program
+development and execution.</p></li>
+<li><p>System Services can be divided into these categories:</p>
+<ul>
+<li>File management</li>
+<li>Status information</li>
+<li>File modificatio</li>
+<li>Programming-language support</li>
+<li>Program loading and execution</li>
+<li>Communications</li>
+<li>Background services
+<ul>
+<li>Constantly running system-program processes are known as
+<strong>services</strong>, <strong>subsystems</strong>, or
+<strong>daemons</strong>.</li>
+</ul></li>
+</ul></li>
+<li><p>The view of the operating system seen by most users is defined by
+<strong>the application and system programs</strong>, rather than by the
+<strong>actual system calls</strong>.</p></li>
+</ul>
+<h1 id="linkers-and-loaders">Linkers and Loaders</h1>
+<ul>
+<li>Source files are compiled into <strong>object files</strong> that
+are designed to be loaded into any physical memory location, a format
+known as an <strong>relocatable object fil</strong> . Next, the
+<strong>linker</strong> combines these <strong>relocatable object files
+into a single binary executable file</strong>.</li>
+<li>A <strong>loader</strong> is used to <strong>load</strong> the
+<strong>binary executable file</strong> into memory, where it is
+eligible to run on a CPU core.</li>
+<li>An activity associated with linking and loading is
+<strong>relocation</strong></li>
+<li><strong>Dynamically linked libraries (DLLs)</strong>:avoids linking
+and loading libraries that may end up not being used into an executable
+file.</li>
+<li>For UNIX and Linux systems, this standard format is known as
+<strong>ELF (for Executable and Linkable Format)</strong>.</li>
+<li>Windows systems use the <strong>Portable Executable (PE)</strong>
+format, and macOS uses the <strong>Mach-O</strong> format</li>
+</ul>
+<h1 id="why-applications-are-operating-system-specific">Why Applications
+Are Operating-System Specific</h1>
+<ul>
+<li>Fundamentally, applications compiled on one operating system are not
+executable on other operating systems.</li>
+<li>An application can <strong>be made available to run on multiple
+operating systems</strong> in one of three ways:
+<ul>
+<li>The application can be written in an <strong>interpreted
+language</strong> (such as Python or Ruby).</li>
+<li>The application can be written in a language that includes a
+<strong>virtual machine</strong> containing the running
+application.</li>
+<li>The application developer can use a standard language or API in
+which the compiler generates binaries in a machine- and
+operating-system-specific language</li>
+</ul></li>
+<li>Other challenges exist at lower levels in the system, including the
+following.
+<ul>
+<li>Each operating system has a <strong>binary format</strong> for
+applications</li>
+<li>CPUs have varying <strong>instruction sets</strong>, and only
+applications containing the appropriate instructions can execute
+correctly.</li>
+<li><strong>System calls</strong> vary among operating systems.</li>
+</ul></li>
+<li>At the architecture level, an <strong>application binary interface
+(ABI)</strong> is used to define how different components of binary code
+can interface for a given operating system on a given architecture.an
+ABI is the architecture-level equivalent of an API.</li>
+<li>If a binary executable file has been compiled and linked according
+to a particular ABI, it should be able to run on different systems that
+support that ABI</li>
+</ul>
+<h1 id="operating-system-design-and-implementation">Operating-System
+Design and Implementation</h1>
+<h2 id="design-goals">Design Goals</h2>
+<ul>
+<li>The first problem in designing a system is to define <strong>goals
+and specifications</strong></li>
+<li>user goals
+<ul>
+<li>The system should be convenient to use, easy to learn and to use,
+reliable, safe, and fast.</li>
+</ul></li>
+<li>system goals
+<ul>
+<li>The system should be easy to design, implement, and maintain; and it
+should be flexible, reliable, error free, and efficient</li>
+</ul></li>
+<li>Specifying and designing an operating system's general principles
+have been developed in the field of <strong>software
+engineering</strong></li>
+</ul>
+<h2 id="mechanisms-and-policies">Mechanisms and Policies</h2>
+<ul>
+<li>One important principle is <strong>the separation of policy from
+mechanism</strong></li>
+<li>Mechanisms determine <strong>how to do something</strong>; policies
+<strong>determine what will be done.</strong></li>
+<li>A change in policy would then require redefinition of <strong>only
+certain parameters</strong> of the system.</li>
+<li>Microkernel-based operating systems <strong>take the separation of
+mechanism and policy to one extreme</strong> by implementing a basic set
+of primitive building blocks. These blocks are almost <strong>policy
+free</strong>.</li>
+</ul>
+<h2 id="implementation">Implementation</h2>
+<ul>
+<li>Early operating systems were written in <strong>assembly
+language</strong>. Now, most are written in higher-level languages such
+as <strong>C or C++</strong></li>
+<li>Most <strong>Android</strong> system libraries are written in
+<strong>C or C++</strong>, and its application frameworks—which provide
+the developer interface to the system—are written mostly in
+<strong>Java</strong>.</li>
+<li>The advantages of using a higher-level language:
+<ul>
+<li>the code can be <strong>written faster</strong>, is more
+<strong>compact</strong>, and is easier to <strong>understand and
+debug</strong></li>
+<li>an operating system is <strong>far easier to port</strong> to other
+hardware if it is written in a higher-level language</li>
+</ul></li>
+<li>The only possible <strong>disadvantages</strong> of implementing an
+operating system in a higher-level language are <strong>reduced speed
+and increased storage requirements</strong>.This, however, is not a
+major issue in today’s systems. Although an <strong>expert
+assembly-language programmer</strong> can produce efficient small
+routines.</li>
+<li>As is true in other systems, major performance improvements in
+operating systems are more likely to be the result of <strong>better
+data structures and algorithms</strong> than of excellent
+assembly-language code.</li>
+</ul>
+<h1 id="operating-system-structure">Operating-System Structure</h1>
+<ul>
+<li>A common approach is to <strong>partition the task into small
+components, or modules</strong>, rather than have one single
+system.</li>
+</ul>
+<h2 id="monolithic-structure">Monolithic Structure</h2>
+<ul>
+<li>The simplest structure for organizing an operating system is
+<strong>no structure</strong> at all.</li>
+<li>An example of such limited structuring is the <strong>original
+UNIX</strong> operating system, which consists of two separable parts:
+<strong>the kernel and the system programs</strong>.</li>
+<li><strong>Everything below the system-call interface and above the
+physical hardware is the kernel.</strong></li>
+<li>Taken in sum, that is <strong>an enormous amount of functionality to
+be combined into one single address space</strong>.</li>
+<li>Despite the <strong>apparent simplicity</strong> of monolithic
+kernels, they are <strong>difficult to implement and
+extend</strong></li>
+<li>There is very <strong>little overhead</strong> in the
+<strong>system-call interface</strong>, and c<strong>ommunication within
+the kernel is fast</strong>.</li>
+</ul>
+<h2 id="layered-approach">Layered Approach</h2>
+<ul>
+<li>The monolithic approach is often known as a <strong>tightly
+coupled</strong> system</li>
+<li>Alternatively, we could design a <strong>loosely coupled</strong>
+system</li>
+<li>The advantage of this <strong>modular approach</strong> is that
+<strong>changes in one component affect only that component</strong>,
+and no others, allowing system implementers more <strong>freedom in
+creating and changing</strong> the inner workings of the system.</li>
+<li>A system can be made modular in many ways. One method is the
+<strong>layered approach</strong>, in which the operating system is
+broken into a number of <strong>layers (levels).</strong> The bottom
+layer <strong>(layer 0) is the hardware</strong>; the <strong>highest
+(layer N) is the user interface</strong>.</li>
+<li>A set of functions that can <strong>be invoked by higher-level
+layers</strong>. Layer M, in turn, can <strong>invoke operations on
+lower-level layers</strong>.</li>
+<li>The main advantage of the layered approach is <strong>simplicity of
+construction and debugging</strong></li>
+<li>Each layer is implemented only with operations <strong>provided by
+lower-level layers</strong>Hence, each layer <strong>hides</strong> the
+existence of certain data structures, operations, and hardware from
+higher-level layers.</li>
+<li>Layered systems have been successfully used in computer
+<strong>networks (such as TCP/IP) and web applications</strong></li>
+<li>the challenges of <strong>appropriately defining the functionality
+of each layer</strong> and the overall performance of such systems is
+poor due to the overhead of requiring a user program to <strong>traverse
+through multiple layers</strong> to obtain an operating-system
+service.</li>
+</ul>
+<h2 id="microkernels">Microkernels</h2>
+<ul>
+<li>In the mid-1980s, researchers at <strong>Carnegie Mellon
+University</strong> developed an operating system called
+<strong>Mach</strong> that <strong>modularized the kernel</strong> using
+the <strong>microkernel approach</strong></li>
+<li>This method structures the operating system by <strong>removing all
+nonessential components from the kernel and implementing them as
+user-level programs</strong> that reside in separate address
+spaces.</li>
+<li>The main function of the microkernel is to <strong>provide
+communication</strong> between the client program and the various
+services that are also running in user space.</li>
+<li>If the client program wishes to access a file, it must
+<strong>interact with the file server</strong>. The client program and
+service <strong>never interact directly</strong>. Rather, they
+<strong>communicate indirectly by exchanging messages with the
+microkernel.</strong></li>
+<li>One benefit of the microkernel approach is that it makes
+<strong>extending the operating system easier</strong>,All new services
+are added to <strong>user space</strong> and consequently <strong>do not
+require modification of the kernel</strong></li>
+<li>The resulting operating system is <strong>easier to port</strong>
+from one hardware design to another. The microkernel also provides more
+<strong>security and reliability</strong>, since most services are
+running as <strong>user—rather than kernel</strong>—processes. If a
+service fails, <strong>the rest of the operating system remains
+untouched.</strong></li>
+<li>Perhaps the best-known illustration of a microkernel operating
+system is <strong>Darwin</strong>, the kernel component of the
+<strong>macOS and iOS</strong> operating systems.</li>
+<li>Another example is <strong>QNX</strong>, a real-time operating
+system for embedded systems.</li>
+<li>Unfortunately, the performance of microkernels can suffer due to
+<strong>increased system-function overhead</strong>.In addition, the
+operating system may have to <strong>switch</strong> from one process to
+the next to exchange the messages. T<strong>he overhead involved in
+copying messages and switching between processes</strong></li>
+<li>Windows architecture had become <strong>more monolithic than
+microkernel</strong></li>
+</ul>
+<h2 id="modules">Modules</h2>
+<ul>
+<li>Perhaps <strong>the best current methodology</strong> for
+operating-system design involves using <strong>loadable kernel modules
+(LKMs)</strong>.</li>
+<li>The idea of the design is for the kernel to provide <strong>core
+services</strong>, while other services are <strong>implemented
+dynamically, as the kernel is running</strong></li>
+<li>it is <strong>more flexible than a layered system</strong></li>
+<li>The approach is also <strong>similar to the microkernel
+approach</strong> in that the primary module has only core functions.but
+it is <strong>more efficient</strong>, because modules do not need to
+invoke message passing in order to communicate.</li>
+<li>LKMs can be “<strong>inserted</strong>” into the kernel as the
+system is started (or booted) or during run time.</li>
+</ul>
+<h2 id="hybrid-systems">Hybrid Systems</h2>
+<h3 id="macos-and-ios">macOS and iOS</h3>
+<ul>
+<li><strong>User experience layer</strong>:macOS uses the
+<strong>Aqua</strong> user interface, which is designed for a mouse or
+trackpad, whereas iOS uses the <strong>Springboard</strong> user
+interface, which is designed for touch devices.</li>
+<li><strong>Application frameworks layer</strong>:This layer includes
+the <strong>Cocoa and Cocoa Touch</strong> frameworks, which provide an
+API for the <strong>Objective-C and Swift</strong> programming
+languages.</li>
+<li><strong>Core frameworks</strong>. This layer defines frameworks that
+support graphics and media including, <strong>Quicktime and
+OpenGL</strong>.</li>
+<li><strong>Kernel environment.</strong> This environment, also known as
+<strong>Darwin</strong>, includes the <strong>Mach</strong> microkernel
+and the <strong>BSD</strong> UNIX kernel.</li>
+<li>Darwin provides two system-call interfaces:
+<ul>
+<li><strong>Mach system calls</strong> (known as <strong>traps</strong>)
+and</li>
+<li><strong>BSD system calls</strong> (which provide POSIX
+functionality).</li>
+</ul></li>
+<li>Mach provides fundamental operating system services, including
+memory management, CPU scheduling, and <strong>interprocess
+communication (IPC)</strong> facilities such as message passing and
+<strong>remote procedure calls (RPCs)</strong>.</li>
+<li>In addition to Mach and BSD, the kernel environment provides an
+<strong>I/O kit</strong> for development of device drivers and
+<strong>dynamically loadable modules (which macOS refers to as kernel
+extensions, or kexts)</strong></li>
+</ul>
+<h3 id="android">Android</h3>
+<ul>
+<li>Whereas many Java virtual machines perform <strong>just-in-time
+(JIT)</strong> compilation to improve application efficiency,
+ART(Android RunTime) performs <strong>ahead-of-time (AOT)</strong>
+compilation.</li>
+<li>Android developers can also write Java programs that use <strong>the
+Java native interface—or JNI</strong>—which allows developers to
+<strong>bypass the virtual machine</strong> and instead write Java
+programs that can access specific hardware features</li>
+<li>Because Android can run on an almost unlimited number of hardware
+devices, Google has chosen to abstract the physical hardware through the
+<strong>hardware abstraction layer, or HAL</strong></li>
+<li>The standard C library used by Linux systems is the <strong>GNU C
+library (glibc)</strong>.Google instead developed the <strong>Bionic
+standard C library</strong> for Android</li>
+<li>It has also made changes in memory management and allocation and has
+added a new form of <strong>IPC known as Binder</strong></li>
+</ul>
+<h1 id="building-and-booting-an-operating-system">Building and Booting
+an Operating System</h1>
+<h2 id="operating-system-generation">Operating-System Generation</h2>
+<ul>
+<li>generating (or building) an operating system
+<ul>
+<li>Write the operating system source code (or obtain previously written
+source code).</li>
+<li>Configure the operating system for the system on which it will
+run.</li>
+<li>Compile the operating system</li>
+<li>Install the operating system.</li>
+<li>Boot the computer and its new operating system.</li>
+</ul></li>
+<li>Typically, parameters describing how the system is configured is
+stored in a <strong>configuration file</strong> of some type, and once
+this file is created, it can be used in several ways.
+<ul>
+<li>At one extreme, a system administrator can use it to modify a copy
+of the operating-system source code. Then the operating system is
+<strong>completely compiled</strong> (known as a system build)ex:laptop
+computers,mobile devices</li>
+<li>At the other extreme, it is possible to construct a system that is
+completely <strong>modular</strong>.ex:embedded systems.</li>
+</ul></li>
+</ul>
+<h2 id="system-boot">System Boot</h2>
+<ul>
+<li>The process of starting a computer by loading the kernel is known as
+<strong>booting</strong> the system.</li>
+<li>the boot process proceeds as follows:
+<ul>
+<li>A small piece of code known as the <strong>bootstrap program or boot
+loader</strong> locates the kernel.</li>
+<li>The kernel is loaded into memory and started</li>
+<li>The kernel initializes hardware</li>
+<li>The root file system is mounted</li>
+</ul></li>
+<li><strong>Multistage boot process</strong>:When the computer is first
+powered on, a small boot loader located in nonvolatile firmware known as
+<strong>BIOS</strong> is run. This initial boot loader usually does
+nothing more than <strong>load a second boot loader</strong>, which is
+located at a fixed disk location called the boot block.</li>
+<li>Many recent computer systems have replaced the BIOS-based boot
+process with <strong>UEFI (Unified Extensible Firmware
+Interface)</strong>,it is better <strong>support for 64-bit systems and
+larger disks</strong></li>
+<li>UEFI is a <strong>single, complete boot manager</strong> and
+therefore is <strong>faster than the multistage BIOS</strong> boot
+process</li>
+<li>the bootstrap program can perform a variety of tasks. In addition to
+l<strong>oading the file containing the kernel program</strong> into
+memory, it also runs <strong>diagnostics</strong> to determine the state
+of the machine.</li>
+<li>Android boot loader is <strong>LK (for “little kernel”)</strong>.
+Android systems use the same compressed kernel image as Linux, as well
+as an initial RAM file system. However, whereas Linux discards the
+initramfs once all necessary drivers have been loaded, Android maintains
+initramfs as the root file system for the device.</li>
+</ul>
+<h1 id="operating-system-debugging">Operating-System Debugging</h1>
+<ul>
+<li>Broadly, debugging is the activity of <strong>finding and fixing
+errors</strong> in a system, both in <strong>hardware and in
+software</strong></li>
+<li>Performance problems are considered bugs, so debugging can also
+include <strong>performance tuning</strong>, which seeks to improve
+performance by <strong>removing processing bottlenecks</strong>.</li>
+</ul>
+<h2 id="failure-analysis">Failure Analysis</h2>
+<ul>
+<li>If a process fails, most operating systems write the error
+information to a <strong>log fil</strong> to alert system administrators
+or users that the problem occurred. The operating system can also take a
+<strong>core dump</strong>—a capture of the memory of the process—and
+store it in a file for later analysis</li>
+<li>A failure in the kernel is called a <strong>crash</strong>. When a
+crash occurs, error information is saved to a log file, and the memory
+state is saved to a <strong>crash dump</strong>.</li>
+</ul>
+<h2 id="performance-monitoring-and-tuning">Performance Monitoring and
+Tuning</h2>
+<ul>
+<li><p>The operating system must have some means of <strong>computing
+and displaying</strong> measures of system behavior. Tools may be
+characterized as providing either <strong>per-process</strong> or
+<strong>system-wide</strong> observations.To make these observations,
+tools may use one of two approaches—<strong>counters or
+tracing.</strong></p></li>
+<li><p>Counters:ex:Windows Task Manager</p></li>
+<li><p>Tracing:tracing tools collect data for a specific event—such as
+the <strong>steps</strong> involved in a system-call invocation</p></li>
+</ul>
+<h2 id="bcc">BCC</h2>
+<ul>
+<li>BCC, a toolkit for <strong>dynamic kernel tracing</strong> in
+Linux</li>
+<li>BCC have a <strong>minimal performance impact</strong> provides a
+<strong>dynamic, secure, low-impact debugging environment.</strong></li>
+<li><strong>BCC (BPF Compiler Collection)</strong> is a rich toolkit
+that provides tracing features for Linux systems. BCC is a front-end
+interface to the <strong>eBPF (extended Berkeley Packet Filter)</strong>
+tool.</li>
+<li>What makes BCC especially powerful is that its tools can be used on
+live production systems that are <strong>running critical applications
+without causing harm to the system</strong></li>
+</ul>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/OS/">#OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/09/08/OS/Operating System Introduction/" title="Operating System Introduction" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Operating System Introduction" class="!max-w-none">
+  <span class="title">Operating System Introduction</span>
+</a><a class="recommended-article-item" href="/2024/08/15/Computer Architecture/Virtual Memory/" title="Virtual Memory" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Virtual Memory" class="!max-w-none">
+  <span class="title">Virtual Memory</span>
+</a><a class="recommended-article-item" href="/2024/08/19/Computer Architecture/A Common Framework for Memory Hierarchy/" title="A Common Framework for Memory Hierarchy" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="A Common Framework for Memory Hierarchy" class="!max-w-none">
+  <span class="title">A Common Framework for Memory Hierarchy</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/09/08/OS/Operating System Introduction/" title="Operating System Introduction" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Operating System Introduction" class="!max-w-none">
+  <span class="title">Operating System Introduction</span>
+</a><a class="recommended-article-item" href="/2024/08/15/Computer Architecture/Virtual Memory/" title="Virtual Memory" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Virtual Memory" class="!max-w-none">
+  <span class="title">Virtual Memory</span>
+</a></div>
+   </div>
+  </div>
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/09/14/Algorithms/HeapSort/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">HeapSort</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/09/11/Analysis%20%E2%85%A1/Rn%E7%9A%84%E6%8B%93%E6%89%91/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Rn的拓扑</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Operating System Structures</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#operating-system-services"><span class="nav-text">Operating-System Services</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#for-helping-the-user"><span class="nav-text">For helping the user</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for-ensuring-the-efficient-operation-of-the-system-itself"><span class="nav-text">For
+ensuring the efficient operation of the system itself</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#user-and-operating-system-interface"><span class="nav-text">User and Operating-System
+Interface</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#command-interpreters"><span class="nav-text">Command Interpreters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#graphical-user-interface"><span class="nav-text">Graphical User Interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#touch-screen-interface"><span class="nav-text">Touch-Screen Interface</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#system-calls"><span class="nav-text">System Calls</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#application-programming-interface"><span class="nav-text">Application Programming
+Interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#types-of-system-calls"><span class="nav-text">Types of System Calls</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#process-control"><span class="nav-text">Process Control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#file-management"><span class="nav-text">File Management</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#device-management"><span class="nav-text">Device Management</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#information-maintenance"><span class="nav-text">Information maintenance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#communications"><span class="nav-text">Communications</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#protection"><span class="nav-text">Protection</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#system-services"><span class="nav-text">System Services</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linkers-and-loaders"><span class="nav-text">Linkers and Loaders</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#why-applications-are-operating-system-specific"><span class="nav-text">Why Applications
+Are Operating-System Specific</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#operating-system-design-and-implementation"><span class="nav-text">Operating-System
+Design and Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#design-goals"><span class="nav-text">Design Goals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mechanisms-and-policies"><span class="nav-text">Mechanisms and Policies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#implementation"><span class="nav-text">Implementation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#operating-system-structure"><span class="nav-text">Operating-System Structure</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#monolithic-structure"><span class="nav-text">Monolithic Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layered-approach"><span class="nav-text">Layered Approach</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#microkernels"><span class="nav-text">Microkernels</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#modules"><span class="nav-text">Modules</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hybrid-systems"><span class="nav-text">Hybrid Systems</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#macos-and-ios"><span class="nav-text">macOS and iOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#android"><span class="nav-text">Android</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#building-and-booting-an-operating-system"><span class="nav-text">Building and Booting
+an Operating System</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#operating-system-generation"><span class="nav-text">Operating-System Generation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#system-boot"><span class="nav-text">System Boot</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#operating-system-debugging"><span class="nav-text">Operating-System Debugging</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#failure-analysis"><span class="nav-text">Failure Analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#performance-monitoring-and-tuning"><span class="nav-text">Performance Monitoring and
+Tuning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bcc"><span class="nav-text">BCC</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-user-secret"></i>&nbsp;&nbsp;<a href="/">Zhao Cong</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        32 posts in total
+                    </span>
+                    
+                        <span>
+                            27.8k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/Swup.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupSlideTheme.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupScriptsPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupProgressPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupScrollPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupPreloadPlugin.min.js"></script>
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+<script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/imageViewer.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/utils.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/main.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/navbarShrink.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/scrollTopBottom.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/lightDarkSwitch.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/categoryList.js"></script>
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/localSearch.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/codeBlock.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/lazyload.js"></script>
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/runtime.js"></script>
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/odometer.min.js"></script>
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/Typed.min.js"></script>
+  <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/tocToggle.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/toc.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/plugins/tabs.js"></script>
+    
+</div>
+
+
+</body>
+</html>
