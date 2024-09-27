@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Zhao Cong">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+        
+        
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/09/24/os/threads & concurrency/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="false">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Threads &amp; Concurrency">
+<meta property="og:url" content="http://example.com/2024/09/24/OS/Threads%20&%20Concurrency/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="false">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-09-24T08:30:43.036Z">
+<meta property="article:modified_time" content="2024-09-26T09:44:44.896Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+    <meta name="theme-color" content="#Ffc0cb">
+    <link rel="shortcut icon" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Threads &amp; Concurrency -
+        
+        ZC&#39;s Blog
+    </title>
+
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/Chillax/chillax.css">
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/assets/build/styles.css">
+    
+
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/GeistMono/geist-mono.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/Geist/geist.css">
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/anime.min.js"></script>
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":true,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#Ffc0cb","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-kxewpm.webp","dark":"/images/wallhaven-kxewpm.webp"},"title":"ZC's Blog","subtitle":{"text":["Simplicity favors regularity"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/acheesebird","instagram":"https://www.instagram.com/acheesebird?igsh=czBzYTdxMXEzaWFr&utm_source=qr","zhihu":null,"twitter":"https://x.com/acheesebird?s=11","email":"aiwdj@outlook.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":"Imagine","artist":"John Lennon","url":"https://evan.beee.top/music/Imagine%20-%20John%20Lennon.mp3","cover":"https://evan.beee.top/music/covers/Lennon_Imagine_Sleeve_1975.jpg","lrc":null},{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Essays":{"path":"/essays","icon":"fa-regular fa-message"},"About":{"icon":"fa-regular fa-archive","submenus":{"Me":"/about","Github":"https://github.com/acheesebird/blog"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"Just do it!","show_on_mobile":true,"links":{"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"YYYY-MM-DD HH:mm:ss","categories":{"enable":true,"limit":999},"tags":{"enable":true,"limit":3}},"footerStart":"2024/8/14 04:47:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        ZC&#39;s Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                ZC&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/essays"
+                                        >
+                                    <i class="fa-regular fa-message fa-fw"></i>
+                                    ESSAYS
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/acheesebird/blog">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/essays"
+                        >
+                            <span>
+                                ESSAYS
+                            </span>
+                            
+                                <i class="fa-regular fa-message fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/acheesebird/blog">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/tags"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/categories"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-regular fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">14</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">40</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Threads &amp; Concurrency</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Zhao Cong</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-09-24 16:30:43</span>
+        <span class="mobile">2024-09-24 16:30:43</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-09-26 17:44:44</span>
+            <span class="mobile">2024-09-26 17:44:44</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/OS/">OS</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/OS/">OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.9k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>18 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="overview">Overview</h1>
+<ul>
+<li>A <strong>thread</strong> is a basic unit of CPU utilization; it
+comprises a <strong>thread ID, a program counter (PC), a register set,
+and a stack</strong>.</li>
+<li>It shares with other threads belonging to the same process its code
+section, data section, and other operating-system resources, such as
+open files and signals</li>
+</ul>
+<h2 id="motivation">Motivation</h2>
+<ul>
+<li>Process creation is time consuming and resource intensive.It is
+generally more efficient to use one process that contains multiple
+threads</li>
+<li>Most operating system kernels are also typically multithreaded.</li>
+<li>Many applications can also take advantage of multiple threads,
+including basic sorting, trees, and graph algorithms.</li>
+</ul>
+<h2 id="benefits">Benefits</h2>
+<ul>
+<li><strong>Responsiveness</strong>:Multithreading an interactive
+application may allow a program to continue running even if part of it
+is blocked or is performing a lengthy operation, thereby
+<strong>increasing responsiveness to the user</strong>.</li>
+<li><strong>Resource sharing</strong>:threads share the memory and the
+resources of the process to which they belong by default</li>
+<li><strong>Economy</strong>:in general thread creation consumes less
+time and memory than process creation. Additionally, context switching
+is typically faster between threads than between processes.</li>
+<li><strong>Scalability</strong>:The benefits of multithreading can be
+even greater in a multiprocessor architecture, where threads may be
+running in parallel on different processing cores</li>
+</ul>
+<h1 id="multicore-programming">Multicore Programming</h1>
+<ul>
+<li><strong>multiple computing cores</strong> on a single processing
+chip where each core appears as a separate CPU to the operating
+system.We refer to such systems as <strong>multicore</strong>, and
+<strong>multithreaded programming</strong> provides a mechanism for more
+efficient use of these multiple computing cores and improved
+<strong>concurrency</strong></li>
+<li>A <strong>concurrent</strong> system supports more than one task by
+allowing all the tasks to make progress. In contrast, a
+<strong>parallel</strong> system can perform more than one task
+<strong>simultaneously</strong></li>
+</ul>
+<h2 id="programming-challenges">Programming Challenges</h2>
+<ul>
+<li><strong>Identifying tasks</strong>:This involves examining
+applications to find areas that can be divided into separate, concurrent
+tasks. Ideally, tasks are independent of one another and thus can run in
+parallel on individual cores.</li>
+<li><strong>Balance</strong>:While identifying tasks that can run in
+parallel, programmers must also ensure that the tasks perform equal work
+of equal value</li>
+<li><strong>Data splitting</strong>:Just as applications are divided
+into separate tasks, the data accessed and manipulated by the tasks must
+be divided to run on separate cores</li>
+<li><strong>Data dependency</strong>:The data accessed by the tasks must
+be examined for dependencies between two or more tasks</li>
+<li>Testing and debugging:When a program is running in parallel on
+multiple cores, many different execution paths are possible</li>
+</ul>
+<h2 id="types-of-parallelism">Types of Parallelism</h2>
+<ul>
+<li><strong>Data parallelism</strong>:Data parallelism focuses on
+distributing subsets of the same data across multiple computing cores
+and performing the same operation on each core.</li>
+<li><strong>Task parallelism</strong>:Task parallelism involves
+distributing not data but tasks (threads) across multiple computing
+cores.Each thread is performing a unique operation. Different threads
+may be operating on the same data, or they may be operating on different
+data</li>
+<li>Fundamentally, then, data parallelism involves the distribution of
+data across multiple cores, and task parallelism involves the
+distribution of tasks across multiple cores</li>
+<li>data and task parallelism are <strong>not mutually
+exclusive.</strong></li>
+</ul>
+<h1 id="multithreading-models">Multithreading Models</h1>
+<ul>
+<li>support for threads may be provided either at the user level, for
+<strong>user threads</strong>, or by the kernel, for <strong>kernel
+threads</strong></li>
+<li>User threads are supported above the kernel and are managed without
+kernel support, whereas kernel threads are supported and managed
+directly by the operating system</li>
+</ul>
+<h2 id="many-to-one-model">Many-to-One Model</h2>
+<ul>
+<li>The <strong>many-to-one model</strong> maps many user-level threads
+to one kernel thread.</li>
+<li>because only one thread can access the kernel at a time, multiple
+threads are unable to run in parallel on multicore systems.</li>
+</ul>
+<h2 id="one-to-one-model">One-to-One Model</h2>
+<ul>
+<li>The <strong>one-to-one model</strong> maps each user thread to a
+kernel thread. It provides more concurrency</li>
+<li>The only <strong>drawback</strong> to this model is that creating a
+user thread requires creating the corresponding kernel thread, and a
+large number of kernel threads may burden the performance of a
+system.</li>
+<li>Linux, along with the family of Windows operating systems, implement
+the one-to-one model</li>
+</ul>
+<h2 id="many-to-many-model">Many-to-Many Model</h2>
+<ul>
+<li>The <strong>many-to-many model</strong> multiplexes many user-level
+threads to a smaller or equal number of kernel threads</li>
+<li>developers can create a<strong>s many user threads as
+necessary,</strong> and the corresponding kernel threads can run in
+parallel on a multiprocessor. Also, when a thread performs a blocking
+system call, the kernel can schedule another thread for execution</li>
+<li>One variation on the many-to-many model still multiplexes many
+userlevel threads to a smaller or equal number of kernel threads but
+also allows a user-level thread to be bound to a kernel thread. This
+variation is sometimes referred to as the <strong>two-level
+model</strong></li>
+<li>Although the many-to-many model appears to be the most flexible of
+the models discussed, in practice it <strong>is difficult to
+implement.</strong></li>
+<li>In addition, with an increasing number of processing cores appearing
+on most systems, limiting the number of kernel threads has become less
+important. As a result, most operating systems now use the
+<strong>one-to-one model</strong>.</li>
+</ul>
+<h1 id="thread-libraries">Thread Libraries</h1>
+<ul>
+<li>A <strong>thread library</strong> provides the programmer with an
+API for creating and managing threads.</li>
+<li>There are two primary ways of implementing a thread library.
+<ul>
+<li>The first approach is to provide a library entirely in <strong>user
+space</strong> with no kernel support.This means that invoking a
+function in the library results in a <strong>local function
+call</strong> in user space and not a system call.</li>
+<li>The second approach is to implement a <strong>kernel-level</strong>
+library supported directly by the operating system.Invoking a function
+in the API for the library typically results in a <strong>system
+call</strong> to the kernel.</li>
+</ul></li>
+<li>Three main thread libraries are in use today:
+<ul>
+<li><strong>POSIX Pthreads</strong>:the threads extension of the POSIX
+standard, may be provided as either a user-level or a kernel-level
+library.UNIX, Linux, and macOS systems typically use Pthreads.</li>
+<li><strong>Windows</strong> :a kernel-level library available on
+Windows systems.</li>
+<li><strong>Java</strong>:Java thread API is generally implemented using
+a thread library available on the host system</li>
+</ul></li>
+<li>For POSIX and Windows threading, any data <strong>declared
+globally</strong>—that is, declared outside of any function—are shared
+among all threads belonging to the same process. Because <strong>Java
+has no equivalent notion of global data</strong>, access to shared data
+must be explicitly arranged between threads.</li>
+<li>Two general strategies for creating multiple threads
+<ul>
+<li><strong>asynchronous threading</strong>:the parent and child execute
+concurrently and independently of one another.there is typically little
+data sharing between them.</li>
+<li><strong>synchronous threading</strong>:the threads created by the
+parent perform work concurrently, but the parent cannot continue until
+this work has been completed. Typically, synchronous threading involves
+significant data sharing among threads.</li>
+</ul></li>
+</ul>
+<h2 id="pthreads">Pthreads</h2>
+<ul>
+<li><strong>Pthreads</strong> refers to the <strong>POSIX
+standard</strong> (IEEE 1003.1c) defining an API for thread creation and
+synchronization. This is a <strong>specification</strong> for thread
+behavior, not an <strong>implementation</strong></li>
+<li>the program has two threads: the initial (or
+<strong>parent</strong>) thread in <strong>main()</strong> and the
+summation (or <strong>child</strong>) thread performing the summation
+operation in the <strong>runner()</strong> function. <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;pthread.h&gt; </span><br><span class="line">#include &lt;stdio.h&gt; </span><br><span class="line">#include &lt;stdlib.h&gt; </span><br><span class="line">int sum; /* this data is shared by the thread（s） */ </span><br><span class="line">void *runner(void *param)；/* threads call this function */ </span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">｛ </span><br><span class="line">	pthread_t tid; /* the thread identifier */ </span><br><span class="line">	pthread_attrt attr; /* set of thread attributes */ </span><br><span class="line">	/* set the default attributes of the thread */ </span><br><span class="line">	pthread_attr init (&amp;attr); </span><br><span class="line">	/* create the thread */ </span><br><span class="line">	pthread_create(&amp;tid，&amp;attr,runner，argv[1]);</span><br><span class="line">	 /* wait for the thread to exit */ </span><br><span class="line">	 pthread join (tid, NULL);</span><br><span class="line">	 printf ("sum = %d\n"，sum);</span><br><span class="line"> ｝ </span><br><span class="line">/* The thread will execute in this function */ </span><br><span class="line">void *runner(void *param) </span><br><span class="line">｛</span><br><span class="line">	int i，upper = atoi (Param); </span><br><span class="line">	sum = 0;</span><br><span class="line">	for (i = 1; i &lt;= upper; i++) </span><br><span class="line">		sum += i;</span><br><span class="line">	pthread_exit(O);</span><br><span class="line">｝</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h2 id="windows-threads">Windows Threads</h2>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt; </span><br><span class="line">#include &lt;stdio.h&gt; </span><br><span class="line">DWORD Sum;/* data is shared by the thread（s） */ </span><br><span class="line">/* The thread will execute in this function */ </span><br><span class="line">DWORD WINAPI Summation （LPVOID Param） </span><br><span class="line">｛ </span><br><span class="line">	DWORD Upper = *（DWORD*）Param； </span><br><span class="line">	for （DWORD i = 1;i &lt;= Upper; i++） </span><br><span class="line">		Sum += i； </span><br><span class="line">	return O； </span><br><span class="line">｝  </span><br><span class="line">int main（int argc,char *argvD） </span><br><span class="line">{</span><br><span class="line">	DWORD ThreadId； </span><br><span class="line">	HANDLE ThreadHandLe； </span><br><span class="line">	int Param； </span><br><span class="line">	Param = atoi （argv[1]）； </span><br><span class="line">	/* create the thread */ </span><br><span class="line">	ThreadHandle = CreateThread（ </span><br><span class="line">		NULL，/* default security attributes */ </span><br><span class="line">		0，/* default stack size */ </span><br><span class="line">		Summation,/* thread function */ </span><br><span class="line">		&amp;Param,/* parameter to thread tunction */ </span><br><span class="line">		0，/* default creation flags */ </span><br><span class="line">		&amp;ThreadId）；/* returns the thread identifier */ </span><br><span class="line">	/* now wait for the thread to finish */ </span><br><span class="line">	WaitForSingleObject（ThreadHandle, INFINITE）； </span><br><span class="line">	/* close the thread handle */ </span><br><span class="line">	CloseHandle （ThreadHandle）； </span><br><span class="line">	printf（"sum = %d\n"， Sum）； </span><br><span class="line">｝</span><br></pre></td></tr></table></figure></div>
+<h2 id="java-threads">Java Threads</h2>
+<ul>
+<li>Thread creation in Java involves creating a Thread object and
+passing it an instance of a class that implements Runnable, followed by
+invoking the start() method on the Thread object.</li>
+<li>we call the start() method, and it calls the run() method on our
+behalf</li>
+</ul>
+<h3 id="java-executor-framework">Java Executor Framework</h3>
+<p>Additionally, this approach separates the creation of threads from
+the results they produce: rather than waiting for a thread to terminate
+before retrieving results, the parent instead only waits for the results
+to become available # Implicit Threading</p>
+<ul>
+<li>One way to address these difficulties and better support the design
+of concurrent and parallel applications is to transfer the creation and
+management of threading from application developers to <strong>compilers
+and run-time libraries</strong>.This strategy, termed <strong>implicit
+threading</strong></li>
+<li>these strategies generally require application developers to
+identify <strong>tasks</strong>—not threads—that can run in parallel. A
+task is usually written as a <strong>function</strong></li>
+<li>The advantage of this approach is that developers only need to
+<strong>identify parallel tasks</strong>, and the libraries determine
+the specific details of thread creation and management.</li>
+</ul>
+<h2 id="thread-pools">Thread Pools</h2>
+<ul>
+<li>The general idea behind a thread pool is to create a number of
+threads at start-up and place them into a pool, where they sit and wait
+for work</li>
+<li>. Thread pools work well when the tasks submitted to the pool can be
+executed asynchronously.</li>
+<li>Thread pools offer these benefits
+<ul>
+<li>Servicing a request with an existing thread is often faster than
+waiting to create a thread.</li>
+<li>A thread pool limits the number of threads that exist at any one
+point.</li>
+<li>Separating the task to be performed from the mechanics of creating
+the task allows us to use different strategies for running the task</li>
+</ul></li>
+<li>The Windows API related to thread pools.(skip)</li>
+</ul>
+<h3 id="java-thread-pools">Java Thread Pools</h3>
+<ul>
+<li>Single thread
+executor—<strong>newSingleThreadExecutor()</strong>—creates a pool of
+size 1.</li>
+<li>Fixed thread executor—<strong>newFixedThreadPool(int
+size)</strong>—creates a thread pool with a specified number of
+threads.</li>
+<li>Cached thread
+executor—<strong>newCachedThreadPool()</strong>—creates an unbounded
+thread pool, reusing threads in many instances.</li>
+</ul>
+<h2 id="fork-join">Fork Join</h2>
+<ul>
+<li>the main parent thread <strong>creates (forks)</strong> one or more
+child threads and then waits for the children to terminate and
+<strong>join</strong> with it, at which point it can retrieve and
+combine their results</li>
+<li>. In some ways, this fork-join model is a synchronous version of
+thread pools</li>
+</ul>
+<h3 id="fork-join-in-java">Fork Join in Java</h3>
+<ul>
+<li>Java introduced a fork-join library in Version 1.7 of the API that
+is designed to be used with <strong>recursive divide-and-conquer
+algorithms</strong> such as Quicksort and Mergesort</li>
+</ul>
+<h2 id="openmp">OpenMP</h2>
+<ul>
+<li>OpenMP is <strong>a set of compiler directives</strong> as well as
+an API for programs written in C, C++, or FORTRAN that provides support
+for parallel programming in shared memory environments.</li>
+<li>OpenMP identifies parallel regions as blocks of code that may run in
+parallel</li>
+<li>When OpenMP encounters the directive <strong># pragma omp
+parallel</strong>.it creates as many threads as there are processing
+cores in the system.All the threads then simultaneously execute the
+parallel region. As each thread exits the parallel region, it is
+terminated.</li>
+</ul>
+<h2 id="grand-central-dispatch">Grand Central Dispatch</h2>
+<ul>
+<li><strong>Grand Central Dispatch (GCD)</strong> is a technology
+developed by Apple for its macOS and iOS operating systems. It is a
+combination of a <strong>run-time library, an API, and language
+extensions</strong> that allow developers to identify sections of code
+(tasks) to run in parallel. Like OpenMP, GCD manages most of the details
+of threading.</li>
+<li>GCD schedules tasks for run-time execution by placing them on a
+<strong>dispatch queue.</strong> GCD identifies two types of dispatch
+queues: <strong>serial and concurrent</strong>.</li>
+<li>Each process has its own serial queue (known as its <strong>main
+queue</strong>)</li>
+</ul>
+<h2 id="intel-thread-building-blocks">Intel Thread Building Blocks</h2>
+<ul>
+<li><strong>Intel threading building blocks (TBB)</strong> is a template
+library that supports designing parallel applications in C++.</li>
+</ul>
+<h1 id="threading-issues">Threading Issues</h1>
+<h2 id="the-fork-and-exec-system-calls">The fork() and exec() System
+Calls</h2>
+<ul>
+<li>Some UNIX systems have chosen to have two versions of fork(), one
+that duplicates all threads and another that duplicates only the thread
+that invoked the fork() system call.</li>
+<li>if a thread invokes the exec() system call, the program specified in
+the parameter to exec() will replace the entire process—including all
+threads.</li>
+<li>the separate process does not call exec() after forking, the
+separate process should duplicate all threads.If exec() is called
+immediately after forking, then duplicating all threads is unnecessary,
+only the calling thread is appropriate.</li>
+</ul>
+<h2 id="signal-handling">Signal Handling</h2>
+<ul>
+<li>A <strong>signal</strong> is used in UNIX systems to notify a
+process that a particular event has occurred</li>
+<li>follow the same pattern:
+<ul>
+<li>A signal is generated by the occurrence of a particular event</li>
+<li>The signal is delivered to a process.</li>
+<li>Once delivered, the signal must be handled</li>
+</ul></li>
+<li>A signal may be <strong>handled</strong> by one of two possible
+handlers
+<ul>
+<li>A default signal handler</li>
+<li>A user-defined signal handler</li>
+</ul></li>
+<li>Every signal has a <strong>default signal handler</strong> that the
+kernel runs when handling that signal. This default action can be
+overridden by a <strong>user-define signal handler</strong> that is
+called to handle the signal</li>
+<li>a signal be delivered for the following options
+<ul>
+<li>Deliver the signal to the thread to which the signal applies.</li>
+<li>Deliver the signal to every thread in the process.</li>
+<li>Deliver the signal to certain threads in the process.</li>
+<li>Assign a specific thread to receive all signals for the process</li>
+</ul></li>
+<li><strong>synchronous signals</strong> need to be delivered to the
+thread causing the signal and not to other threads in the process.Some
+<strong>asynchronous signals</strong> should be sent to all
+threads.</li>
+<li>an asynchronous signal may be delivered <strong>only to those
+threads that are not blocking</strong> it. However, because
+<strong>signals need to be handled only once</strong>, a signal is
+typically delivered <strong>only to the first thread found that is not
+blocking</strong> it.</li>
+<li>Windows:<strong>asynchronous procedure calls (APCs)</strong></li>
+</ul>
+<h2 id="thread-cancellation">Thread Cancellation</h2>
+<ul>
+<li><strong>Thread cancellation</strong> involves terminating a thread
+before it has completed.</li>
+<li>A thread that is to be canceled is often referred to as the
+<strong>target thread</strong>.Cancellation of a target thread may occur
+in two different scenarios:
+<ul>
+<li><strong>Asynchronous cancellation</strong>. One thread immediately
+terminates the target thread.canceling a thread asynchronously may not
+free a necessary system-wide resource.</li>
+<li><strong>Deferred cancellation</strong>. The target thread
+periodically checks whether it should terminate, allowing it an
+opportunity to terminate itself in an orderly fashion.The thread can
+perform this check at a point at which it can be canceled safely.</li>
+</ul></li>
+<li>The default cancellation type is <strong>deferred
+cancellation</strong>. However, cancellation occurs only when a thread
+reaches a <strong>cancellation point</strong></li>
+<li>Pthreads allows a function known as a <strong>cleanup
+handler</strong> to be invoked if a thread is canceled. This function
+allows any resources a thread may have acquired to be released before
+the thread is terminated.</li>
+</ul>
+<h2 id="thread-local-storage">Thread-Local Storage</h2>
+<ul>
+<li>in some circumstances, each thread might need its own copy of
+certain data. We will call such data <strong>thread-local storage (or
+TLS)</strong></li>
+<li>It is easy to confuse <strong>TLS with local variables</strong>.
+However, local variables are visible <strong>only during a single
+function invocation</strong>, whereas TLS data are visible across
+<strong>function invocations.</strong></li>
+</ul>
+<h2 id="scheduler-activations">Scheduler Activations</h2>
+<ul>
+<li>Many systems implementing either the many-to-many or the two-level
+model place an intermediate data structure between the user and kernel
+threads. This data structure—typically known as a <strong>lightweight
+process, or LWP</strong></li>
+<li>One scheme for communication between the user-thread library and the
+kernel is known as <strong>scheduler activation</strong></li>
+<li>The kernel provides an application with a set of <strong>virtual
+processors (LWPs)</strong>, and the application can schedule user
+threads onto an available virtual processor. Furthermore, the kernel
+must inform an application about certain events. This procedure is known
+as an <strong>upcall</strong>. Upcalls are handled by the thread library
+with an upcall handler, and upcall handlers must run on a virtual
+processor.</li>
+</ul>
+<h1 id="operating-system-examples">Operating-System Examples</h1>
+<h2 id="windows-threads-1">Windows Threads</h2>
+<ul>
+<li>Windows uses the one-to-one mapping</li>
+<li>The general components of a thread include:
+<ul>
+<li>A thread ID uniquely identifying the thread</li>
+<li>A register set representing the status of the processor</li>
+<li>A program counter</li>
+<li>A user stack, employed when the thread is running in user mode, and
+a kernel stack, employed when the thread is running in kernel mode</li>
+<li>A private storage area used by various run-time libraries and
+dynamic link libraries (DLLs)</li>
+</ul></li>
+<li>The register set, stacks, and private storage area are known as the
+<strong>context</strong> of the thread</li>
+<li>The primary data structures of a thread include:
+<ul>
+<li>ETHREAD—executive thread block:ETHREAD include a pointer to the
+process to which the <strong>thread belongs</strong> and <strong>the
+address of the routine</strong> in which the thread <strong>starts
+control</strong>. The ETHREAD also contains a pointer to the
+corresponding KTHREAD</li>
+<li>KTHREAD—kernel thread block:The KTHREAD includes <strong>scheduling
+and synchronization</strong> information for the thread. In addition,
+the KTHREAD includes the kernel stack (used when the thread is running
+in kernel mode) and a pointer to the TEB.</li>
+<li>TEB—thread environment block:The TEB is a user-space data structure
+that is accessed when the thread is running in user mode. Among other
+fields, the TEB contains the thread identifier, a user-mode stack, and
+an array for thread-local storage.</li>
+</ul></li>
+</ul>
+<h2 id="linux-threads">Linux Threads</h2>
+<ul>
+<li>Unlike many other operating systems, Linux <strong>does not
+distinguish between processes and threads</strong>; instead, it refers
+to each as a <strong>task</strong>. The Linux <strong>clone()</strong>
+system call can be used to create tasks that behave either more like
+processes or more like threads.</li>
+</ul>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/OS/">#OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/09/12/OS/Operating System Structures_/" title="Operating System Structures" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Operating System Structures" class="!max-w-none">
+  <span class="title">Operating System Structures</span>
+</a><a class="recommended-article-item" href="/2024/09/17/OS/Processes/" title="Processes" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Processes" class="!max-w-none">
+  <span class="title">Processes</span>
+</a><a class="recommended-article-item" href="/2024/09/08/OS/Operating System Introduction/" title="Operating System Introduction" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Operating System Introduction" class="!max-w-none">
+  <span class="title">Operating System Introduction</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/09/12/OS/Operating System Structures_/" title="Operating System Structures" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Operating System Structures" class="!max-w-none">
+  <span class="title">Operating System Structures</span>
+</a><a class="recommended-article-item" href="/2024/09/17/OS/Processes/" title="Processes" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Processes" class="!max-w-none">
+  <span class="title">Processes</span>
+</a></div>
+   </div>
+  </div>
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/09/24/Probability/Distribution%20functions%20and%20density%20functions/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Distribution functions and density functions</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Threads &amp; Concurrency</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#overview"><span class="nav-text">Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#motivation"><span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#benefits"><span class="nav-text">Benefits</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#multicore-programming"><span class="nav-text">Multicore Programming</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#programming-challenges"><span class="nav-text">Programming Challenges</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#types-of-parallelism"><span class="nav-text">Types of Parallelism</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#multithreading-models"><span class="nav-text">Multithreading Models</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#many-to-one-model"><span class="nav-text">Many-to-One Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#one-to-one-model"><span class="nav-text">One-to-One Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#many-to-many-model"><span class="nav-text">Many-to-Many Model</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#thread-libraries"><span class="nav-text">Thread Libraries</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pthreads"><span class="nav-text">Pthreads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#windows-threads"><span class="nav-text">Windows Threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java-threads"><span class="nav-text">Java Threads</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#java-executor-framework"><span class="nav-text">Java Executor Framework</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#thread-pools"><span class="nav-text">Thread Pools</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#java-thread-pools"><span class="nav-text">Java Thread Pools</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fork-join"><span class="nav-text">Fork Join</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fork-join-in-java"><span class="nav-text">Fork Join in Java</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#openmp"><span class="nav-text">OpenMP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grand-central-dispatch"><span class="nav-text">Grand Central Dispatch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#intel-thread-building-blocks"><span class="nav-text">Intel Thread Building Blocks</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#threading-issues"><span class="nav-text">Threading Issues</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-fork-and-exec-system-calls"><span class="nav-text">The fork() and exec() System
+Calls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#signal-handling"><span class="nav-text">Signal Handling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#thread-cancellation"><span class="nav-text">Thread Cancellation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#thread-local-storage"><span class="nav-text">Thread-Local Storage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scheduler-activations"><span class="nav-text">Scheduler Activations</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#operating-system-examples"><span class="nav-text">Operating-System Examples</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#windows-threads-1"><span class="nav-text">Windows Threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux-threads"><span class="nav-text">Linux Threads</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-user-secret"></i>&nbsp;&nbsp;<a href="/">Zhao Cong</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        40 posts in total
+                    </span>
+                    
+                        <span>
+                            38.9k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/Swup.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupSlideTheme.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupScriptsPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupProgressPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupScrollPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupPreloadPlugin.min.js"></script>
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+<script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/imageViewer.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/utils.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/main.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/navbarShrink.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/scrollTopBottom.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/lightDarkSwitch.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/categoryList.js"></script>
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/localSearch.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/codeBlock.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/lazyload.js"></script>
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/runtime.js"></script>
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/odometer.min.js"></script>
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/Typed.min.js"></script>
+  <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/tocToggle.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/toc.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/plugins/tabs.js"></script>
+    
+</div>
+
+
+</body>
+</html>
