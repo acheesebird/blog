@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Zhao Cong">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+        
+        
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/10/21/os/synchronization examples/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="false">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Synchronization Examples">
+<meta property="og:url" content="http://example.com/2024/10/21/OS/Synchronization%20Examples/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="false">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-10-21T09:17:30.550Z">
+<meta property="article:modified_time" content="2024-10-23T08:53:11.341Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+    <meta name="theme-color" content="#Ffc0cb">
+    <link rel="shortcut icon" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Synchronization Examples -
+        
+        ZC&#39;s Blog
+    </title>
+
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/Chillax/chillax.css">
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/assets/build/styles.css">
+    
+
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/GeistMono/geist-mono.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/Geist/geist.css">
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/anime.min.js"></script>
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":true,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#Ffc0cb","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-kxewpm.webp","dark":"/images/wallhaven-kxewpm.webp"},"title":"ZC's Blog","subtitle":{"text":["Simplicity favors regularity"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/acheesebird","instagram":"https://www.instagram.com/acheesebird?igsh=czBzYTdxMXEzaWFr&utm_source=qr","zhihu":null,"twitter":"https://x.com/acheesebird?s=11","email":"aiwdj@outlook.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":"Imagine","artist":"John Lennon","url":"https://evan.beee.top/music/Imagine%20-%20John%20Lennon.mp3","cover":"https://evan.beee.top/music/covers/Lennon_Imagine_Sleeve_1975.jpg","lrc":null},{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Essays":{"path":"/essays","icon":"fa-regular fa-message"},"About":{"icon":"fa-regular fa-archive","submenus":{"Me":"/about","Github":"https://github.com/acheesebird/blog"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"Just do it!","show_on_mobile":true,"links":{"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"YYYY-MM-DD HH:mm:ss","categories":{"enable":true,"limit":999},"tags":{"enable":true,"limit":3}},"footerStart":"2024/8/14 04:47:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        ZC&#39;s Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                ZC&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/essays"
+                                        >
+                                    <i class="fa-regular fa-message fa-fw"></i>
+                                    ESSAYS
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/acheesebird/blog">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/essays"
+                        >
+                            <span>
+                                ESSAYS
+                            </span>
+                            
+                                <i class="fa-regular fa-message fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/acheesebird/blog">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/tags"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/categories"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-regular fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">14</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">55</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Synchronization Examples</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Zhao Cong</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-10-21 17:17:30</span>
+        <span class="mobile">2024-10-21 17:17:30</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-10-23 16:53:11</span>
+            <span class="mobile">2024-10-23 16:53:11</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/OS/">OS</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/OS/">OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.9k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>11 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="classic-problems-of-synchronization">Classic Problems of
+Synchronization</h1>
+<h2 id="the-bounded-buffer-problemproducer-and-consumer-problems">The
+Bounded-Buffer Problem(producer and consumer problems)</h2>
+<p>The structure of the producer process</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">while（true）{</span><br><span class="line">	...</span><br><span class="line">	/* produce an item in next-produced */</span><br><span class="line">	...</span><br><span class="line">	wait （empty）； </span><br><span class="line">	wait （mutex）；  </span><br><span class="line">	/* add next-produced to the buffer */ </span><br><span class="line">	signal （mutex）； </span><br><span class="line">	signal（full）；</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
+<p>The structure of the consumer process</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">while（true）{</span><br><span class="line">	...</span><br><span class="line">	/* remove an item from buffer to next consumed */</span><br><span class="line">	...</span><br><span class="line">	wait （full）； </span><br><span class="line">	wait （mutex）；  </span><br><span class="line">	/* add next-produced to the buffer */ </span><br><span class="line">	signal （mutex）； </span><br><span class="line">	signal（empty）；</span><br><span class="line">	/* consume the item in next consumed */</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
+<h2 id="the-readerswriters-problem">The Readers–Writers Problem</h2>
+<ul>
+<li><p>the first readers–writers problem The structure of a reader
+process <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">while （true）｛ </span><br><span class="line">	wait （mutex）； </span><br><span class="line">	read_count++； </span><br><span class="line">	if （read_count == 1） </span><br><span class="line">		wait （rw mutex）； </span><br><span class="line">	signal （mutex）； </span><br><span class="line">	•/* reading is performed */ •</span><br><span class="line">	wait （mutex）； </span><br><span class="line">	read_count--； </span><br><span class="line">	if （read_count == 0） </span><br><span class="line">		signal （rw mutex）； </span><br><span class="line">	signal （mutex）；</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div> The structure of a writer process
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">while （true）｛ </span><br><span class="line">	wait （rw mutex）； </span><br><span class="line">	•/* writing is performed */ </span><br><span class="line">	signal（rw mutex）；</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div></p></li>
+<li><p>The second readers–writers problem</p></li>
+<li><p>A solution to either problem may result in
+<strong>starvation</strong></p></li>
+<li><p>The readers–writers problem and its solutions have been
+generalized to provide <strong>reader–writer locks</strong> on some
+systems. Acquiring a reader–writer lock requires specifying the mode of
+the lock: either <strong>read or write access</strong></p></li>
+<li><p>Reader–writer locks are most useful in the following
+situations:</p>
+<ul>
+<li>In applications where it is easy to identify which processes only
+read shared data and which processes only write shared data.</li>
+<li>In applications that have more readers than writers.</li>
+</ul></li>
+</ul>
+<h2 id="the-dining-philosophers-problem">The Dining-Philosophers
+Problem</h2>
+<h3 id="semaphore-solution">Semaphore Solution</h3>
+<ul>
+<li>Several possible remedies to the deadlock problem are the following:
+<ul>
+<li>Allow at most four philosophers to be sitting simultaneously at the
+table</li>
+<li>Allow a philosopher to pick up her chopsticks only if both
+chopsticks are available (to do this, she must pick them up in a
+critical section).</li>
+<li>Use an asymmetric solution—that is, an odd-numbered philosopher
+picks up first her left chopstick and then her right chopstick, whereas
+an even numbered philosopher picks up her right chopstick and then her
+left chopstick.</li>
+</ul></li>
+<li>Note, however, that any satisfactory solution to the
+dining-philosophers problem must guard against the possibility that one
+of the philosophers will <strong>starve to death</strong></li>
+</ul>
+<h3 id="monitor-solution">Monitor Solution</h3>
+<h1 id="synchronization-within-the-kernel">Synchronization within the
+Kernel</h1>
+<h2 id="synchronization-in-windows">Synchronization in Windows</h2>
+<ul>
+<li>On a multiprocessor system, Windows protects access to global
+resources using spinlocks, although the kernel uses
+<strong>spinlocks</strong> only to protect short code segments.</li>
+<li>For thread synchronization outside the kernel, Windows provides
+<strong>dispatcher objects</strong></li>
+<li>Using a dispatcher object, threads synchronize according to several
+different mechanisms, including<strong>mutex locks, semaphores, events,
+and timers.</strong>
+<ul>
+<li><strong>Events</strong> are similar to condition variables; that is,
+they may notify a waiting thread when a desired condition occurs.<br>
+</li>
+<li><strong>Timers</strong> are used to notify one (or more than one)
+thread that a specified amount of time has expired</li>
+</ul></li>
+<li>Dispatcher objects may be in either a signaled state or a
+non-signaled state.
+<ul>
+<li>An object in a <strong>signaled state</strong> is available, and a
+thread will not block when acquiring the object.</li>
+<li>An object in a <strong>non-signaled state</strong> is not available,
+and a thread will block when attempting to acquire the object.</li>
+</ul></li>
+</ul>
+<h2 id="synchronization-in-linux">Synchronization in Linux</h2>
+<ul>
+<li>the simplest synchronization technique within the Linux kernel is an
+<strong>atomic integer</strong>.which is represented using the opaque
+data type atomic_t.</li>
+<li><strong>Mutex locks</strong> are available in Linux for protecting
+critical sections within the kernel.</li>
+<li>Linux also provides <strong>spinlocks</strong> and semaphores (as
+well as reader–writer versions of these two locks) for locking in the
+kernel.</li>
+<li>On SMP machines, the fundamental locking mechanism is a
+<strong>spinlock</strong>, and the kernel is designed so that the
+spinlock is held only for <strong>short durations</strong>.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Single Processor</th>
+<th>Multiple Processors</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Disable kernel preemption</td>
+<td>Acquire spin lock</td>
+</tr>
+<tr>
+<td>Enable kernel preemption</td>
+<td>Release spin lock</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>In the Linux kernel, both spinlocks and mutex locks are
+<strong>nonrecurive</strong> which means that if a thread has acquired
+one of these locks, it cannot acquire the same lock a second time
+without first releasing the lock.</li>
+<li>When a lock must be held for a <strong>longer period</strong>,
+<strong>semaphores or mutex locks</strong> are appropriate for use.</li>
+</ul>
+<h1 id="posix-synchronization">POSIX Synchronization</h1>
+<ul>
+<li>The synchronization methods discussed in the preceding section
+pertain to synchronization within the kernel and are therefore
+<strong>available only to kernel developers</strong>. In contrast, the
+<strong>POSIX API is available for programmers at the user
+level</strong> and is not part of any particular operating-system
+kernel.</li>
+</ul>
+<h2 id="posix-mutex-locks">POSIX Mutex Locks</h2>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;pthread.h&gt; </span><br><span class="line"></span><br><span class="line">pthread _mutex_t mutex； </span><br><span class="line"></span><br><span class="line">/* create and initialize the mutex lock */</span><br><span class="line"></span><br><span class="line">pthread mutex init （&amp;mutex,NULL） ；</span><br><span class="line"></span><br><span class="line">/* acquire the mutex lock */ </span><br><span class="line"></span><br><span class="line">pthread mutex lock （&amp;mutex）； </span><br><span class="line">...</span><br><span class="line">/* critical section */ </span><br><span class="line">...</span><br><span class="line">/* release the mutex lock */ </span><br><span class="line"></span><br><span class="line">pthread_mutex_unlock （&amp;mutex）；</span><br></pre></td></tr></table></figure></div>
+<p>All mutex functions return a value of 0 with correct operation; if an
+error occurs, these functions return a nonzero error code.</p>
+<h2 id="posix-semaphores">POSIX Semaphores</h2>
+<ul>
+<li>POSIX specifies two types of semaphores—<strong>named and
+unnamed.</strong></li>
+</ul>
+<h3 id="posix-named-semaphores">POSIX Named Semaphores</h3>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;semaphore.h&gt; </span><br><span class="line"></span><br><span class="line">sem_t *sem； </span><br><span class="line"></span><br><span class="line">/* Create the semaphore and initialize it to 1 */ </span><br><span class="line"></span><br><span class="line">sem = sem_open（"SEM"，O_CREAT,0666，1）；</span><br><span class="line"></span><br><span class="line">/* acquire the semaphore */ </span><br><span class="line"></span><br><span class="line">sem_wait（sem）； </span><br><span class="line">...</span><br><span class="line">/* critical section */ </span><br><span class="line">...</span><br><span class="line">/* release the semaphore */ </span><br><span class="line"></span><br><span class="line">sem-post （sem）；</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>In this instance, we are naming the semaphore SEM. The 0_CREAT flag
+indicates that the semaphore will be created if it does not already
+exist. Additionally, the semaphore has read and write access for other
+processes (via the parameter 0666) and is initialized to 1</li>
+<li>Both Linux and macOS systems provide POSIX named semaphores.</li>
+<li>The <strong>advantage</strong> of named semaphores is that multiple
+unrelated processes can easily use a common semaphore as a
+synchronization mechanism by simply referring to the semaphore’s
+name</li>
+</ul>
+<h3 id="posix-unnamed-semaphores">POSIX Unnamed Semaphores</h3>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include ＜semaphore.h&gt; </span><br><span class="line"></span><br><span class="line">sem_t sem; </span><br><span class="line"></span><br><span class="line">/* Create the semaphore and initialize it to 1 */ </span><br><span class="line"></span><br><span class="line">sem init（&amp;sem，0，1）；</span><br><span class="line"></span><br><span class="line">/* acquire the semaphore */ </span><br><span class="line"></span><br><span class="line">sem_wait （&amp;sem）； </span><br><span class="line">...</span><br><span class="line">/* critical section */ </span><br><span class="line">...</span><br><span class="line">/* release the semaphore */ </span><br><span class="line"></span><br><span class="line">sem_post （&amp;sem）；</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>In this example, by passing the <strong>flag 0</strong>, to
+<strong>indicate the level of sharing</strong>. we are indicating that
+this semaphore can be shared only by threads belonging to the process
+that created the semaphore.(If we supplied a nonzero value, we could
+allow the semaphore to be shared between separate processes by placing
+it in a region of shared memory.) In addition, we initialize the
+semaphore to the <strong>value 1</strong>.</li>
+<li>Just like mutex locks, all semaphore functions return 0 when
+successful and nonzero when an error condition occurs</li>
+</ul>
+<h2 id="posix-condition-variables">POSIX Condition Variables</h2>
+<ul>
+<li>condition variables are used within <strong>the context of a
+monitor</strong>, which <strong>provides a locking mechanism</strong> to
+ensure data integrity</li>
+<li>Since Pthreads is typically used in C programs—and since C does not
+have a monitor— we accomplish locking by <strong>associating a condition
+variable with a mutex lock</strong>.</li>
+</ul>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Pthread_mutex_t mutex； </span><br><span class="line">pthread_cond_t cond_var； </span><br><span class="line"></span><br><span class="line">pthread_mutex_init （&amp;mutex, NULL） ； </span><br><span class="line">pthread_cond_init （&amp;cond_var, NULL）；</span><br></pre></td></tr></table></figure></div>
+<p>The following code illustrates how a thread can wait for the
+condition a == b to become true using a Pthread condition variable
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pthread_mutex_lock （&amp;mutex）； </span><br><span class="line">while （a ！= b） </span><br><span class="line">	pthread_cond_wait（&amp;cond_var，&amp;mutex）； </span><br><span class="line">pthread_mutex_unlock （&amp;mutex）；</span><br></pre></td></tr></table></figure></div></p>
+<ul>
+<li>The mutex lock associated with the condition variable must be locked
+before the pthread_cond_wait() function is called</li>
+<li>Calling pthread_cond_wait() <strong>releases the mutex lock</strong>
+,thereby allowing another thread to access the shared data and possibly
+update its value so that the condition clause evaluates to true</li>
+<li>it is important to place the conditional clause within <strong>a
+loop</strong> so that the condition is rechecked after being
+signaled</li>
+<li>It is important to note that the call to pthread_cond_signal() does
+not release the mutex lock. <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pthread_mutex_lock （&amp;mutex）； </span><br><span class="line">a=b； </span><br><span class="line">pthread_cond_signal（&amp;cond_var）；</span><br><span class="line">pthread_mutex_unlock （&amp;mutex）；</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h1 id="synchronization-in-java">Synchronization in Java</h1>
+<h2 id="java-monitors">Java Monitors</h2>
+<ul>
+<li>Every object in Java has associated with it a <strong>single
+lock</strong>. When a method is declared to be
+<strong>synchronized</strong>, calling the method requires owning the
+lock for the object. We declare a <strong>synchronized method</strong>
+by placing the <strong>synchronized keyword</strong> in the method
+definition, such as with the insert() and remove() methods in the
+<strong>BoundedBuffer class</strong>.</li>
+<li>Invoking a synchronized method requires owning the lock on an object
+instance of BoundedBuffer.
+<ul>
+<li>If the lock is already owned by another thread, the thread calling
+the synchronized method blocks and is placed in the <strong>entry
+set</strong> for the object’s lock.</li>
+<li>The <strong>entry set</strong> represents <strong>the set of threads
+waiting for the lock to become available</strong>.</li>
+<li>If the entry set for the lock is not empty when the lock is
+released, the JVM arbitrarily <strong>selects a thread from this set to
+be the owner of the lock</strong></li>
+</ul></li>
+<li>In addition to having a lock, every object also has associated with
+it a wait set consisting of a set of threads,This wait set is initially
+empty. When a thread enters a synchronized method, it owns the lock for
+the object. However, <strong>this thread may determine that it is unable
+to continue because a certain condition has not been met</strong></li>
+<li>When a thread calls the <strong>wait() method</strong>, the
+following happens:
+<ul>
+<li>The thread releases the lock for the object</li>
+<li>The state of the thread is set to blocked</li>
+<li>The thread is placed in the wait set for the object</li>
+</ul></li>
+<li>at the end of the insert() and remove() methods, we have a call to
+the method notify().The call to <strong>notify()</strong>:
+<ul>
+<li>Picks an arbitrary thread T from the list of threads in the wait
+set</li>
+<li>Moves T from the wait set to the entry set</li>
+<li>Sets the state of T from blocked to runnable</li>
+</ul></li>
+<li>insert() and remove() methods using wait() and notify() to
+<strong>Figure 7.11</strong></li>
+</ul>
+<h2 id="reentrant-locks">Reentrant Locks</h2>
+<ul>
+<li>Perhaps the simplest locking mechanism available in the API is the
+<strong>Reentrant-Lock</strong>.</li>
+<li>A thread acquires a ReentrantLock lock by invoking its lock()
+method.</li>
+<li>If the lock is available—or if the thread invoking
+<strong>lock()</strong> already owns it, which is why it is termed
+<strong>reentrant</strong>—lock() assigns the invoking thread lock
+ownership and returns control.</li>
+</ul>
+<h2 id="semaphores">Semaphores</h2>
+<ul>
+<li>The Java API also provides a counting semaphore</li>
+</ul>
+<h2 id="condition-variables">Condition Variables</h2>
+<h1 id="alternative-approaches">Alternative Approaches</h1>
+<h2 id="transactional-memory">Transactional Memory</h2>
+<ul>
+<li>The concept of <strong>transactional memory</strong> originated in
+database theory, for example, yet it provides a strategy for process
+synchronization. A <strong>memory transaction</strong> is a sequence of
+memory read–write operations that are <strong>atomic</strong>. If all
+operations in a transaction are completed, the memory transaction is
+committed. Otherwise, the operations must be aborted and rolled
+back.</li>
+<li>The <strong>advantage</strong> of using such a mechanism rather than
+locks is that the transactional memory system—not the developer—is
+responsible for guaranteeing atomicity. Additionally, because no locks
+are involved, <strong>deadlock is not possible</strong></li>
+<li><strong>Software transactional memory (STM)</strong>, as the name
+suggests, implements transactional memory exclusively in software—no
+special hardware is needed.STM works by <strong>inserting
+instrumentation code inside transaction blocks</strong>. The code is
+inserted by a <strong>compiler</strong></li>
+<li><strong>Hardware transactional memory (HTM)</strong> uses hardware
+<strong>cache hierarchies</strong> and cache <strong>coherency
+protocols</strong> to manage and resolve conflicts involving shared data
+residing in separate processors’ caches</li>
+<li>HTM requires no special code instrumentation and thus has less
+overhead than STM</li>
+</ul>
+<h2 id="openmp">OpenMP</h2>
+<ul>
+<li>The advantage of OpenMP (and similar tools) is that thread creation
+and management are handled by the OpenMP library and are not the
+responsibility of application developers.</li>
+<li>An advantage of using the critical-section compiler directive in
+OpenMP is that it is generally considered easier to use than standard
+mutex locks</li>
+<li>because the critical-section compiler directive behaves much like a
+mutex lock, <strong>deadlock is still possible</strong> when two or more
+critical sections are identified.</li>
+</ul>
+<h2 id="functional-programming-languages">Functional Programming
+Languages</h2>
+<ul>
+<li>Most well-known programming languages—such as C, C++, Java, and
+C#—are known as <strong>imperative (or procedural)
+languages</strong></li>
+<li>The fundamental difference between imperative and functional
+languages is that functional languages <strong>do not maintain
+state.</strong></li>
+<li>That is, once a variable has been defined and assigned a value, its
+value is immutable—it cannot change. Because functional languages
+disallow mutable state, they need not be concerned with issues such as
+race conditions and deadlocks.</li>
+<li>Several functional languages are presently in use, and we briefly
+mention two of them here: <strong>Erlang and Scala</strong></li>
+</ul>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/OS/">#OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/10/15/OS/Synchronization Tools/" title="Synchronization Tools" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Synchronization Tools" class="!max-w-none">
+  <span class="title">Synchronization Tools</span>
+</a><a class="recommended-article-item" href="/2024/09/24/OS/Threads & Concurrency/" title="Threads & Concurrency" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Threads & Concurrency" class="!max-w-none">
+  <span class="title">Threads & Concurrency</span>
+</a><a class="recommended-article-item" href="/2024/09/17/OS/Processes/" title="Processes" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Processes" class="!max-w-none">
+  <span class="title">Processes</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/10/15/OS/Synchronization Tools/" title="Synchronization Tools" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Synchronization Tools" class="!max-w-none">
+  <span class="title">Synchronization Tools</span>
+</a><a class="recommended-article-item" href="/2024/09/24/OS/Threads & Concurrency/" title="Threads & Concurrency" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Threads & Concurrency" class="!max-w-none">
+  <span class="title">Threads & Concurrency</span>
+</a></div>
+   </div>
+  </div>
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/10/22/Probability/Branching%20processes/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Branching processes</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/10/16/Probability/The%20main%20limit%20theorems/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">The main limit theorems</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Synchronization Examples</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#classic-problems-of-synchronization"><span class="nav-text">Classic Problems of
+Synchronization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-bounded-buffer-problemproducer-and-consumer-problems"><span class="nav-text">The
+Bounded-Buffer Problem(producer and consumer problems)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-readerswriters-problem"><span class="nav-text">The Readers–Writers Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-dining-philosophers-problem"><span class="nav-text">The Dining-Philosophers
+Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#semaphore-solution"><span class="nav-text">Semaphore Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#monitor-solution"><span class="nav-text">Monitor Solution</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#synchronization-within-the-kernel"><span class="nav-text">Synchronization within the
+Kernel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronization-in-windows"><span class="nav-text">Synchronization in Windows</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronization-in-linux"><span class="nav-text">Synchronization in Linux</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#posix-synchronization"><span class="nav-text">POSIX Synchronization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#posix-mutex-locks"><span class="nav-text">POSIX Mutex Locks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#posix-semaphores"><span class="nav-text">POSIX Semaphores</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#posix-named-semaphores"><span class="nav-text">POSIX Named Semaphores</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#posix-unnamed-semaphores"><span class="nav-text">POSIX Unnamed Semaphores</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#posix-condition-variables"><span class="nav-text">POSIX Condition Variables</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#synchronization-in-java"><span class="nav-text">Synchronization in Java</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java-monitors"><span class="nav-text">Java Monitors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reentrant-locks"><span class="nav-text">Reentrant Locks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#semaphores"><span class="nav-text">Semaphores</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#condition-variables"><span class="nav-text">Condition Variables</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#alternative-approaches"><span class="nav-text">Alternative Approaches</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#transactional-memory"><span class="nav-text">Transactional Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#openmp"><span class="nav-text">OpenMP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#functional-programming-languages"><span class="nav-text">Functional Programming
+Languages</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-user-secret"></i>&nbsp;&nbsp;<a href="/">Zhao Cong</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        55 posts in total
+                    </span>
+                    
+                        <span>
+                            59.4k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/Swup.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupSlideTheme.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupScriptsPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupProgressPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupScrollPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupPreloadPlugin.min.js"></script>
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+<script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/imageViewer.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/utils.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/main.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/navbarShrink.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/scrollTopBottom.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/lightDarkSwitch.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/categoryList.js"></script>
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/localSearch.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/codeBlock.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/lazyload.js"></script>
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/runtime.js"></script>
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/odometer.min.js"></script>
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/Typed.min.js"></script>
+  <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/tocToggle.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/toc.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/plugins/tabs.js"></script>
+    
+</div>
+
+
+</body>
+</html>

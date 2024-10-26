@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Zhao Cong">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+        
+        
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/10/08/os/cpu scheduling/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="false">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CPU scheduling">
+<meta property="og:url" content="http://example.com/2024/10/08/OS/CPU%20scheduling/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="false">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-10-08T08:35:19.213Z">
+<meta property="article:modified_time" content="2024-10-20T09:04:18.253Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+    <meta name="theme-color" content="#Ffc0cb">
+    <link rel="shortcut icon" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            CPU scheduling -
+        
+        ZC&#39;s Blog
+    </title>
+
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/Chillax/chillax.css">
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/assets/build/styles.css">
+    
+
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/GeistMono/geist-mono.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/Geist/geist.css">
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/anime.min.js"></script>
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":true,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#Ffc0cb","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-kxewpm.webp","dark":"/images/wallhaven-kxewpm.webp"},"title":"ZC's Blog","subtitle":{"text":["Simplicity favors regularity"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/acheesebird","instagram":"https://www.instagram.com/acheesebird?igsh=czBzYTdxMXEzaWFr&utm_source=qr","zhihu":null,"twitter":"https://x.com/acheesebird?s=11","email":"aiwdj@outlook.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":"Imagine","artist":"John Lennon","url":"https://evan.beee.top/music/Imagine%20-%20John%20Lennon.mp3","cover":"https://evan.beee.top/music/covers/Lennon_Imagine_Sleeve_1975.jpg","lrc":null},{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Essays":{"path":"/essays","icon":"fa-regular fa-message"},"About":{"icon":"fa-regular fa-archive","submenus":{"Me":"/about","Github":"https://github.com/acheesebird/blog"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"Just do it!","show_on_mobile":true,"links":{"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"YYYY-MM-DD HH:mm:ss","categories":{"enable":true,"limit":999},"tags":{"enable":true,"limit":3}},"footerStart":"2024/8/14 04:47:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        ZC&#39;s Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                ZC&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/essays"
+                                        >
+                                    <i class="fa-regular fa-message fa-fw"></i>
+                                    ESSAYS
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/acheesebird/blog">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/essays"
+                        >
+                            <span>
+                                ESSAYS
+                            </span>
+                            
+                                <i class="fa-regular fa-message fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/acheesebird/blog">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/tags"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/categories"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-regular fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">14</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">55</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">CPU scheduling</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Zhao Cong</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-10-08 16:35:19</span>
+        <span class="mobile">2024-10-08 16:35:19</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-10-20 17:04:18</span>
+            <span class="mobile">2024-10-20 17:04:18</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/OS/">OS</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/OS/">OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.9k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>17 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="basic-concepts">Basic Concepts</h1>
+<ul>
+<li>The objective of multiprogramming is to have some process
+<strong>running at all times</strong>, to maximize CPU utilization</li>
+</ul>
+<h2 id="cpuio-burst-cycle">CPU–I/O Burst Cycle</h2>
+<ul>
+<li>process execution consists of a <strong>cycle</strong> of CPU
+execution and I/O wait.</li>
+<li>Process execution begins with a <strong>CPU burst</strong>.That is
+followed by an <strong>I/O burst</strong>, which is followed by another
+CPU burst, then another I/O burst, and so on.</li>
+<li>An I/O-bound program typically has many short CPU bursts. A
+CPU-bound program might have a few long CPU bursts</li>
+</ul>
+<h2 id="cpu-scheduler">CPU Scheduler</h2>
+<ul>
+<li>Whenever the CPU becomes idle, the operating system must select one
+of the processes in the ready queue to be executed. The selection
+process is carried out by the <strong>CPU scheduler</strong></li>
+<li>a ready queue can be implemented as a FIFO queue, a priority queue,
+a tree, or simply an unordered linked list.</li>
+</ul>
+<h2 id="preemptive-and-nonpreemptive-scheduling">Preemptive and
+Nonpreemptive Scheduling</h2>
+<ul>
+<li>CPU-scheduling decisions may take place under the following four
+circumstances:
+<ul>
+<li>When a process switches from the running state to the waiting
+state</li>
+<li>When a process switches from the running state to the ready
+state</li>
+<li>When a process switches from the waiting state to the ready
+state</li>
+<li>When a process terminates</li>
+</ul></li>
+<li>When scheduling takes place only under circumstances 1 and 4, we say
+that the scheduling scheme is <strong>nonpreemptive or
+cooperative</strong>. Otherwise, it is <strong>preemptive</strong>.</li>
+<li>Virtually all modern operating systems including Windows, macOS,
+Linux, and UNIX use <strong>preemptive</strong> scheduling
+algorithms.</li>
+<li>preemptive scheduling can result in <strong>race conditions</strong>
+when data are shared among several processes</li>
+<li>Most modern operating systems are now fully preemptive when running
+in kernel mode</li>
+</ul>
+<h2 id="dispatcher">Dispatcher</h2>
+<ul>
+<li>The dispatcher is the module that gives control of the CPU’s core to
+the process selected by the CPU scheduler. This function involves the
+following:
+<ul>
+<li>Switching context from one process to another</li>
+<li>Switching to user mode</li>
+<li>Jumping to the proper location in the user program to resume that
+program</li>
+</ul></li>
+<li>The time it takes for the dispatcher to stop one process and start
+another running is known as the <strong>dispatch latency</strong></li>
+</ul>
+<h1 id="scheduling-criteria">Scheduling Criteria</h1>
+<ul>
+<li>Many criteria have been suggested for comparing CPU-scheduling
+algorithms:
+<ul>
+<li>CPU utilization</li>
+<li>Throughput</li>
+<li>Turnaround time:Turnaround time is the sum of the periods spent
+waiting in the ready queue, executing on the CPU, and doing I/O.</li>
+<li>Waiting time: Waiting time is the sum of the periods spent waiting
+in the ready queue.</li>
+<li>Response time:the time from the submission of a request until the
+first response is produced</li>
+</ul></li>
+<li>It is desirable to maximize CPU utilization and throughput and to
+minimize turnaround time, waiting time, and response time.</li>
+</ul>
+<h1 id="scheduling-algorithms">Scheduling Algorithms</h1>
+<h2 id="first-come-first-served-scheduling">First-Come, First-Served
+Scheduling</h2>
+<ul>
+<li>By far the simplest CPU-scheduling algorithm is the
+<strong>first-come first-serve (FCFS)</strong> scheduling algorithm</li>
+<li>The implementation of the FCFS policy is easily managed with a FIFO
+queue</li>
+<li>On the negative side, the average waiting time under the FCFS policy
+is often quite long.</li>
+<li>Note also that the FCFS scheduling algorithm is nonpreemptive.</li>
+</ul>
+<h2 id="shortest-job-first-scheduling">Shortest-Job-First
+Scheduling</h2>
+<ul>
+<li><p>The SJF scheduling algorithm is provably optimal, in that it
+gives the minimum average waiting time for a given set of
+processes.</p></li>
+<li><p>The next CPU burst is generally predicted as an exponential
+average of the measured lengths of previous CPU bursts. <span class="math display"><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="22.617ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 9996.9 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D70F" d="M39 284Q18 284 18 294Q18 301 45 338T99 398Q134 425 164 429Q170 431 332 431Q492 431 497 429Q517 424 517 402Q517 388 508 376T485 360Q479 358 389 358T299 356Q298 355 283 274T251 109T233 20Q228 5 215 -4T186 -13Q153 -13 153 20V30L203 192Q214 228 227 272T248 336L254 357Q254 358 208 358Q206 358 197 358T183 359Q105 359 61 295Q56 287 53 286T39 284Z"></path></g><g data-mml-node="TeXAtom" transform="translate(470,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(600,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mn" transform="translate(1378,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g><g data-mml-node="mo" transform="translate(2125.7,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(3181.5,0)"><path data-c="1D6FC" d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z"></path></g><g data-mml-node="msub" transform="translate(3821.5,0)"><g data-mml-node="mi"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="TeXAtom" transform="translate(394,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g><g data-mml-node="mo" transform="translate(4912,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mo" transform="translate(5912.2,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mn" transform="translate(6301.2,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mo" transform="translate(7023.4,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mi" transform="translate(8023.7,0)"><path data-c="1D6FC" d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z"></path></g><g data-mml-node="mo" transform="translate(8663.7,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="msub" transform="translate(9052.7,0)"><g data-mml-node="mi"><path data-c="1D70F" d="M39 284Q18 284 18 294Q18 301 45 338T99 398Q134 425 164 429Q170 431 332 431Q492 431 497 429Q517 424 517 402Q517 388 508 376T485 360Q479 358 389 358T299 356Q298 355 283 274T251 109T233 20Q228 5 215 -4T186 -13Q153 -13 153 20V30L203 192Q214 228 227 272T248 336L254 357Q254 358 208 358Q206 358 197 358T183 359Q105 359 61 295Q56 287 53 286T39 284Z"></path></g><g data-mml-node="TeXAtom" transform="translate(470,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g></g></g></svg></mjx-container></span> The value of <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="1.964ex" height="1.773ex" role="img" focusable="false" viewBox="0 -626 868.3 783.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mi" transform="translate(394,-150) scale(0.707)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg></mjx-container></span> contains
+our most recent information, while <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="2.136ex" height="1.332ex" role="img" focusable="false" viewBox="0 -431 944.3 588.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D70F" d="M39 284Q18 284 18 294Q18 301 45 338T99 398Q134 425 164 429Q170 431 332 431Q492 431 497 429Q517 424 517 402Q517 388 508 376T485 360Q479 358 389 358T299 356Q298 355 283 274T251 109T233 20Q228 5 215 -4T186 -13Q153 -13 153 20V30L203 192Q214 228 227 272T248 336L254 357Q254 358 208 358Q206 358 197 358T183 359Q105 359 61 295Q56 287 53 286T39 284Z"></path></g><g data-mml-node="mi" transform="translate(470,-150) scale(0.707)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg></mjx-container></span> stores the past history.<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.312ex;" xmlns="http://www.w3.org/2000/svg" width="9.745ex" height="1.819ex" role="img" focusable="false" viewBox="0 -666 4307.1 804"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></g><g data-mml-node="mo" transform="translate(777.8,0)"><path data-c="2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path></g><g data-mml-node="mi" transform="translate(1833.6,0)"><path data-c="1D6FC" d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z"></path></g><g data-mml-node="mo" transform="translate(2751.3,0)"><path data-c="2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path></g><g data-mml-node="mn" transform="translate(3807.1,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg></mjx-container></span></p></li>
+<li><p>The SJF algorithm can be either preemptive or nonpreemptive.
+Preemptive SJF scheduling is sometimes called
+<strong>shortest-remainingtime-firs</strong> scheduling.</p></li>
+</ul>
+<h2 id="round-robin-scheduling">Round-Robin Scheduling</h2>
+<ul>
+<li>The <strong>round-robin (RR)</strong> scheduling algorithm is
+similar to <strong>FCFS scheduling</strong>, but
+<strong>preemption</strong> is added to enable the system to switch
+between processes. A small unit of time, called a <strong>time quantum
+or time slice</strong>, is defined</li>
+<li>The CPU scheduler picks the first process from the ready queue, sets
+a timer to interrupt after 1 time quantum, and dispatches the
+process</li>
+<li>The performance of the RR algorithm depends heavily on the size of
+the time quantum</li>
+<li>At one extreme, if the time quantum is extremely large, the RR
+policy is <strong>the same as the FCFS</strong> policy. In contrast, if
+the time quantum is extremely small (say, 1 millisecond), the RR
+approach can result in a <strong>large number of context
+switches</strong></li>
+<li>Thus, we want the time quantum to be large with respect to the
+context switch time.</li>
+</ul>
+<h2 id="priority-scheduling">Priority Scheduling</h2>
+<ul>
+<li>The SJF algorithm is a special case of the <strong>general
+priority-scheduling</strong> algorithm</li>
+<li>Priorities can be defined either internally or externally</li>
+<li>Priority scheduling can be either preemptive or nonpreemptive</li>
+<li>A major problem with priority scheduling algorithms is
+<strong>indefinit blocking</strong>, or <strong>starvation</strong>.A
+priority scheduling algorithm can leave some low priority processes
+waiting indefinitely</li>
+<li>Asolution to the problem of indefinite blockage of low-priority
+processes is <strong>aging</strong>. Aging involves gradually increasing
+the priority of processes that wait in the system for a long time</li>
+<li>Another option is to <strong>combine round-robin and priority
+scheduling</strong> in such a way that the system executes the
+highest-priority process and <strong>runs processes with the same
+priority</strong> using round-robin scheduling.</li>
+</ul>
+<h2 id="multilevel-queue-scheduling">Multilevel Queue Scheduling</h2>
+<ul>
+<li>Let’s look at an example of a multilevel queue scheduling algorithm
+with four queues, listed below in order of priority:
+<ul>
+<li>Real-time processes</li>
+<li>System processes</li>
+<li>Interactive processes</li>
+<li>Batch processes</li>
+</ul></li>
+<li>Each queue has absolute priority over lower-priority queues</li>
+</ul>
+<h2 id="multilevel-feedback-queue-scheduling">Multilevel Feedback Queue
+Scheduling</h2>
+<ul>
+<li>The <strong>multilevel feedback queue</strong> scheduling algorithm
+allows <strong>a process to move between queues</strong></li>
+<li>If a process uses <strong>too much CPU time</strong>, it will be
+moved to a <strong>lower-priority queue</strong>. This scheme leaves
+<strong>I/O-bound</strong> and <strong>interactive
+processes</strong>—which are typically characterized by <strong>short
+CPU bursts</strong> —in the <strong>higher-priority queues</strong>. In
+addition, a process that waits too long in a lower-priority queue may be
+moved to a higher-priority queue. <strong>This form of aging prevents
+starvation.</strong></li>
+<li>It is <strong>the most general</strong> CPU-scheduling algorithm.it
+is also <strong>the most complex</strong> algorithm</li>
+</ul>
+<h1 id="thread-scheduling">Thread Scheduling</h1>
+<h2 id="contention-scope">Contention Scope</h2>
+<ul>
+<li>On systems implementing the many-to-one (Section 4.3.1) and
+many-to-many (Section 4.3.3) models, the thread library schedules
+userlevel threads to run on an available LWP. This scheme is known
+<strong>as process contention scope (PCS)</strong>, since competition
+for the CPU takes place among threads belonging to the same
+process.</li>
+<li>To decide which kernel-level thread to schedule onto a CPU, the
+kernel uses <strong>system-contention scope (SCS)</strong></li>
+<li>Typically, PCS is done according to <strong>priority</strong>—the
+scheduler selects the runnable thread with the highest priority to
+run.</li>
+</ul>
+<h2 id="pthread-scheduling">Pthread Scheduling</h2>
+<ul>
+<li>On systems implementing the many-to-many model, the
+<strong>PTHREAD_SCOPE_PROCESS</strong> policy schedules user-level
+threads onto available LWPs. The number of LWPs is maintained by the
+thread library, perhaps using scheduler activations (Section 4.6.5). The
+<strong>PTHREAD_ SCOPE_SYSTEM</strong> scheduling policy will create and
+bind an LWP for each user-level thread on many-to-many systems,
+effectively mapping threads using the one-to-one policy.</li>
+<li>Note that on some systems, only certain contention scope values are
+allowed. For example, Linux and macOS systems allow only
+PTHREAD_SCOPE_SYSTEM.</li>
+</ul>
+<h1 id="multi-processor-scheduling">Multi-Processor Scheduling</h1>
+<p>multiprocessor now applies to the following system architectures: -
+Multicore CPUs - Multithreaded cores - NUMA systems - Heterogeneous
+multiprocessing</p>
+<h2 id="approaches-to-multiple-processor-scheduling">Approaches to
+Multiple-Processor Scheduling</h2>
+<ul>
+<li>One approach to CPU scheduling in a multiprocessor system has all
+scheduling decisions, I/O processing, and other system activities
+handled by a single processor — <strong>the master server</strong>. The
+other processors execute only <strong>user code</strong>.</li>
+<li>This <strong>asymmetric multiprocessing</strong> is simple because
+only one core accesses the system data structures, <strong>reducing the
+need for data sharing</strong></li>
+<li>The downfall of this approach is the master server becomes a
+<strong>potential bottleneck</strong> where overall system performance
+may be reduced.</li>
+<li>The standard approach for supporting multiprocessors is
+<strong>symmetric multiprocessing (SMP)</strong>, where each processor
+is self-scheduling</li>
+<li>Note that this provides two possible strategies for organizing the
+threads eligible to be scheduled:
+<ul>
+<li>All threads may be in a <strong>common ready queue</strong>,we could
+use some form of <strong>locking</strong> to protect the common ready
+queue from this <strong>race condition</strong>,accessing the shared
+queue would likely be a <strong>performance bottleneck</strong></li>
+<li>Each processor may have its <strong>own private queue</strong> of
+threads, it is the most common approach, <strong>balancing
+algorithms</strong> can be used to equalize workloads among all
+processors</li>
+</ul></li>
+</ul>
+<h2 id="multicore-processors">Multicore Processors</h2>
+<ul>
+<li>most contemporary computer hardware now places multiple computing
+cores on the same physical chip, resulting in a <strong>multicore
+processor</strong></li>
+<li>when a processor accesses memory, it spends a significant amount of
+time waiting for the data to become available. This situation, known as
+a <strong>memory stall</strong></li>
+<li>To remedy memory stall, many recent hardware designs have
+implemented multithreaded processing cores in which two (or more)
+<strong>hardware threads</strong> are assigned to each core.</li>
+<li>From an operating system perspective, each hardware thread maintains
+its architectural state, such as instruction pointer and register set,
+and thus appears as a <strong>logical CPU</strong> that is available to
+run a software thread. This technique—known as <strong>chip
+multithreading (CMT)</strong></li>
+<li>Intel processors use the term <strong>hyper-threading</strong> (also
+known as <strong>simultaneous multithreading</strong> or
+<strong>SMT</strong>) to describe assigning multiple hardware threads to
+a single processing core.</li>
+<li>In general, there are two ways to multithread a processing core:
+<strong>coarse grained</strong> and <strong>fine-graine</strong>
+multithreading</li>
+<li>It is important to note that the resources of the physical core
+(such as caches and pipelines) must be shared among its hardware
+threads, and therefore a processing core can only <strong>execute one
+hardware thread at a time</strong></li>
+<li>two different levels of scheduling
+<ul>
+<li>On one level are the scheduling decisions that must be made by the
+operating system as it chooses <strong>which software thread to run on
+each hardware thread</strong> (logical CPU).</li>
+<li>A second level of scheduling specifies how each core decides
+<strong>which hardware thread to run</strong>
+<ul>
+<li>round-robin algorithm</li>
+<li>dynamic urgency value</li>
+</ul></li>
+</ul></li>
+<li>In fact, if the operating system scheduler (the first level) is made
+aware of the sharing of processor resources, it can make more effective
+scheduling decisions</li>
+</ul>
+<h2 id="load-balancing">Load Balancing</h2>
+<ul>
+<li><strong>Load balancing</strong> attempts to keep the workload evenly
+distributed across all processors in an SMP system.</li>
+<li>It is important to note that load balancing is <strong>typically
+necessary only on systems where each processor has its own private ready
+queue</strong> of eligible threads to execute.On systems with a common
+run queue, load balancing is unnecessary</li>
+<li>There are two general approaches to load balancing: <strong>push
+migration</strong> and <strong>pull migration</strong>.
+<ul>
+<li>With push migration, a specific task periodically checks the load on
+each processor and—if it finds an imbalance—evenly distributes the load
+by moving (or pushing) threads from overloaded to idle or less-busy
+processors.</li>
+<li>Pull migration occurs when an idle processor pulls a waiting task
+from a busy processor.</li>
+</ul></li>
+<li>The concept of a “balanced load” may have different meanings.
+<ul>
+<li>One view of a balanced load may require simply that all queues have
+approximately the <strong>same number of threads.</strong></li>
+<li>Alternatively, balance may require an <strong>equal distribution of
+thread priorities</strong> across all queues</li>
+</ul></li>
+</ul>
+<h2 id="processor-affinity">Processor Affinity</h2>
+<ul>
+<li>The data most recently accessed by the thread populate the cache for
+the processor. As a result, successive memory accesses by the thread are
+often satisfied in cache memory (known as a “<strong>warm
+cache</strong>”).</li>
+<li>Avoid migrating a thread from one processor to another and instead
+attempt to keep a thread running on the same processor and take
+advantage of a warm cache. This is known as <strong>processor
+affinity</strong>.</li>
+<li>With <strong>private</strong>, per-processor ready queues, a thread
+is always scheduled on the same processor and can therefore
+<strong>benefit from the contents of a warm cache</strong></li>
+<li>When an operating system has a policy of attempting to keep a
+process running on the same processor—but not guaranteeing that it will
+do so—we have a situation known as <strong>soft affinity</strong></li>
+<li>some systems provide system calls that support <strong>hard
+affinity</strong> , thereby allowing a process to specify a subset of
+processors on which it can run.</li>
+<li>The main-memory architecture of a system can affect processor
+affinity issues as well, such as NUMA</li>
+<li>Interestingly, load balancing often counteracts the benefits of
+processor affinity.. Similarly, migrating a thread between processors
+may incur a penalty on <strong>NUMA systems</strong></li>
+</ul>
+<h2 id="heterogeneous-multiprocessing">Heterogeneous
+Multiprocessing</h2>
+<ul>
+<li>some systems are now designed using cores that run the same
+instruction set, yet vary in terms of their clock speed and power
+management, including the ability to adjust the power consumption of a
+core to the point of idling the core. Such systems are known as
+<strong>heterogeneous multiprocessing (HMP)</strong>.</li>
+<li>For ARM processors that support it, this type of architecture is
+known as <strong>big.LITTLE</strong> where higher- performance
+<strong>big cores</strong> are combined with energy efficient
+<strong>LITTLE cores</strong></li>
+</ul>
+<h1 id="real-time-cpu-scheduling">Real-Time CPU Scheduling</h1>
+<ul>
+<li><strong>Soft real-time systems</strong> provide no guarantee as to
+when a critical real-time process will be scheduled. They guarantee only
+that the process will be given preference over noncritical
+processes.</li>
+<li><strong>Hard real-time systems</strong> have stricter requirements.
+A task must be serviced by its deadline; service after the deadline has
+expired is the same as no service at all.</li>
+</ul>
+<h2 id="minimizing-latency">Minimizing Latency</h2>
+<ul>
+<li>We refer to <strong>event latency</strong> as the amount of time
+that elapses from when an event occurs to when it is serviced</li>
+<li><strong>Interrupt latency</strong> refers to the period of time from
+the arrival of an interrupt at the CPU to the start of the routine that
+services the interrupt.</li>
+<li>One important factor contributing to interrupt latency is the amount
+of time interrupts may be <strong>disabled</strong> while kernel data
+structures are being updated</li>
+<li>The amount of time required for the scheduling dispatcher to stop
+one process and start another is known as <strong>dispatch
+latency</strong></li>
+<li>The most effective technique for keeping dispatch latency low is to
+provide <strong>preemptive kernels</strong></li>
+<li>The conflict phase of dispatch latency has two components:
+<ul>
+<li>Preemption of any process running in the kernel</li>
+<li>Release by low-priority processes of resources needed by a
+high-priority process</li>
+</ul></li>
+<li>Following the conflict phase, the dispatch phase schedules the
+<strong>high-priority</strong> process onto an available CPU.</li>
+</ul>
+<h2 id="priority-based-scheduling">Priority-Based Scheduling</h2>
+<ul>
+<li>The most important feature of a real-time operating system is to
+<strong>respond immediately to a real-time process as soon as that
+process requires the CPU.</strong></li>
+<li>Note that providing a preemptive, priority-based scheduler only
+guarantees soft real-time functionality.</li>
+<li>First, the processes are considered <strong>periodic</strong>. That
+is, they require the CPU at constant intervals (periods).</li>
+<li>Once a periodic process has acquired the CPU, it has a <strong>fixed
+processing time</strong> <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="0.817ex" height="1.441ex" role="img" focusable="false" viewBox="0 -626 361 637"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g></g></svg></mjx-container></span>, a
+<strong>deadline</strong> <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.023ex;" xmlns="http://www.w3.org/2000/svg" width="1.176ex" height="1.593ex" role="img" focusable="false" viewBox="0 -694 520 704"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g></g></g></svg></mjx-container></span> by
+which it must be serviced by the CPU, and a <strong>period</strong>
+<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="1.138ex" height="1.439ex" role="img" focusable="false" viewBox="0 -442 503 636"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g></g></g></svg></mjx-container></span>. The relationship of the
+processing time, the deadline, and the period can be expressed as <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="13.314ex" height="2.009ex" role="img" focusable="false" viewBox="0 -694 5884.7 888"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></g><g data-mml-node="mo" transform="translate(777.8,0)"><path data-c="2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path></g><g data-mml-node="mi" transform="translate(1833.6,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mo" transform="translate(2472.3,0)"><path data-c="2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path></g><g data-mml-node="mi" transform="translate(3528.1,0)"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="mo" transform="translate(4325.9,0)"><path data-c="2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path></g><g data-mml-node="mi" transform="translate(5381.7,0)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g></g></g></svg></mjx-container></span>. The <strong>rate</strong>
+of a periodic task is <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -1.091ex;" xmlns="http://www.w3.org/2000/svg" width="1.8ex" height="3.048ex" role="img" focusable="false" viewBox="0 -864.9 795.7 1347.1"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(221.1,394) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mi" transform="translate(220,-345) scale(0.707)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><rect width="555.7" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container></span>.</li>
+<li>Using a technique known as an <strong>admission-control</strong>
+algorithm, the scheduler does one of two things. It either admits the
+process, guaranteeing that the process will complete on time, or rejects
+the request as impossible if it cannot guarantee that the task will be
+serviced by its deadline.</li>
+</ul>
+<h2 id="rate-monotonic-scheduling">Rate-Monotonic Scheduling</h2>
+<ul>
+<li>The <strong>rate-monotonic</strong> scheduling algorithm schedules
+periodic tasks using a static priority policy with preemption.</li>
+<li>The shorter the period, the higher the priority; the longer the
+period, the lower the priority</li>
+<li>The rationale behind this policy is to assign a higher priority to
+tasks that require the CPU <strong>more often</strong></li>
+</ul>
+<h2 id="earliest-deadline-first-scheduling">Earliest-Deadline-First
+Scheduling</h2>
+<ul>
+<li><strong>Earliest-deadline-firs (EDF)</strong> scheduling assigns
+priorities dynamically according to deadline.</li>
+<li>The appeal of EDF scheduling is that it is <strong>theoretically
+optimal</strong>—theoretically, it can schedule processes so that each
+process can meet its deadline requirements and CPU utilization will be
+100 percent. In practice, however, it is impossible to achieve this
+level of CPU utilization due to the cost of context switching between
+processes and interrupt handling.</li>
+</ul>
+<h2 id="proportional-share-scheduling">Proportional Share
+Scheduling</h2>
+<ul>
+<li>Proportional share schedulers operate by allocating T shares among
+all applications</li>
+<li>Proportional share schedulers must work in conjunction with an
+<strong>admission-control policy</strong> to guarantee that an
+application receives its allocated shares of time</li>
+</ul>
+<h2 id="posix-real-time-scheduling">POSIX Real-Time Scheduling</h2>
+<h1 id="operating-system-examples">Operating-System Examples</h1>
+<h2 id="example-linux-scheduling">Example: Linux Scheduling</h2>
+<h2 id="example-windows-scheduling">Example: Windows Scheduling</h2>
+<h2 id="example-solaris-scheduling">Example: Solaris Scheduling</h2>
+<h1 id="algorithm-evaluation">Algorithm Evaluation</h1>
+<h2 id="deterministic-modeling">Deterministic Modeling</h2>
+<ul>
+<li>One major class of evaluation methods is <strong>analytic
+evaluation</strong></li>
+<li><strong>Deterministic modeling</strong> is one type of analytic
+evaluation.This method takes a particular predetermined workload and
+defines the performance of each algorithm for that workload</li>
+</ul>
+<h2 id="queueing-models">Queueing Models</h2>
+<ul>
+<li><p>The computer system is described as a network of servers. Each
+server has a queue of waiting processes. The CPU is a server with its
+ready queue, as is the I/O system with its device queues. Knowing
+arrival rates and service rates, we can compute utilization, average
+queue length, average wait time, and so on.This area of study is called
+<strong>queueing-network analysis</strong></p></li>
+<li><p>As an example, let <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.357ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 600 453"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g></svg></mjx-container></span> be the
+<strong>average long-term queue length</strong> (excluding the process
+being serviced), let <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.05ex;" xmlns="http://www.w3.org/2000/svg" width="2.371ex" height="1.595ex" role="img" focusable="false" viewBox="0 -683 1048 705"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D44A" d="M436 683Q450 683 486 682T553 680Q604 680 638 681T677 682Q695 682 695 674Q695 670 692 659Q687 641 683 639T661 637Q636 636 621 632T600 624T597 615Q597 603 613 377T629 138L631 141Q633 144 637 151T649 170T666 200T690 241T720 295T759 362Q863 546 877 572T892 604Q892 619 873 628T831 637Q817 637 817 647Q817 650 819 660Q823 676 825 679T839 682Q842 682 856 682T895 682T949 681Q1015 681 1034 683Q1048 683 1048 672Q1048 666 1045 655T1038 640T1028 637Q1006 637 988 631T958 617T939 600T927 584L923 578L754 282Q586 -14 585 -15Q579 -22 561 -22Q546 -22 542 -17Q539 -14 523 229T506 480L494 462Q472 425 366 239Q222 -13 220 -15T215 -19Q210 -22 197 -22Q178 -22 176 -15Q176 -12 154 304T131 622Q129 631 121 633T82 637H58Q51 644 51 648Q52 671 64 683H76Q118 680 176 680Q301 680 313 683H323Q329 677 329 674T327 656Q322 641 318 637H297Q236 634 232 620Q262 160 266 136L501 550L499 587Q496 629 489 632Q483 636 447 637Q428 637 422 639T416 648Q416 650 418 660Q419 664 420 669T421 676T424 680T428 682T436 683Z"></path></g></g></g></svg></mjx-container></span> be the
+<strong>average waiting time</strong> in the queue, and let <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.027ex;" xmlns="http://www.w3.org/2000/svg" width="1.319ex" height="1.597ex" role="img" focusable="false" viewBox="0 -694 583 706"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D706" d="M166 673Q166 685 183 694H202Q292 691 316 644Q322 629 373 486T474 207T524 67Q531 47 537 34T546 15T551 6T555 2T556 -2T550 -11H482Q457 3 450 18T399 152L354 277L340 262Q327 246 293 207T236 141Q211 112 174 69Q123 9 111 -1T83 -12Q47 -12 47 20Q47 37 61 52T199 187Q229 216 266 252T321 306L338 322Q338 323 288 462T234 612Q214 657 183 657Q166 657 166 673Z"></path></g></g></g></svg></mjx-container></span> be the <strong>average arrival
+rate</strong> for new processes in the queue (such as three processes
+per second).</p>
+<ul>
+<li><strong>Little’s formula</strong>：<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.186ex;" xmlns="http://www.w3.org/2000/svg" width="10.83ex" height="1.756ex" role="img" focusable="false" viewBox="0 -694 4787 776"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(877.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(1933.6,0)"><path data-c="1D706" d="M166 673Q166 685 183 694H202Q292 691 316 644Q322 629 373 486T474 207T524 67Q531 47 537 34T546 15T551 6T555 2T556 -2T550 -11H482Q457 3 450 18T399 152L354 277L340 262Q327 246 293 207T236 141Q211 112 174 69Q123 9 111 -1T83 -12Q47 -12 47 20Q47 37 61 52T199 187Q229 216 266 252T321 306L338 322Q338 323 288 462T234 612Q214 657 183 657Q166 657 166 673Z"></path></g><g data-mml-node="mo" transform="translate(2738.8,0)"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g><g data-mml-node="mi" transform="translate(3739,0)"><path data-c="1D44A" d="M436 683Q450 683 486 682T553 680Q604 680 638 681T677 682Q695 682 695 674Q695 670 692 659Q687 641 683 639T661 637Q636 636 621 632T600 624T597 615Q597 603 613 377T629 138L631 141Q633 144 637 151T649 170T666 200T690 241T720 295T759 362Q863 546 877 572T892 604Q892 619 873 628T831 637Q817 637 817 647Q817 650 819 660Q823 676 825 679T839 682Q842 682 856 682T895 682T949 681Q1015 681 1034 683Q1048 683 1048 672Q1048 666 1045 655T1038 640T1028 637Q1006 637 988 631T958 617T939 600T927 584L923 578L754 282Q586 -14 585 -15Q579 -22 561 -22Q546 -22 542 -17Q539 -14 523 229T506 480L494 462Q472 425 366 239Q222 -13 220 -15T215 -19Q210 -22 197 -22Q178 -22 176 -15Q176 -12 154 304T131 622Q129 631 121 633T82 637H58Q51 644 51 648Q52 671 64 683H76Q118 680 176 680Q301 680 313 683H323Q329 677 329 674T327 656Q322 641 318 637H297Q236 634 232 620Q262 160 266 136L501 550L499 587Q496 629 489 632Q483 636 447 637Q428 637 422 639T416 648Q416 650 418 660Q419 664 420 669T421 676T424 680T428 682T436 683Z"></path></g></g></g></svg></mjx-container></span></li>
+</ul></li>
+<li><p>queueing models are often only <strong>approximations</strong> of
+real systems, and the accuracy of the computed results may be
+questionable ## Simulations</p></li>
+<li><p>To get a more accurate evaluation of scheduling algorithms, we
+can use <strong>simulations</strong>. Running simulations involves
+programming a model of the computer system.</p></li>
+<li><p>The data to drive the simulation can be generated in several
+ways. The most common method uses a <strong>random-number
+generator</strong> that is programmed to generate processes, CPU burst
+times, arrivals, departures, and so on, according to <strong>probability
+distributions</strong></p></li>
+<li><p>The distributions can be defined <strong>mathematically</strong>
+(uniform, exponential, Poisson) or <strong>empirically</strong></p></li>
+<li><p>It does not indicate anything about the <strong>order</strong> of
+their occurrence. To correct this problem, we can use <strong>trace
+files</strong>.</p></li>
+</ul>
+<h2 id="implementation">Implementation</h2>
+<ul>
+<li></li>
+</ul>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/OS/">#OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/09/17/OS/Processes/" title="Processes" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Processes" class="!max-w-none">
+  <span class="title">Processes</span>
+</a><a class="recommended-article-item" href="/2024/09/08/OS/Operating System Introduction/" title="Operating System Introduction" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Operating System Introduction" class="!max-w-none">
+  <span class="title">Operating System Introduction</span>
+</a><a class="recommended-article-item" href="/2024/09/24/OS/Threads & Concurrency/" title="Threads & Concurrency" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Threads & Concurrency" class="!max-w-none">
+  <span class="title">Threads & Concurrency</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/09/17/OS/Processes/" title="Processes" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Processes" class="!max-w-none">
+  <span class="title">Processes</span>
+</a><a class="recommended-article-item" href="/2024/09/08/OS/Operating System Introduction/" title="Operating System Introduction" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Operating System Introduction" class="!max-w-none">
+  <span class="title">Operating System Introduction</span>
+</a></div>
+   </div>
+  </div>
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/10/14/Analysis%20%E2%85%A1/%E9%87%8D%E7%A7%AF%E5%88%86/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">重积分</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/10/08/Probability/Multivariate%20distributions%20and%20independence/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Multivariate distributions and independence</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">CPU scheduling</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#basic-concepts"><span class="nav-text">Basic Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cpuio-burst-cycle"><span class="nav-text">CPU–I&#x2F;O Burst Cycle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cpu-scheduler"><span class="nav-text">CPU Scheduler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#preemptive-and-nonpreemptive-scheduling"><span class="nav-text">Preemptive and
+Nonpreemptive Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dispatcher"><span class="nav-text">Dispatcher</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scheduling-criteria"><span class="nav-text">Scheduling Criteria</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scheduling-algorithms"><span class="nav-text">Scheduling Algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#first-come-first-served-scheduling"><span class="nav-text">First-Come, First-Served
+Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shortest-job-first-scheduling"><span class="nav-text">Shortest-Job-First
+Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#round-robin-scheduling"><span class="nav-text">Round-Robin Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#priority-scheduling"><span class="nav-text">Priority Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multilevel-queue-scheduling"><span class="nav-text">Multilevel Queue Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multilevel-feedback-queue-scheduling"><span class="nav-text">Multilevel Feedback Queue
+Scheduling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#thread-scheduling"><span class="nav-text">Thread Scheduling</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#contention-scope"><span class="nav-text">Contention Scope</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pthread-scheduling"><span class="nav-text">Pthread Scheduling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#multi-processor-scheduling"><span class="nav-text">Multi-Processor Scheduling</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#approaches-to-multiple-processor-scheduling"><span class="nav-text">Approaches to
+Multiple-Processor Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multicore-processors"><span class="nav-text">Multicore Processors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#load-balancing"><span class="nav-text">Load Balancing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#processor-affinity"><span class="nav-text">Processor Affinity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#heterogeneous-multiprocessing"><span class="nav-text">Heterogeneous
+Multiprocessing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#real-time-cpu-scheduling"><span class="nav-text">Real-Time CPU Scheduling</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#minimizing-latency"><span class="nav-text">Minimizing Latency</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#priority-based-scheduling"><span class="nav-text">Priority-Based Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rate-monotonic-scheduling"><span class="nav-text">Rate-Monotonic Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#earliest-deadline-first-scheduling"><span class="nav-text">Earliest-Deadline-First
+Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proportional-share-scheduling"><span class="nav-text">Proportional Share
+Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#posix-real-time-scheduling"><span class="nav-text">POSIX Real-Time Scheduling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#operating-system-examples"><span class="nav-text">Operating-System Examples</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#example-linux-scheduling"><span class="nav-text">Example: Linux Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example-windows-scheduling"><span class="nav-text">Example: Windows Scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example-solaris-scheduling"><span class="nav-text">Example: Solaris Scheduling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#algorithm-evaluation"><span class="nav-text">Algorithm Evaluation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#deterministic-modeling"><span class="nav-text">Deterministic Modeling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#queueing-models"><span class="nav-text">Queueing Models</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#implementation"><span class="nav-text">Implementation</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-user-secret"></i>&nbsp;&nbsp;<a href="/">Zhao Cong</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        55 posts in total
+                    </span>
+                    
+                        <span>
+                            59.4k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/Swup.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupSlideTheme.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupScriptsPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupProgressPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupScrollPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupPreloadPlugin.min.js"></script>
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+<script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/imageViewer.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/utils.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/main.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/navbarShrink.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/scrollTopBottom.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/lightDarkSwitch.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/categoryList.js"></script>
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/localSearch.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/codeBlock.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/lazyload.js"></script>
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/runtime.js"></script>
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/odometer.min.js"></script>
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/Typed.min.js"></script>
+  <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/tocToggle.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/toc.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/plugins/tabs.js"></script>
+    
+</div>
+
+
+</body>
+</html>

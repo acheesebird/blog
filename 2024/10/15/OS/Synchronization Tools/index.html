@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Zhao Cong">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+        
+        
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/10/15/os/synchronization tools/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="false">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Synchronization Tools">
+<meta property="og:url" content="http://example.com/2024/10/15/OS/Synchronization%20Tools/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="false">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-10-15T10:08:16.457Z">
+<meta property="article:modified_time" content="2024-10-17T09:45:35.682Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+    <meta name="theme-color" content="#Ffc0cb">
+    <link rel="shortcut icon" href="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Synchronization Tools -
+        
+        ZC&#39;s Blog
+    </title>
+
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/Chillax/chillax.css">
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/assets/build/styles.css">
+    
+
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/GeistMono/geist-mono.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fonts/Geist/geist.css">
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/anime.min.js"></script>
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":true,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#Ffc0cb","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-kxewpm.webp","dark":"/images/wallhaven-kxewpm.webp"},"title":"ZC's Blog","subtitle":{"text":["Simplicity favors regularity"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/acheesebird","instagram":"https://www.instagram.com/acheesebird?igsh=czBzYTdxMXEzaWFr&utm_source=qr","zhihu":null,"twitter":"https://x.com/acheesebird?s=11","email":"aiwdj@outlook.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":"Imagine","artist":"John Lennon","url":"https://evan.beee.top/music/Imagine%20-%20John%20Lennon.mp3","cover":"https://evan.beee.top/music/covers/Lennon_Imagine_Sleeve_1975.jpg","lrc":null},{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Essays":{"path":"/essays","icon":"fa-regular fa-message"},"About":{"icon":"fa-regular fa-archive","submenus":{"Me":"/about","Github":"https://github.com/acheesebird/blog"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"Just do it!","show_on_mobile":true,"links":{"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"YYYY-MM-DD HH:mm:ss","categories":{"enable":true,"limit":999},"tags":{"enable":true,"limit":3}},"footerStart":"2024/8/14 04:47:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        ZC&#39;s Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                ZC&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/essays"
+                                        >
+                                    <i class="fa-regular fa-message fa-fw"></i>
+                                    ESSAYS
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/acheesebird/blog">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/essays"
+                        >
+                            <span>
+                                ESSAYS
+                            </span>
+                            
+                                <i class="fa-regular fa-message fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/acheesebird/blog">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/tags"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/categories"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-regular fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">14</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">55</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Synchronization Tools</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/afxvk-134dd_%E5%89%AF%E6%9C%AC.svg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Zhao Cong</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-10-15 18:08:16</span>
+        <span class="mobile">2024-10-15 18:08:16</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-10-17 17:45:35</span>
+            <span class="mobile">2024-10-17 17:45:35</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/OS/">OS</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/OS/">OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.8k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>14 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="background">Background</h1>
+<ul>
+<li>We’ve already seen that processes can execute <strong>concurrently
+or in parallel</strong>
+<ul>
+<li>concurrently:CPU scheduler switches rapidly between processes to
+provide concurrent execution.</li>
+<li>parallel:two instruction streams (representing different processes)
+execute <strong>simultaneously</strong> on separate processing
+cores</li>
+</ul></li>
+<li>Although the producer and consumer routines shown above are correct
+separately, they may not function correctly when executed
+concurrently</li>
+<li>We would arrive at this incorrect state because we allowed both
+processes to <strong>manipulate the variable count
+concurrently</strong></li>
+<li>A situation like this, where several processes access and manipulate
+the same data concurrently and the outcome of the execution depends on
+the particular order in which the access takes place, is called a
+<strong>race condition</strong></li>
+</ul>
+<h1 id="the-critical-section-problem">The Critical-Section Problem</h1>
+<ul>
+<li>. Consider a system consisting of n processes <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="17.824ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 7878.1 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="7B" d="M434 -231Q434 -244 428 -250H410Q281 -250 230 -184Q225 -177 222 -172T217 -161T213 -148T211 -133T210 -111T209 -84T209 -47T209 0Q209 21 209 53Q208 142 204 153Q203 154 203 155Q189 191 153 211T82 231Q71 231 68 234T65 250T68 266T82 269Q116 269 152 289T203 345Q208 356 208 377T209 529V579Q209 634 215 656T244 698Q270 724 324 740Q361 748 377 749Q379 749 390 749T408 750H428Q434 744 434 732Q434 719 431 716Q429 713 415 713Q362 710 332 689T296 647Q291 634 291 499V417Q291 370 288 353T271 314Q240 271 184 255L170 250L184 245Q202 239 220 230T262 196T290 137Q291 131 291 1Q291 -134 296 -147Q306 -174 339 -192T415 -213Q429 -213 431 -216Q434 -219 434 -231Z"></path></g><g data-mml-node="msub" transform="translate(500,0)"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mn" transform="translate(675,-150) scale(0.707)"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></g></g><g data-mml-node="mo" transform="translate(1578.6,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="msub" transform="translate(2023.2,0)"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mn" transform="translate(675,-150) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g><g data-mml-node="mo" transform="translate(3101.8,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mo" transform="translate(3546.4,0)"><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path></g><g data-mml-node="mo" transform="translate(3991.1,0)"><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path></g><g data-mml-node="mo" transform="translate(4435.8,0)"><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path></g><g data-mml-node="mo" transform="translate(4880.4,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="msub" transform="translate(5325.1,0)"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="TeXAtom" transform="translate(675,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(600,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(1378,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g><g data-mml-node="mo" transform="translate(7378.1,0)"><path data-c="7D" d="M65 731Q65 745 68 747T88 750Q171 750 216 725T279 670Q288 649 289 635T291 501Q292 362 293 357Q306 312 345 291T417 269Q428 269 431 266T434 250T431 234T417 231Q380 231 345 210T298 157Q293 143 292 121T291 -28V-79Q291 -134 285 -156T256 -198Q202 -250 89 -250Q71 -250 68 -247T65 -230Q65 -224 65 -223T66 -218T69 -214T77 -213Q91 -213 108 -210T146 -200T183 -177T207 -139Q208 -134 209 3L210 139Q223 196 280 230Q315 247 330 250Q305 257 280 270Q225 304 212 352L210 362L209 498Q208 635 207 640Q195 680 154 696T77 713Q68 713 67 716T65 731Z"></path></g></g></g></svg></mjx-container></span>. Each process
+has a segment of code, called a <strong>critical section</strong>, in
+which the process may be accessing — and updating — data that is shared
+with at least one other process.</li>
+<li>The important feature of the system is that, when one process is
+executing in its critical section, no other process is allowed to
+execute in its critical section. That is, <strong>no two processes are
+executing in their critical sections at the same time</strong>.</li>
+<li>Each process must request <strong>permission</strong> to enter its
+critical section</li>
+<li>The section of code implementing this request is the <strong>entry
+section</strong>. The critical section may be followed by an
+<strong>exit section</strong>. The remaining code is the
+<strong>remainder section</strong></li>
+<li>A solution to the critical-section problem must satisfy the
+following three requirements:
+<ul>
+<li><strong>Mutual exclusion</strong>. If process <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="2.192ex" height="1.902ex" role="img" focusable="false" viewBox="0 -683 969 840.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mi" transform="translate(675,-150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg></mjx-container></span> is executing in its critical section,
+then no other processes can be executing in their critical sections</li>
+<li><strong>Progress</strong>. If no process is executing in its
+critical section and some processes wish to enter their critical
+sections, then only those processes that are not executing in their
+remainder sections can participate in deciding which will enter its
+critical section next, and this selection cannot be postponed
+indefinitely.</li>
+<li><strong>Bounded waiting</strong>. There exists a bound, or limit, on
+the number of times that other processes are allowed to enter their
+critical sections after a process has made a request to enter its
+critical section and before that request is granted</li>
+</ul></li>
+<li>Two general approaches are used to handle critical sections in
+operating systems: <strong>preemptive kernels</strong> and
+<strong>nonpreemptive kernels</strong></li>
+<li>Obviously, a <strong>nonpreemptive kernel is essentially free from
+race conditions</strong> on kernel data structures, as <strong>only one
+process is active in the kernel at a time</strong>.We cannot say the
+same about preemptive kernels.</li>
+<li>A preemptive kernel may be more <strong>responsive</strong> ,and is
+more <strong>suitable for real-time programming</strong>, as it will
+allow a real-time process to preempt a process currently running in the
+kernel.</li>
+</ul>
+<h1 id="petersons-solution">Peterson’s Solution</h1>
+<ul>
+<li>Next, we illustrate a classic software-based solution to the
+critical-section problem known as <strong>Peterson’s
+solution</strong></li>
+<li>there are no guarantees that Peterson’s solution will work correctly
+on such architectures</li>
+<li>Peterson’s solution is restricted to two processes that alternate
+execution between their critical sections and remainder sections
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int turn，</span><br><span class="line">boolean flag [2]；</span><br><span class="line">while （true）｛ </span><br><span class="line">	flag[i] = true； </span><br><span class="line">	turn= j； </span><br><span class="line">	while （flag [j] &amp;&amp; turn == j） </span><br><span class="line">	； </span><br><span class="line">	/* critical section */ </span><br><span class="line">	flag[i] = false； </span><br><span class="line">	/*remainder section */</span><br><span class="line">｝</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h1 id="hardware-support-for-synchronization">Hardware Support for
+Synchronization</h1>
+<h2 id="memory-barriers">Memory Barriers</h2>
+<ul>
+<li>. How a computer architecture determines what memory guarantees it
+will provide to an application program is known as its <strong>memory
+model</strong>. In general, a memory model falls into one of two
+categories:
+<ul>
+<li><strong>Strongly ordered</strong>, where a memory modification on
+one processor is immediately visible to all other processors</li>
+<li><strong>Weakly ordered</strong>, where modifications to memory on
+one processor may not be immediately visible to other processors.</li>
+</ul></li>
+<li>computer architectures provide instructions that can force any
+changes in memory to be propagated to all other processors, thereby
+ensuring that memory modifications are visible to threads running on
+other processors. Such instructions are known as <strong>memory barriers
+or memory fences</strong></li>
+<li>Note that memory barriers are considered <strong>very low-level
+operations</strong> and are typically only used by kernel developers
+when writing specialized code that ensures mutual exclusion</li>
+</ul>
+<h2 id="hardware-instructions">Hardware Instructions</h2>
+<ul>
+<li>test and set()
+<ul>
+<li>important characteristic of this instruction is that it is executed
+atomically. Thus, if two test and set() instructions are executed
+simultaneously (each on a different core), they will be executed
+sequentially in some arbitrary order.</li>
+</ul></li>
+<li>The compare and swap() instruction (CAS)
+<ul>
+<li>if two CAS instructions are executed simultaneously (each on a
+different core), they will be executed sequentially in some arbitrary
+order.</li>
+</ul></li>
+</ul>
+<h2 id="atomic-variables">Atomic Variables</h2>
+<ul>
+<li>Typically, the compare and swap() instruction is not used directly
+to provide mutual exclusion. Rather, it is used as a basic building
+block for constructing other tools that solve the critical-section
+problem. One such tool is an <strong>atomic variable</strong>, which
+provides atomic operations on basic data types such as integers and
+booleans.</li>
+<li>These functions are often implemented using <strong>compare and
+swap()</strong> operations.</li>
+<li>their use is often limited to single updates of shared data such as
+counters and sequence generators</li>
+</ul>
+<h1 id="mutex-locks">Mutex Locks</h1>
+<ul>
+<li>operating-system designers build higher-level <strong>software
+tools</strong> to solve the critical-section problem. The simplest of
+these tools is the <strong>mutex lock</strong>. (In fact, the term mutex
+is short for mutual exclusion.)</li>
+<li>Calls to either <strong>acquire()</strong> or
+<strong>release()</strong> must be performed
+<strong>atomically</strong>.Thus, mutex locks can be implemented using
+the <strong>CAS operation</strong></li>
+<li>The main disadvantage of the implementation given here is that it
+requires busy waiting.</li>
+<li>The type of mutex lock we have been describing is also called a
+<strong>spin-lock</strong> because the process “spins” while waiting for
+the lock to become available.</li>
+</ul>
+<h1 id="semaphores">Semaphores</h1>
+<ul>
+<li>A <strong>semaphore</strong> S is an integer variable that, apart
+from initialization, is accessed only through two standard atomic
+operations: wait() and signal().</li>
+<li>the wait() operation was originally termed P,signal() was originally
+called V</li>
+<li>The definition of wait() is as follows:</li>
+</ul>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wait （S）｛ </span><br><span class="line">	while （S &lt;= 0） </span><br><span class="line">	；// busy wait </span><br><span class="line">	S--；</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>The definition of signal() is as follows: <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">signal（S）｛ </span><br><span class="line">	S++；</span><br><span class="line"> ｝</span><br></pre></td></tr></table></figure></div></li>
+<li>when one process modifies the semaphore value, no other process can
+simultaneously modify that same semaphore value</li>
+</ul>
+<h2 id="semaphore-usage">Semaphore Usage</h2>
+<ul>
+<li>The value of a <strong>counting semaphore</strong> can range over an
+<strong>unrestricted domain</strong>. The value of a <strong>binary
+semaphore</strong> can range only between 0 and 1.</li>
+<li>Each process that wishes to use a resource performs a wait()
+operation on the semaphore (thereby decrementing the count). When a
+process releases a resource, it performs a signal() operation
+(incrementing the count).</li>
+</ul>
+<h2 id="semaphore-implementation">Semaphore Implementation</h2>
+<ul>
+<li>The process is restarted by a wakeup() operation, which changes the
+process from the waiting state to the ready state. The process is then
+placed in the <strong>ready queue.</strong> <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">typedef struct｛ </span><br><span class="line">	int value； </span><br><span class="line">	struct process *list； </span><br><span class="line">｝semaphore；</span><br></pre></td></tr></table></figure></div></li>
+<li>Now, the <strong>wait() semaphore</strong> operation can be defined
+as <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wait（semaphore *S）｛</span><br><span class="line">	S-&gt;value--； </span><br><span class="line">	if （S-&gt;value &lt; 0）｛ </span><br><span class="line">		add this process to S-&gt;1ist； </span><br><span class="line">		sleep()；</span><br><span class="line">	｝</span><br><span class="line"> ｝</span><br></pre></td></tr></table></figure></div> and the signal() semaphore operation can be defined as
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">signal（semaphore *s）｛ </span><br><span class="line">	S-&gt;valuet++； </span><br><span class="line">	if （S-&gt;value &lt;= 0）｛ </span><br><span class="line">		remove a process P from S-&gt;1ist； </span><br><span class="line">		wakeup （P）； </span><br><span class="line">	｝ </span><br><span class="line">｝</span><br></pre></td></tr></table></figure></div></li>
+<li>guarantee that no two processes can execute wait() and signal()
+operations on the same semaphore at the same time
+<ul>
+<li>single-processor environment:inhibiting interrupts</li>
+<li>multicore environment:such as compare and swap() or spinlocks #
+Monitors</li>
+</ul></li>
+<li>the semaphore solution to the critical-section problem:All processes
+share a binary semaphore variable mutex, which is initialized to 1. Each
+process must execute wait(mutex) before entering the critical section
+and signal(mutex) afterward</li>
+<li>one fundamental high-level synchronization construct—the monitor
+type.</li>
+</ul>
+<h2 id="monitor-usage">Monitor Usage</h2>
+<ul>
+<li>An <strong>abstract data type—or ADT</strong>—encapsulates data with
+a set of functions to operate on that data that are independent of any
+specific implementation of the ADT.</li>
+<li>A <strong>monitor type</strong> is an ADT that includes a set of
+programmer-defined operations that are provided with mutual exclusion
+within the monitor.</li>
+<li>we need to define additional synchronization mechanisms. These
+mechanisms are provided by the <strong>condition
+construct</strong>.</li>
+</ul>
+<h2 id="implementing-a-monitor-using-semaphores">Implementing a Monitor
+Using Semaphores</h2>
+<p>这三段代码结合在一起展示了如何使用信号量（semaphore）实现<strong>监视器（monitor）</strong>，一种确保线程安全访问共享资源的机制。通过信号量和条件变量，代码能够有效管理线程之间的同步，确保对共享资源的访问是有序且排他的。下面是将三段代码结合起来的完整解释：</p>
+<h3 id="背景监视器与信号量">背景：监视器与信号量</h3>
+<ul>
+<li><strong>监视器</strong>是一种高级同步机制，它封装了共享资源及对这些资源的操作，同时确保只有一个线程能够在任何时刻进入监视器中的关键部分（临界区）。</li>
+<li><strong>信号量</strong>在这里用于实现两方面的控制：一是线程对共享资源的互斥访问，二是线程在特定条件下的等待和唤醒。</li>
+</ul>
+<h3 id="代码解析综合三段">代码解析（综合三段）：</h3>
+<h4 id="第一部分进入监视器的控制">第一部分：进入监视器的控制</h4>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x_count++;</span><br><span class="line"><span class="keyword">if</span> (next_count &gt; <span class="number">0</span>)</span><br><span class="line">    <span class="built_in">signal</span>(next);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">signal</span>(mutex);</span><br><span class="line"><span class="built_in">wait</span>(x_sem);</span><br><span class="line">x_count--;</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li><code>x_count++</code>：进入监视器的线程数量加
+1，用于记录当前有多少线程试图进入监视器。</li>
+<li><code>if (next_count &gt; 0)</code>：检查是否有其他线程在等待监视器的资源。
+<ul>
+<li>如果有
+(<code>next_count &gt; 0</code>)，则唤醒下一个等待线程（<code>signal(next);</code>）。</li>
+<li>否则，释放
+<code>mutex</code>，允许其他线程获得互斥锁（<code>signal(mutex);</code>）。</li>
+</ul></li>
+<li><code>wait(x_sem)</code>：当前线程等待信号量
+<code>x_sem</code>，这确保了它只有在某些条件满足后才能继续执行。</li>
+<li><code>x_count--</code>：离开监视器时，将 <code>x_count</code> 减
+1。</li>
+</ul>
+<h4 id="第二部分退出时的控制">第二部分：退出时的控制</h4>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">wait</span>(mutex);</span><br><span class="line"><span class="comment">// body of F (执行监视器的关键操作)</span></span><br><span class="line"><span class="keyword">if</span> (next_count &gt; <span class="number">0</span>)</span><br><span class="line">    <span class="built_in">signal</span>(next);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">signal</span>(mutex);</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li><code>wait(mutex)</code>：线程在执行关键操作之前需要先获取互斥锁
+<code>mutex</code>，确保当前没有其他线程在访问共享资源。</li>
+<li>执行关键部分的代码（<code>body of F</code>）。</li>
+<li>完成后，检查是否有其他线程在等待：
+<ul>
+<li>如果 <code>next_count &gt; 0</code>，则通过
+<code>signal(next)</code> 唤醒下一个等待的线程。</li>
+<li>否则，通过 <code>signal(mutex)</code>
+释放互斥锁，让其他线程能够获取锁并进入临界区。</li>
+</ul></li>
+</ul>
+<h4 id="第三部分等待和唤醒机制">第三部分：等待和唤醒机制</h4>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (x_count &gt; <span class="number">0</span>) {</span><br><span class="line">    next_count++;</span><br><span class="line">    <span class="built_in">signal</span>(x_sem);</span><br><span class="line">    <span class="built_in">wait</span>(next);</span><br><span class="line">    next_count--;</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li><code>if (x_count &gt; 0)</code>：如果当前监视器中仍有其他线程（<code>x_count &gt; 0</code>），则执行以下操作：
+<ul>
+<li><code>next_count++</code>：等待线程的计数增加，表示该线程现在处于等待状态。</li>
+<li><code>signal(x_sem)</code>：发出信号，释放信号量
+<code>x_sem</code>，通知其他线程可以继续执行。</li>
+<li><code>wait(next)</code>：当前线程进入等待状态，直到被
+<code>next</code> 信号唤醒为止。</li>
+<li><code>next_count--</code>：唤醒后，等待线程的计数减少。</li>
+</ul></li>
+</ul>
+<h3 id="结合后的解释">结合后的解释：</h3>
+<ol type="1">
+<li><p><strong>进入监视器</strong>：每个线程试图进入监视器时，先增加
+<code>x_count</code>，表示有一个新的线程进入。然后根据是否有其他线程在等待，决定是唤醒下一个线程还是释放互斥锁。接着，线程等待
+<code>x_sem</code> 信号，确保同步执行。</p></li>
+<li><p><strong>在监视器内执行</strong>：线程进入临界区后，首先获取互斥锁
+<code>mutex</code>，执行共享资源的操作。执行完毕后，再次检查是否有等待的线程，如果有则唤醒下一个等待线程，否则释放锁。</p></li>
+<li><p><strong>线程的等待与唤醒</strong>：如果有线程在等待监视器资源，计数器
+<code>next_count</code> 增加，并发送 <code>x_sem</code>
+信号，接着当前线程进入 <code>next</code>
+信号的等待状态。被唤醒后，线程减少
+<code>next_count</code>，表示已经结束等待。</p></li>
+</ol>
+<h3 id="总结">总结：</h3>
+<p>通过这三段代码，使用信号量实现了对监视器的控制，确保线程能够有序地进入和退出临界区，同时通过条件变量（<code>x_sem</code>
+和
+<code>next</code>）控制线程的等待和唤醒。这种方式保证了多个线程在访问共享资源时的互斥和同步，实现了对并发线程的安全管理。</p>
+<h2 id="resuming-processes-within-a-monitor">Resuming Processes within a
+Monitor</h2>
+<ul>
+<li>how do we determine <strong>which of the suspended processes should
+be resumed next</strong>? One simple solution is to use a first-come,
+first-served (FCFS) ordering.</li>
+<li>the <strong>conditional wait</strong> construct can be used.</li>
+</ul>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.wait(c);</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>The value of c, which is called a <strong>priority number</strong>,
+is then stored with the name of the process that is suspended.</li>
+</ul>
+<h1 id="liveness">Liveness</h1>
+<ul>
+<li><strong>Liveness</strong> refers to a set of properties that a
+system must satisfy to ensure that processes make progress during their
+execution life cycle</li>
+<li>A process <strong>waiting indefinitely</strong> under the
+circumstances just described is an example of a “<strong>liveness
+failure</strong>.”</li>
+<li>A very simple example of a liveness failure is an <strong>infinite
+loop</strong>.</li>
+</ul>
+<h2 id="deadlock">Deadlock</h2>
+<ul>
+<li>The implementation of a semaphore with a waiting queue may result in
+a situation where two or more processes are waiting indefinitely for an
+event that can be caused only by one of the waiting processes. The event
+in question is the execution of a signal() operation. When such a state
+is reached, these processes are said to be
+<strong>deadlocked</strong>.</li>
+<li>We say that a set of processes is in a deadlocked state when every
+process in the set is waiting for an event that can be caused only by
+another process in the set.</li>
+</ul>
+<h2 id="priority-inversion">Priority Inversion</h2>
+<ul>
+<li>As an example, assume we have three processes—L, M, and H—whose
+priorities follow the order L &lt; M &lt; H. Assume that process H
+requires a semaphore S, which is currently being accessed by process L.
+Ordinarily, process H would wait for L to finish using resource S.
+However, now suppose that process M becomes runnable, thereby preempting
+process L. Indirectly, a process with a lower priority—process M—has
+affected how long process H must wait for L to relinquish resource
+S.</li>
+<li>This liveness problem is known as <strong>priority
+inversion</strong>, and it can occur only in systems with more than two
+priorities. Typically, priority inversion is avoided by implementing a
+<strong>priority-inheritance protocol</strong></li>
+<li>In the example above, a priority-inheritance protocol would allow
+process L to temporarily inherit the priority of process H, thereby
+preventing process M from preempting its execution. When process L had
+finished using resource S, it would relinquish its inherited priority
+from H and assume its original priority.Because resource S would now be
+available, process H—not M—would run next.</li>
+</ul>
+<h1 id="evaluation">Evaluation</h1>
+<ul>
+<li>The following guidelines identify general rules concerning
+performance differences between <strong>CAS-based synchronization and
+traditional synchronization</strong> (such as mutex locks and
+semaphores) under varying contention loads:
+<ul>
+<li><strong>Uncontended</strong>. Although both options are generally
+fast, CAS protection will be somewhat faster than traditional
+synchronization.</li>
+<li><strong>Moderate contention</strong>. CAS protection will be
+faster—possibly much faster —than traditional synchronization.</li>
+<li><strong>High contention</strong>. Under very highly contended loads,
+traditional synchronization will ultimately be faster than CAS-based
+synchronization</li>
+</ul></li>
+<li>The hardware solutions are considered <strong>very low
+level</strong> and are typically used as the foundations for
+<strong>constructing other synchronization tools</strong>, such as mutex
+locks.</li>
+</ul>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/OS/">#OS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/10/21/OS/Synchronization Examples/" title="Synchronization Examples" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Synchronization Examples" class="!max-w-none">
+  <span class="title">Synchronization Examples</span>
+</a><a class="recommended-article-item" href="/2024/09/17/OS/Processes/" title="Processes" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Processes" class="!max-w-none">
+  <span class="title">Processes</span>
+</a><a class="recommended-article-item" href="/2024/10/08/OS/CPU scheduling/" title="CPU scheduling" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="CPU scheduling" class="!max-w-none">
+  <span class="title">CPU scheduling</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/10/21/OS/Synchronization Examples/" title="Synchronization Examples" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Synchronization Examples" class="!max-w-none">
+  <span class="title">Synchronization Examples</span>
+</a><a class="recommended-article-item" href="/2024/09/17/OS/Processes/" title="Processes" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Processes" class="!max-w-none">
+  <span class="title">Processes</span>
+</a></div>
+   </div>
+  </div>
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/10/16/Probability/The%20main%20limit%20theorems/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">The main limit theorems</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/10/15/Probability/Moments,%20and%20moment%20generating%20functions/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Moments, and moment generating functions</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Synchronization Tools</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-text">Background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#the-critical-section-problem"><span class="nav-text">The Critical-Section Problem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#petersons-solution"><span class="nav-text">Peterson’s Solution</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hardware-support-for-synchronization"><span class="nav-text">Hardware Support for
+Synchronization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#memory-barriers"><span class="nav-text">Memory Barriers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hardware-instructions"><span class="nav-text">Hardware Instructions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#atomic-variables"><span class="nav-text">Atomic Variables</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mutex-locks"><span class="nav-text">Mutex Locks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#semaphores"><span class="nav-text">Semaphores</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#semaphore-usage"><span class="nav-text">Semaphore Usage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#semaphore-implementation"><span class="nav-text">Semaphore Implementation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#monitor-usage"><span class="nav-text">Monitor Usage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#implementing-a-monitor-using-semaphores"><span class="nav-text">Implementing a Monitor
+Using Semaphores</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E7%9B%91%E8%A7%86%E5%99%A8%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="nav-text">背景：监视器与信号量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90%E7%BB%BC%E5%90%88%E4%B8%89%E6%AE%B5"><span class="nav-text">代码解析（综合三段）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E5%90%88%E5%90%8E%E7%9A%84%E8%A7%A3%E9%87%8A"><span class="nav-text">结合后的解释：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#resuming-processes-within-a-monitor"><span class="nav-text">Resuming Processes within a
+Monitor</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#liveness"><span class="nav-text">Liveness</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#deadlock"><span class="nav-text">Deadlock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#priority-inversion"><span class="nav-text">Priority Inversion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#evaluation"><span class="nav-text">Evaluation</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-user-secret"></i>&nbsp;&nbsp;<a href="/">Zhao Cong</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        55 posts in total
+                    </span>
+                    
+                        <span>
+                            59.4k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/Swup.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupSlideTheme.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupScriptsPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupProgressPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupScrollPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/SwupPreloadPlugin.min.js"></script>
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+<script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/imageViewer.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/utils.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/main.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/navbarShrink.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/scrollTopBottom.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/lightDarkSwitch.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/categoryList.js"></script>
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/localSearch.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/codeBlock.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/lazyload.js"></script>
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/runtime.js"></script>
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/odometer.min.js"></script>
+    <link rel="stylesheet" href="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/libs/Typed.min.js"></script>
+  <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/tools/tocToggle.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/layouts/toc.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine/2.6.4/source/js/plugins/tabs.js"></script>
+    
+</div>
+
+
+</body>
+</html>
